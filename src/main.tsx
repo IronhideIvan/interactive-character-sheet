@@ -1,14 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { Provider } from 'react-redux'
-import { store } from './redux/store.ts'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "./redux/store.ts";
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ThemeProvider } from "next-themes";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ReduxProvider store={store}>
+      <ChakraProvider value={defaultSystem}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ChakraProvider>
+    </ReduxProvider>
   </StrictMode>,
-)
+);
