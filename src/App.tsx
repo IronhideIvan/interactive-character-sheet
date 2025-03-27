@@ -1,8 +1,11 @@
-import { Box } from "@chakra-ui/react";
+import { Route, Routes } from "react-router";
+import BasicInformationCard from "./features/characterSheet/basicInformation/BasicInformationCard";
 
 function App() {
   return (
-    <Box>TEST</Box>
+    <Routes>
+      <Route index element={<BasicInformationCard />} />
+    </Routes>
   );
 }
 
