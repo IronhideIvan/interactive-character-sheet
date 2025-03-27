@@ -6,7 +6,7 @@ export type BasicInformationState = BasicInformation & {
 };
 
 const initialState: BasicInformationState = {
-  name: "",
+  name: "BLAH",
 };
 
 export const basicInformationSlice = createSlice({
