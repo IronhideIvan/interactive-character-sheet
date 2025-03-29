@@ -16,7 +16,12 @@ const navRoutes: NavRoutes = {
       value: "/data/prof",
       friendlyName: "Proficiency Bonus",
     },
-  ],
+    {
+      path: "/skills",
+      value: "/data/skills",
+      friendlyName: "Skills",
+    },
+  ].sort((a, b) => a.friendlyName.localeCompare(b.friendlyName)),
   fallback: {
     path: "/abilities",
     value: "/data/abilities",
@@ -50,7 +55,13 @@ const DataSets = ({ children }: { children: ReactNode; }): JSX.Element => {
   };
 
   return (
-    <VStack justifyContent={"center"} width={"100%"}>
+    <VStack
+      justifyContent={"start"}
+      alignItems={"center"}
+      width={"100%"}
+      height={"100%"}
+      overflow={"hidden"}
+    >
       <Box>
         <Select.Root
           collection={selectCollection}
@@ -82,7 +93,17 @@ const DataSets = ({ children }: { children: ReactNode; }): JSX.Element => {
           </Portal>
         </Select.Root>
       </Box>
-      {children}
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        height={"100%"}
+        width={"100%"}
+        overflow={"auto"}
+        alignItems={"start"}
+        paddingTop={2}
+      >
+        {children}
+      </Box>
     </VStack>
   );
 };

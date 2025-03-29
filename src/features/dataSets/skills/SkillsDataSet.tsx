@@ -1,79 +1,69 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { Ability } from "@/types/data/ability";
-import { Box } from "@chakra-ui/react";
+import { Skill } from "@/types/data/skill";
 import { JSX } from "react";
-import { deleteAbility, resetState, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
+import { deleteSkill, resetState, setSkills, upsertSkill } from "./skillsDataSetSlice";
 import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
 
-const AbilitiesDataSet = (): JSX.Element => {
-  const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
+const SkillsDataSet = (): JSX.Element => {
+  const skills = useAppSelector(state => state.skillsDataSet.latest);
   const dispatch = useAppDispatch();
 
-  const handleGetId = (item: Ability) => {
+  const handleGetId = (item: Skill) => {
     return item.id;
   };
 
-  const handleStringValueChanged = (item: Ability, columnKey: keyof Ability, value: string) => {
-    let newItem: Ability | undefined;
+  const handleStringValueChanged = (item: Skill, columnKey: keyof Skill, value: string) => {
+    let newItem: Skill | undefined;
     switch (columnKey) {
       case "name":
         newItem = { ...item, name: value };
-        break;
-      case "abbreviation":
-        newItem = { ...item, abbreviation: value };
         break;
       default:
         break;
     }
 
     if (newItem) {
-      dispatch(upsertAbility(newItem));
+      dispatch(upsertSkill(newItem));
     }
   };
 
-  const handleIconValueChanged = (item: Ability, key: keyof Ability, value: Icon) => {
+  const handleIconValueChanged = (item: Skill, key: keyof Skill, value: Icon) => {
     if (key === "icon") {
-      dispatch(upsertAbility({ ...item, icon: value }));
+      dispatch(upsertSkill({ ...item, icon: value }));
     }
   };
 
   const handleAddRow = () => {
-    dispatch(setAbilities([
-      ...abilities,
+    dispatch(setSkills([
+      ...skills,
       {
         id: uuidv4(),
         name: "",
-        abbreviation: "",
       },
     ]));
   };
 
-  const handleDeleteRow = (item: Ability) => {
-    dispatch(deleteAbility(item.id));
+  const handleDeleteRow = (item: Skill) => {
+    dispatch(deleteSkill(item.id));
   };
 
   const handleRevertAllChanges = () => {
     dispatch(resetState());
   };
 
-  const handleGetFriendlyName = (item: Ability) => {
+  const handleGetFriendlyName = (item: Skill) => {
     return item.name.length === 0 ? "Unknown" : item.name;
   };
 
   return (
     <DataGrid
-      items={abilities}
+      items={skills}
       columnInfo={[
         {
           name: "Name",
           key: "name",
-          type: "text",
-        },
-        {
-          name: "Abbreviation",
-          key: "abbreviation",
           type: "text",
         },
         {
@@ -93,4 +83,4 @@ const AbilitiesDataSet = (): JSX.Element => {
   );
 };
 
-export default AbilitiesDataSet;
+export default SkillsDataSet;

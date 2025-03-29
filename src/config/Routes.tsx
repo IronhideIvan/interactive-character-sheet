@@ -2,6 +2,7 @@ import BasicInformationSection from "@/features/characterSheet/basicInformation/
 import AbilitiesDataSet from "@/features/dataSets/abilities/AbilitiesDataSet";
 import DataSets from "@/features/dataSets/DataSets";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
+import SkillsDataSet from "@/features/dataSets/skills/SkillsDataSet";
 import { JSX } from "react";
 
 export type Route = {
@@ -41,6 +42,14 @@ export const appRoutes: Route[] = [
         element: (
           <DataSets>
             <ProficiencyBonusDataSet />
+          </DataSets>
+        ),
+      },
+      {
+        path: "skills",
+        element: (
+          <DataSets>
+            <SkillsDataSet />
           </DataSets>
         ),
       },

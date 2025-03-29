@@ -1,6 +1,7 @@
 import { BasicInformation } from "./character/basicInformation";
 import { Ability } from "./data/ability";
 import { ProficiencyBonus } from "./data/proficienyBonus";
+import { Skill } from "./data/skill";
 
 export type SaveFile = {
   character: {
@@ -9,5 +10,6 @@ export type SaveFile = {
   data: {
     abilities: Ability[];
     proficiencyBonuses: ProficiencyBonus[];
+    skills: Skill[];
   };
 };

@@ -52,28 +52,26 @@ const ProficiencyBonusDataSet = (): JSX.Element => {
   };
 
   return (
-    <Box display={"flex"} justifyContent={"center"}>
-      <DataGrid
-        items={profs}
-        columnInfo={[
-          {
-            name: "Level",
-            key: "level",
-            type: "number",
-          },
-          {
-            name: "Bonus",
-            key: "bonus",
-            type: "number",
-          },
-        ]}
-        getId={handleGetId}
-        onNumberValueChange={handleNumberValueChanged}
-        onAddRow={handleAddRow}
-        onDeleteRow={handleDeleteRow}
-        onRevertAllChanges={handleRevertAllChanges}
-      />
-    </Box>
+    <DataGrid
+      items={profs}
+      columnInfo={[
+        {
+          name: "Level",
+          key: "level",
+          type: "number",
+        },
+        {
+          name: "Bonus",
+          key: "bonus",
+          type: "number",
+        },
+      ]}
+      getId={handleGetId}
+      onNumberValueChange={handleNumberValueChanged}
+      onAddRow={handleAddRow}
+      onDeleteRow={handleDeleteRow}
+      onRevertAllChanges={handleRevertAllChanges}
+    />
   );
 };
 

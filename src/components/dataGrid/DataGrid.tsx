@@ -14,6 +14,7 @@ type DataGridProps<T> = {
   items: T[];
   columnInfo: ColumnInfo<T>[];
   getId: (item: T) => string;
+  getFriendlyName?: (item: T) => string;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
   onNumberValueChange?: (item: T, columnKey: keyof T, value: number) => void;
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
@@ -30,6 +31,7 @@ const DataGrid = <T,>(
     items,
     columnInfo,
     getId,
+    getFriendlyName,
     onStringValueChange,
     onNumberValueChange,
     onIconValueChange,
@@ -139,11 +141,12 @@ const DataGrid = <T,>(
     getId,
     getValue,
     handleIconDialogOpen,
+    onNumberValueChange,
     onStringValueChange,
   ]);
 
   return (
-    <>
+    <Box display={"flex"} marginBottom={12}>
       <VStack rowGap={0}>
         <Table.Root variant={"outline"} showColumnBorder>
           <Table.Header>
@@ -225,18 +228,17 @@ const DataGrid = <T,>(
             </IconButton>
           </Box>
         )}
-
       </VStack>
       {selectedItem && selectedColumn && (
         <IconPickerDialog
           open={isIconDialogOpen}
           defaultIcon={selectedIcon}
-          title={selectedColumn.name}
+          title={getFriendlyName ? `${getFriendlyName(selectedItem)} - ${selectedColumn.name}` : selectedColumn.name}
           onClose={handleIconDialogClose}
           onSelect={handleIconDialogChoice}
         />
       )}
-    </>
+    </Box>
   );
 };
 
