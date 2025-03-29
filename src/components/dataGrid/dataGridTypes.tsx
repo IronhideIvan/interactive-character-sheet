@@ -1,4 +1,4 @@
-export type EditorType = "text" | "icon";
+export type EditorType = "text" | "icon" | "number";
 
 export type ColumnInfo<T> = {
   key: keyof T;

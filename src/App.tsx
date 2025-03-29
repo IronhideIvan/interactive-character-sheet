@@ -4,10 +4,12 @@ import NavBar from "./features/navigation/NavBar";
 
 function App() {
   return (
-    <Box>
+    <Box width={"100%"}>
       <NavBar />
-      <Flex justify="center" width={{ base: "100%", lg: "50rem", xl: "60rem" }}>
-        <AppRoutes />
+      <Flex width={"100%"} justifyContent={"center"}>
+        <Flex justify="center" width={{ base: "100%", lg: "50rem", xl: "60rem" }}>
+          <AppRoutes />
+        </Flex>
       </Flex>
     </Box>
   );

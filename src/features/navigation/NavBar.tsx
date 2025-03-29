@@ -4,38 +4,41 @@ import { Box, FileUpload, HStack, IconButton, Tabs } from "@chakra-ui/react";
 import { JSX, useMemo } from "react";
 import { FaFolderOpen, FaRegSave } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
+import { NavRoutes as NavRoutes } from "./navigation";
+import { matchRoute, matchRouteValue } from "@/utils/navUtils";
+
+const navRoutes: NavRoutes = {
+  paths: [
+    {
+      path: "/data",
+      value: "data",
+      friendlyName: "Data",
+    },
+    {
+      path: "/sandbox",
+      value: "sandbox",
+      friendlyName: "Sandbox",
+    },
+  ],
+  fallback: {
+    path: "/",
+    value: "/",
+    friendlyName: "Character Sheet",
+  },
+};
 
 const NavBar = (): JSX.Element => {
   const save = useExport();
   const load = useImport();
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedTab = useMemo(() => {
-    if (location.pathname.toLowerCase().includes("/data")) {
-      return "data";
-    }
-    if (location.pathname.toLowerCase().includes("/sandbox")) {
-      return "sandbox";
-    }
-    else {
-      return "char";
-    }
+  const selectedRoute = useMemo(() => {
+    return matchRoute(location.pathname, navRoutes);
   }, [location.pathname]);
 
   const handleValueChanged = (val: string) => {
-    switch (val) {
-      case "data": {
-        navigate("data");
-        break;
-      }
-      case "sandbox": {
-        navigate("sandbox");
-        break;
-      }
-      default: {
-        navigate("/");
-      }
-    }
+    const navItem = matchRouteValue(val, navRoutes);
+    navigate(navItem.value);
   };
 
   const handleFilePicked = (files: File[]) => {
@@ -69,11 +72,14 @@ const NavBar = (): JSX.Element => {
         </FileUpload.Root>
 
       </HStack>
-      <Tabs.Root value={selectedTab} onValueChange={det => handleValueChanged(det.value)} width="100%">
+      <Tabs.Root value={selectedRoute.value} onValueChange={det => handleValueChanged(det.value)} width="100%">
         <Tabs.List justifyContent={"center"}>
-          <Tabs.Trigger value="char">Character Sheet</Tabs.Trigger>
-          <Tabs.Trigger value="data">Data</Tabs.Trigger>
-          <Tabs.Trigger value="sandbox">Sandbox</Tabs.Trigger>
+          <Tabs.Trigger key={navRoutes.fallback.value} value={navRoutes.fallback.value}>{navRoutes.fallback.friendlyName}</Tabs.Trigger>
+          {navRoutes.paths.map((p) => {
+            return (
+              <Tabs.Trigger key={p.value} value={p.value}>{p.friendlyName}</Tabs.Trigger>
+            );
+          })}
         </Tabs.List>
       </Tabs.Root>
     </Box>
