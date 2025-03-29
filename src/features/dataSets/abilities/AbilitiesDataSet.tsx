@@ -4,6 +4,7 @@ import { Ability } from "@/types/data/ability";
 import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
 import { upsertAbility } from "./abilitiesDataSetSlice";
+import { Icon } from "@/types/data/icon";
 
 const AbilitiesDataSet = (): JSX.Element => {
   const { abilities } = useAppSelector(state => state.abilitiesDataSet);
@@ -11,18 +12,6 @@ const AbilitiesDataSet = (): JSX.Element => {
 
   const handleGetId = (item: Ability) => {
     return item.id;
-  };
-
-  const handleGetValue = (item: Ability, columnKey: keyof Ability) => {
-    switch (columnKey) {
-      case "name":
-        return item.name;
-      case "abbreviation":
-        return item.abbreviation;
-      default:
-        break;
-    }
-    return "Not Implemented";
   };
 
   const handleStringValueChanged = (item: Ability, columnKey: keyof Ability, value: string) => {
@@ -43,6 +32,12 @@ const AbilitiesDataSet = (): JSX.Element => {
     }
   };
 
+  const handleIconValueChanged = (item: Ability, key: keyof Ability, value: Icon) => {
+    if (key === "icon") {
+      dispatch(upsertAbility({ ...item, icon: value }));
+    }
+  };
+
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <DataGrid
@@ -58,10 +53,15 @@ const AbilitiesDataSet = (): JSX.Element => {
             key: "abbreviation",
             type: "text",
           },
+          {
+            name: "Icon",
+            key: "icon",
+            type: "icon",
+          },
         ]}
         getId={handleGetId}
-        getDisplayValue={handleGetValue}
         onStringValueChange={handleStringValueChanged}
+        onIconValueChange={handleIconValueChanged}
       />
     </Box>
   );

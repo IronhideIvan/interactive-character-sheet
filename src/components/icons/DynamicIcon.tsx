@@ -23,7 +23,7 @@ const DynamicIcon = ({ iconId, ...baseProps }: DynamicIconProps): JSX.Element =>
     Icon = MdQuestionMark;
   }
 
-  return <Icon {...baseProps} style={{ width: "100%", height: "100%" }} data-testid="TEST ICON" />;
+  return <Icon {...baseProps} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default DynamicIcon;

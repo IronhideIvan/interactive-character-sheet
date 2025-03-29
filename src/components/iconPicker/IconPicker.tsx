@@ -1,18 +1,24 @@
-import { Box, Color, Field, Grid, GridItem, Input, parseColor, Stack, Text } from "@chakra-ui/react";
+import { Box, Color, Field, Grid, GridItem, GridItemProps, Input, parseColor, Stack, Text } from "@chakra-ui/react";
 import { JSX, useState } from "react";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
 import IconCard from "./IconCard";
 import AppColorPicker from "../colorPicker/ColorPicker";
+import { Icon } from "@/types/data/icon";
 
 const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
 
-const IconPicker = (): JSX.Element => {
+export type IconPickerProps = {
+  defaultIcon?: Icon;
+  onSelect: (icon: Icon) => void;
+} & Pick<GridItemProps, "colSpan" | "height">;
+
+export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps): JSX.Element => {
   const searchLimit = 50;
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [iconColor, setIconColor] = useState<Color>(parseColor("#eb5e41"));
+  const [iconColor, setIconColor] = useState<Color>(defaultIcon ? parseColor(defaultIcon.color) : parseColor("#eb5e41"));
 
   const allIconCount = allGiKeys.length + allFaKey.length;
 
@@ -55,12 +61,21 @@ const IconPicker = (): JSX.Element => {
     setIconColor(color);
   };
 
+  const handleIconSelect = (iconId: string) => {
+    onSelect({
+      id: iconId,
+      color: iconColor.toString("hex"),
+    });
+  };
+
   return (
     <Box
       width="100%"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
+      height={props.height}
+      overflow={"hidden"}
       p={2}
     >
       <Stack justifyContent={"center"}>
@@ -88,11 +103,12 @@ const IconPicker = (): JSX.Element => {
         width={"100%"}
         templateColumns="repeat(12, 1fr)"
         rowGap={2}
+        overflowY={"auto"}
       >
         {searchResults.map((iconId) => {
           return (
-            <GridItem justifyContent={"center"} key={iconId} colSpan={{ smDown: 4, sm: 3, md: 2 }}>
-              <IconCard iconId={iconId} iconColor={iconColor.toString("hex")} onClick={id => console.log(id)} />
+            <GridItem justifyContent={"center"} key={iconId} colSpan={props.colSpan ? props.colSpan : { smDown: 4, sm: 3, md: 2 }}>
+              <IconCard iconId={iconId} iconColor={iconColor.toString("hex")} onClick={id => handleIconSelect(id)} />
             </GridItem>
           );
         })}
@@ -100,5 +116,3 @@ const IconPicker = (): JSX.Element => {
     </Box>
   );
 };
-
-export default IconPicker;

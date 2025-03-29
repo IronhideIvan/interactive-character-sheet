@@ -8,7 +8,6 @@ type DataTextEditorProps = {
 };
 
 const DataTextEditor = ({ value, onValueChanged, placeholder }: DataTextEditorProps): JSX.Element => {
-  console.log(value);
   return (
     <Editable.Root
       value={value}
