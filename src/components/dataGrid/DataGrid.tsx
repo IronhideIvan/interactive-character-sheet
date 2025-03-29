@@ -123,7 +123,7 @@ const DataGrid = <T,>(
 
   return (
     <>
-      <VStack>
+      <VStack rowGap={0}>
         <Table.Root variant={"outline"} showColumnBorder>
           <Table.Header>
             <Table.Row>
@@ -131,7 +131,13 @@ const DataGrid = <T,>(
 
               {columnInfo.map((ci) => {
                 return (
-                  <Table.ColumnHeader padding={0} textAlign={"center"} key={ci.key.toString()}>{ci.name}</Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    minW={"3rem"}
+                    padding={0}
+                    textAlign={"center"}
+                    key={ci.key.toString()}
+                  >{ci.name}
+                  </Table.ColumnHeader>
                 );
               })}
             </Table.Row>

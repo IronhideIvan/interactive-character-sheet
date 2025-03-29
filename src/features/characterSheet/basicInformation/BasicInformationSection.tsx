@@ -6,7 +6,7 @@ import { setName } from "./basicInformationSlice";
 
 const BasicInformationSection = (): JSX.Element => {
   const { name } = useAppSelector((state) => {
-    return state.basicInformation;
+    return state.basicInformation.latest;
   });
   const dispatch = useAppDispatch();
 

@@ -2,24 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Ability } from "@/types/data/ability";
 import { upsert } from "@/utils/arrayUtils";
+import cloneDeep from "lodash.clonedeep";
 
 export type AbilityDataSetState = {
-  abilities: Ability[];
+  latest: Ability[];
+  initial: Ability[];
 };
 
 const initialState: AbilityDataSetState = {
-  abilities: [
-    {
-      id: "str",
-      name: "Strength",
-      abbreviation: "STR",
-    },
-    {
-      id: "dec",
-      name: "Dexterity",
-      abbreviation: "DEX",
-    },
-  ],
+  latest: [],
+  initial: [],
 };
 
 export const abilityDataSetSlice = createSlice({
@@ -27,15 +19,21 @@ export const abilityDataSetSlice = createSlice({
   initialState,
   reducers: {
     setAbilities: (state, action: PayloadAction<Ability[]>) => {
-      state.abilities = [...action.payload];
+      state.latest = [...action.payload];
     },
     upsertAbility: (state, action: PayloadAction<Ability>) => {
-      state.abilities = upsert(action.payload, state.abilities, a => a.id === action.payload.id);
+      state.latest = upsert(action.payload, state.latest, a => a.id === action.payload.id);
     },
     deleteAbility: (state, action: PayloadAction<string>) => {
-      state.abilities = state.abilities.filter(a => a.id !== action.payload);
+      state.latest = state.latest.filter(a => a.id !== action.payload);
+    },
+    setInitial: (state, action: PayloadAction<Ability[]>) => {
+      state.initial = cloneDeep(action.payload);
+    },
+    resetState: (state) => {
+      state.latest = cloneDeep(state.initial);
     },
   },
 });
 
-export const { setAbilities, upsertAbility, deleteAbility } = abilityDataSetSlice.actions;
+export const { setAbilities, upsertAbility, deleteAbility, resetState, setInitial } = abilityDataSetSlice.actions;

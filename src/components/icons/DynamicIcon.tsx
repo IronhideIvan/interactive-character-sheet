@@ -2,7 +2,7 @@ import { JSX } from "react";
 import { IconBaseProps, IconType } from "react-icons";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
-import { MdQuestionMark } from "react-icons/md";
+import { FaQuestion } from "react-icons/fa";
 
 type DynamicIconProps = {
   iconId: string;
@@ -20,7 +20,7 @@ const DynamicIcon = ({ iconId, ...baseProps }: DynamicIconProps): JSX.Element =>
   }
 
   if (Icon === undefined) {
-    Icon = MdQuestionMark;
+    Icon = FaQuestion;
   }
 
   return <Icon {...baseProps} style={{ width: "100%", height: "100%" }} />;

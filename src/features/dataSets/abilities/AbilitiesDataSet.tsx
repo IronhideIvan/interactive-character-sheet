@@ -8,7 +8,7 @@ import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
 
 const AbilitiesDataSet = (): JSX.Element => {
-  const { abilities } = useAppSelector(state => state.abilitiesDataSet);
+  const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const dispatch = useAppDispatch();
 
   const handleGetId = (item: Ability) => {
