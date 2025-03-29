@@ -1,11 +1,13 @@
 import { Box, Button, Card, Color, Field, Grid, GridItem, GridItemProps, HStack, Input, parseColor, Separator, Stack, Text } from "@chakra-ui/react";
-import { JSX, useState } from "react";
+import { JSX, useMemo, useState } from "react";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
 import IconCard from "./IconCard";
 import AppColorPicker from "../colorPicker/ColorPicker";
 import { Icon } from "@/types/data/icon";
 import DynamicIcon from "../icons/DynamicIcon";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setMostRecentColor } from "./iconPickerSlice";
 
 const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
@@ -17,10 +19,13 @@ export type IconPickerProps = {
 
 export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps): JSX.Element => {
   const searchLimit = 50;
+  const { mostRecentColor } = useAppSelector(state => state.iconPicker);
+  const defaultColor = useMemo(() => parseColor(mostRecentColor), [mostRecentColor]);
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [iconColor, setIconColor] = useState<Color>(defaultIcon ? parseColor(defaultIcon.color) : parseColor("#eb5e41"));
+  const [iconColor, setIconColor] = useState<Color>(defaultIcon ? parseColor(defaultIcon.color) : parseColor(mostRecentColor));
   const [selectIconId, setSelectedIconId] = useState<string | undefined>(defaultIcon?.id);
+  const dispatch = useAppDispatch();
 
   const allIconCount = allGiKeys.length + allFaKey.length;
 
@@ -72,10 +77,12 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
       return;
     }
 
+    const color = iconColor.toString("hex");
     onSelect({
       id: selectIconId,
-      color: iconColor.toString("hex"),
+      color: color,
     });
+    dispatch(setMostRecentColor(color));
   };
 
   return (
@@ -91,7 +98,7 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
       <HStack justifyContent={"center"}>
         <Stack justifyContent={"center"}>
           <Box display={"flex"} justifyContent={"center"}>
-            <AppColorPicker color={iconColor} onColorChange={handleColorChange} />
+            <AppColorPicker color={iconColor} onColorChange={handleColorChange} defaultColor={defaultColor} />
           </Box>
           <Box display={"flex"} justifyContent={"center"}>
             <Field.Root maxWidth={"20rem"}>

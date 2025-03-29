@@ -1,16 +1,17 @@
-import { Color, ColorPicker, HStack, parseColor } from "@chakra-ui/react";
+import { Color, ColorPicker, HStack } from "@chakra-ui/react";
 import { JSX } from "react";
 
 type AppColorPickerProps = {
   color: Color;
+  defaultColor?: Color;
   onColorChange: (color: Color) => void;
 };
 
-const AppColorPicker = ({ color, onColorChange }: AppColorPickerProps): JSX.Element => {
+const AppColorPicker = ({ color, onColorChange, defaultColor }: AppColorPickerProps): JSX.Element => {
   return (
     <ColorPicker.Root
       format="hsla"
-      defaultValue={parseColor("#eb5e41")}
+      defaultValue={defaultColor}
       maxW="200px"
       value={color}
       onValueChange={e => onColorChange(e.value)}
