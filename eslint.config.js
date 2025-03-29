@@ -16,7 +16,7 @@ export default tseslint.config(
       globals: globals.browser,
     },
     plugins: {
-      "react": react,
+      react: react,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "@stylistic": stylistic,
@@ -47,6 +47,7 @@ export default tseslint.config(
           generics: "always-multiline",
         },
       ],
+      "@stylistic/jsx-curly-brace-presence": ["off", "always"],
       "@stylistic/jsx-quotes": ["error", "prefer-double"],
       "@stylistic/indent": ["error", 2],
       "@stylistic/array-bracket-newline": ["error", { multiline: true }],
