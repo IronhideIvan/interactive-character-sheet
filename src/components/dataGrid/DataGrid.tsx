@@ -1,36 +1,65 @@
-import { JSX } from "react";
+import { JSX, useCallback } from "react";
 import { ColumnInfo } from "./dataGridTypes";
 import { Table } from "@chakra-ui/react";
+import DataTextEditor from "./editors/DataTextEditor";
 
 type DataGridProps<T> = {
   items: T[];
   columnInfo: ColumnInfo<T>[];
   getId: (item: T) => string;
-  getValue: (item: T, columnKey: keyof T) => string;
+  getDisplayValue: (item: T, columnKey: keyof T) => string;
+  onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
 };
 
 // The comma dangle is necessary here to allow typescript to differentiate
 // the generic from a JSX element
 // eslint-disable-next-line @stylistic/comma-dangle
-const DataGrid = <T,>(props: DataGridProps<T>): JSX.Element => {
+const DataGrid = <T,>({ items, columnInfo, getId, getDisplayValue, onStringValueChange }: DataGridProps<T>): JSX.Element => {
+  const getEditorForCell = useCallback((item: T, columnInfo: ColumnInfo<T>) => {
+    switch (columnInfo.type) {
+      case "text":
+        return (
+          <DataTextEditor
+            value={getDisplayValue(item, columnInfo.key)}
+            onValueChanged={(v) => {
+              if (onStringValueChange) {
+                onStringValueChange(item, columnInfo.key, v);
+              }
+            }}
+            placeholder={columnInfo.name}
+          />
+        );
+
+      default:
+        return getDisplayValue(item, columnInfo.key);
+    }
+  }, [getDisplayValue, onStringValueChange]);
+
   return (
     <Table.Root>
       <Table.Header>
         <Table.Row>
-          {props.columnInfo.map((ci) => {
+          {columnInfo.map((ci) => {
             return (
-              <Table.ColumnHeader key={ci.key.toString()}>{ci.name}</Table.ColumnHeader>
+              <Table.ColumnHeader padding={0} textAlign={"center"} key={ci.key.toString()}>{ci.name}</Table.ColumnHeader>
             );
           })}
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {props.items.map((item) => {
+        {items.map((item) => {
           return (
-            <Table.Row key={props.getId(item)}>
-              {props.columnInfo.map((ci) => {
+            <Table.Row key={getId(item)}>
+              {columnInfo.map((ci) => {
                 return (
-                  <Table.Cell key={`${ci.key.toString()}-${props.getId(item)}`}>{props.getValue(item, ci.key)}</Table.Cell>
+                  <Table.Cell
+                    padding={0}
+                    paddingLeft={1}
+                    paddingRight={1}
+                    key={`${ci.key.toString()}-${getId(item)}`}
+                  >
+                    {getEditorForCell(item, ci)}
+                  </Table.Cell>
                 );
               })}
             </Table.Row>
