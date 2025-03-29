@@ -23,13 +23,10 @@ const IconPickerDialog = ({ open, onClose, title, ...props }: IconPickerDialogPr
         <Dialog.Content>
           {title
             && (
-              <Dialog.Header>
-                <Dialog.Title>Dialog Title</Dialog.Title>
+              <Dialog.Header paddingBottom={0}>
+                <Dialog.Title>{title}</Dialog.Title>
               </Dialog.Header>
             )}
-          <Dialog.Header>
-            <Dialog.Title>Dialog Title</Dialog.Title>
-          </Dialog.Header>
           <Dialog.Body>
             <IconPicker {...props} colSpan={{ base: 4, md: 3 }} height={{ md: "80vh" }} />
           </Dialog.Body>

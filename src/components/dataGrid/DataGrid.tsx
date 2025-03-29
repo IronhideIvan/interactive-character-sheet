@@ -35,7 +35,7 @@ const DataGrid = <T,>(
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
   const [selectedItem, setSelectedItem] = useState<T | undefined>();
-  const [selectedColumn, setSelectedColumn] = useState<keyof T | undefined>();
+  const [selectedColumn, setSelectedColumn] = useState<ColumnInfo<T> | undefined>();
 
   const getDefaultValue = useCallback((item: T, columnInfo: ColumnInfo<T>) => {
     return JSON.stringify(item[columnInfo.key]);
@@ -46,16 +46,16 @@ const DataGrid = <T,>(
     return item[columnKey] as K;
   }, []);
 
-  const handleIconDialogOpen = useCallback((itemId: string, columnKey: keyof T) => {
+  const handleIconDialogOpen = useCallback((itemId: string, columnInfo: ColumnInfo<T>) => {
     const item = items.find(it => getId(it) === itemId);
     if (!item) {
       return;
     }
 
-    const icon = getValue<Icon>(item, columnKey);
+    const icon = getValue<Icon>(item, columnInfo.key);
     setSelectedIcon(icon);
     setSelectedItem (item);
-    setSelectedColumn(columnKey);
+    setSelectedColumn(columnInfo);
     setIsIconDialogOpen(true);
   }, [getId, getValue, items]);
 
@@ -66,7 +66,7 @@ const DataGrid = <T,>(
   const handleIconDialogChoice = (icon: Icon) => {
     setIsIconDialogOpen(false);
     if (onIconValueChange && selectedItem && selectedColumn) {
-      onIconValueChange(selectedItem, selectedColumn, icon);
+      onIconValueChange(selectedItem, selectedColumn.key, icon);
     }
   };
 
@@ -104,7 +104,7 @@ const DataGrid = <T,>(
           <DataColorEditor
             icon={icon}
             onClick={() => {
-              handleIconDialogOpen(getId(item), ci.key);
+              handleIconDialogOpen(getId(item), ci);
             }}
           />
         );
@@ -192,6 +192,7 @@ const DataGrid = <T,>(
         <IconPickerDialog
           open={isIconDialogOpen}
           defaultIcon={selectedIcon}
+          title={selectedColumn.name}
           onClose={handleIconDialogClose}
           onSelect={handleIconDialogChoice}
         />
