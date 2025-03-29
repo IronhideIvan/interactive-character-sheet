@@ -1,16 +1,18 @@
-import { Box, Field, Grid, GridItem, Input, Stack, Text } from "@chakra-ui/react";
+import { Box, Color, Field, Grid, GridItem, Input, parseColor, Stack, Text } from "@chakra-ui/react";
 import { JSX, useState } from "react";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
 import IconCard from "./IconCard";
+import AppColorPicker from "../colorPicker/ColorPicker";
 
 const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
 
 const IconPicker = (): JSX.Element => {
-  const searchLimit = 100;
+  const searchLimit = 50;
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [iconColor, setIconColor] = useState<Color>(parseColor("#eb5e41"));
 
   const allIconCount = allGiKeys.length + allFaKey.length;
 
@@ -49,9 +51,22 @@ const IconPicker = (): JSX.Element => {
     setSearchResults(results);
   };
 
+  const handleColorChange = (color: Color) => {
+    setIconColor(color);
+  };
+
   return (
-    <Box width="100%">
+    <Box
+      width="100%"
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      p={2}
+    >
       <Stack justifyContent={"center"}>
+        <Box display={"flex"} justifyContent={"center"}>
+          <AppColorPicker color={iconColor} onColorChange={handleColorChange} />
+        </Box>
         <Box display={"flex"} justifyContent={"center"}>
           <Field.Root maxWidth={"20rem"}>
             <Field.Label>Search</Field.Label>
@@ -65,7 +80,7 @@ const IconPicker = (): JSX.Element => {
           </Field.Root>
         </Box>
         <Box display={"flex"} justifyContent={"center"}>
-          <Text>Showing {searchResults.length} of {allIconCount} (Max: 100)</Text>
+          <Text>Showing {searchResults.length} of {allIconCount} (Max: {searchLimit})</Text>
         </Box>
       </Stack>
       <Grid
@@ -77,7 +92,7 @@ const IconPicker = (): JSX.Element => {
         {searchResults.map((iconId) => {
           return (
             <GridItem justifyContent={"center"} key={iconId} colSpan={{ smDown: 4, sm: 3, md: 2 }}>
-              <IconCard iconId={iconId} onClick={id => console.log(id)} />
+              <IconCard iconId={iconId} iconColor={iconColor.toString("hex")} onClick={id => console.log(id)} />
             </GridItem>
           );
         })}

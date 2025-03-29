@@ -5,9 +5,10 @@ import DynamicIcon from "../icons/DynamicIcon";
 type IconCardProps = {
   iconId: string;
   onClick: (id: string) => void;
+  iconColor?: string;
 };
 
-const IconCard = ({ iconId, onClick }: IconCardProps): JSX.Element => {
+const IconCard = ({ iconId, onClick, iconColor }: IconCardProps): JSX.Element => {
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <Button
@@ -19,7 +20,12 @@ const IconCard = ({ iconId, onClick }: IconCardProps): JSX.Element => {
         width={{ base: "7rem", md: "7.6rem", lg: "8rem" }}
       >
         <Stack justifyContent={"center"} width={"100%"}>
-          <Box display={"flex"} justifyContent={"center"}>
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            color={iconColor ?? undefined}
+            height={"2rem"}
+          >
             <DynamicIcon iconId={iconId} />
           </Box>
           <Text overflow={"hidden"} textStyle={"sm"} truncate>{iconId}</Text>
