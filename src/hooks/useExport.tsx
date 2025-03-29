@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 export const useExport = () => {
   const basicInformation = useAppSelector(state => state.basicInformation.latest);
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
+  const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
 
   const saveFile = () => {
     const fileContents: SaveFile = {
@@ -13,6 +14,7 @@ export const useExport = () => {
       },
       data: {
         abilities: abilities,
+        proficiencyBonuses: profBonuses,
       },
     };
 

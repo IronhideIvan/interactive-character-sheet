@@ -8,12 +8,14 @@ import IconPickerDialog from "../iconPicker/IconPickerDialog";
 import DynamicIcon from "../icons/DynamicIcon";
 import { FaPlus, FaTrash, FaUndo } from "react-icons/fa";
 import ConfirmIconButton from "../buttons/ConfirmIconButton";
+import DataNumberEditor from "./editors/DataNumberEditor";
 
 type DataGridProps<T> = {
   items: T[];
   columnInfo: ColumnInfo<T>[];
   getId: (item: T) => string;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
+  onNumberValueChange?: (item: T, columnKey: keyof T, value: number) => void;
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
   onAddRow?: () => void;
   onDeleteRow?: (item: T) => void;
@@ -29,6 +31,7 @@ const DataGrid = <T,>(
     columnInfo,
     getId,
     onStringValueChange,
+    onNumberValueChange,
     onIconValueChange,
     onAddRow,
     onDeleteRow,
@@ -88,6 +91,22 @@ const DataGrid = <T,>(
               }
             }}
             placeholder={ci.name}
+          />
+        );
+
+      case "number":
+        if (ci.readonly) {
+          return getValue<number>(item, ci.key);
+        }
+
+        return (
+          <DataNumberEditor
+            value={getValue<number>(item, ci.key) ?? 0}
+            onValueChanged={(v) => {
+              if (onNumberValueChange) {
+                onNumberValueChange(item, ci.key, v);
+              }
+            }}
           />
         );
 
