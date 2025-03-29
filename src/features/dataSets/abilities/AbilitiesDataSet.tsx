@@ -1,10 +1,6 @@
 import { JSX } from "react";
 
-type AbilitiesDataSetProps = {
-  a?: string;
-};
-
-const AbilitiesDataSet = (props: AbilitiesDataSetProps): JSX.Element => {
+const AbilitiesDataSet = (): JSX.Element => {
   return <div>TEST</div>;
 };
 

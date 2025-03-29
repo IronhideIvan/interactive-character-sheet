@@ -1,4 +1,4 @@
-import SectionHeaderEditable from "@/components/sectionHeaderEditable/sectionHeaderEditable";
+import SectionHeaderEditable from "@/components/sectionHeaderEditable/SectionHeaderEditable";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { Box, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
 import { JSX } from "react";
