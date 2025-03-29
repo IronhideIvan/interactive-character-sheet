@@ -6,7 +6,7 @@ import { Icon } from "@/types/data/icon";
 import DataColorEditor from "./editors/DataColorEditor";
 import IconPickerDialog from "../iconPicker/IconPickerDialog";
 import DynamicIcon from "../icons/DynamicIcon";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash, FaUndo } from "react-icons/fa";
 import ConfirmIconButton from "../buttons/ConfirmIconButton";
 
 type DataGridProps<T> = {
@@ -17,6 +17,7 @@ type DataGridProps<T> = {
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
   onAddRow?: () => void;
   onDeleteRow?: (item: T) => void;
+  onRevertAllChanges?: () => void;
 };
 
 // The comma dangle is necessary here to allow typescript to differentiate
@@ -31,6 +32,7 @@ const DataGrid = <T,>(
     onIconValueChange,
     onAddRow,
     onDeleteRow,
+    onRevertAllChanges,
   }: DataGridProps<T>): JSX.Element => {
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
@@ -127,8 +129,26 @@ const DataGrid = <T,>(
         <Table.Root variant={"outline"} showColumnBorder>
           <Table.Header>
             <Table.Row>
-              {onDeleteRow && <Table.ColumnHeader key={"table.actions"} w={6} />}
-
+              {onDeleteRow && (
+                <Table.ColumnHeader key={"table.actions"} w={6} padding={1}>
+                  {onRevertAllChanges && (
+                    <ConfirmIconButton
+                      size={"sm"}
+                      variant={"ghost"}
+                      rounded={"full"}
+                      onConfirmClick={() => {
+                        onRevertAllChanges();
+                      }}
+                      confirm={{
+                        variant: "outline",
+                        color: "red",
+                      }}
+                    >
+                      <FaUndo />
+                    </ConfirmIconButton>
+                  )}
+                </Table.ColumnHeader>
+              )}
               {columnInfo.map((ci) => {
                 return (
                   <Table.ColumnHeader

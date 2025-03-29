@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Ability } from "@/types/data/ability";
 import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
-import { deleteAbility, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
+import { deleteAbility, resetState, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
 import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
 
@@ -54,6 +54,10 @@ const AbilitiesDataSet = (): JSX.Element => {
     dispatch(deleteAbility(item.id));
   };
 
+  const handleRevertAllChanges = () => {
+    dispatch(resetState());
+  };
+
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <DataGrid
@@ -80,6 +84,7 @@ const AbilitiesDataSet = (): JSX.Element => {
         onIconValueChange={handleIconValueChanged}
         onAddRow={handleAddRow}
         onDeleteRow={handleDeleteRow}
+        onRevertAllChanges={handleRevertAllChanges}
       />
     </Box>
   );
