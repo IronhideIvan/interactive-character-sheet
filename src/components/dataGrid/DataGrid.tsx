@@ -1,11 +1,13 @@
 import { JSX, useCallback, useState } from "react";
 import { ColumnInfo } from "./dataGridTypes";
-import { Table } from "@chakra-ui/react";
+import { Box, IconButton, Table, VStack } from "@chakra-ui/react";
 import DataTextEditor from "./editors/DataTextEditor";
 import { Icon } from "@/types/data/icon";
 import DataColorEditor from "./editors/DataColorEditor";
 import IconPickerDialog from "../iconPicker/IconPickerDialog";
 import DynamicIcon from "../icons/DynamicIcon";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import ConfirmIconButton from "../buttons/ConfirmIconButton";
 
 type DataGridProps<T> = {
   items: T[];
@@ -13,6 +15,8 @@ type DataGridProps<T> = {
   getId: (item: T) => string;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
+  onAddRow?: () => void;
+  onDeleteRow?: (item: T) => void;
 };
 
 // The comma dangle is necessary here to allow typescript to differentiate
@@ -25,6 +29,8 @@ const DataGrid = <T,>(
     getId,
     onStringValueChange,
     onIconValueChange,
+    onAddRow,
+    onDeleteRow,
   }: DataGridProps<T>): JSX.Element => {
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
@@ -117,37 +123,65 @@ const DataGrid = <T,>(
 
   return (
     <>
-      <Table.Root>
-        <Table.Header>
-          <Table.Row>
-            {columnInfo.map((ci) => {
+      <VStack>
+        <Table.Root variant={"outline"} showColumnBorder>
+          <Table.Header>
+            <Table.Row>
+              {onDeleteRow && <Table.ColumnHeader key={"table.actions"} w={6} />}
+
+              {columnInfo.map((ci) => {
+                return (
+                  <Table.ColumnHeader padding={0} textAlign={"center"} key={ci.key.toString()}>{ci.name}</Table.ColumnHeader>
+                );
+              })}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {items.map((item) => {
               return (
-                <Table.ColumnHeader padding={0} textAlign={"center"} key={ci.key.toString()}>{ci.name}</Table.ColumnHeader>
+                <Table.Row key={getId(item)}>
+                  {onDeleteRow && (
+                    <Table.Cell key={"table.actions"} padding={1}>
+                      <ConfirmIconButton
+                        size={"sm"}
+                        variant={"ghost"}
+                        rounded={"full"}
+                        color="red"
+                        onConfirmClick={() => {
+                          onDeleteRow(item);
+                        }}
+                        confirm={{
+                          variant: "outline",
+                        }}
+                      >
+                        <FaTrash />
+                      </ConfirmIconButton>
+                    </Table.Cell>
+                  )}
+                  {columnInfo.map((ci) => {
+                    return (
+                      <Table.Cell
+                        padding={1}
+                        key={`${ci.key.toString()}-${getId(item)}`}
+                      >
+                        {getEditorForCell(item, ci)}
+                      </Table.Cell>
+                    );
+                  })}
+                </Table.Row>
               );
             })}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {items.map((item) => {
-            return (
-              <Table.Row key={getId(item)}>
-                {columnInfo.map((ci) => {
-                  return (
-                    <Table.Cell
-                      padding={0}
-                      paddingLeft={1}
-                      paddingRight={1}
-                      key={`${ci.key.toString()}-${getId(item)}`}
-                    >
-                      {getEditorForCell(item, ci)}
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table.Root>
+          </Table.Body>
+        </Table.Root>
+        {onAddRow && (
+          <Box width={"100%"}>
+            <IconButton width={"100%"} variant={"outline"} onClick={onAddRow}>
+              <FaPlus />
+            </IconButton>
+          </Box>
+        )}
+
+      </VStack>
       {selectedItem && selectedColumn && (
         <IconPickerDialog
           open={isIconDialogOpen}

@@ -3,8 +3,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Ability } from "@/types/data/ability";
 import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
-import { upsertAbility } from "./abilitiesDataSetSlice";
+import { deleteAbility, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
 import { Icon } from "@/types/data/icon";
+import { v4 as uuidv4 } from "uuid";
 
 const AbilitiesDataSet = (): JSX.Element => {
   const { abilities } = useAppSelector(state => state.abilitiesDataSet);
@@ -38,6 +39,21 @@ const AbilitiesDataSet = (): JSX.Element => {
     }
   };
 
+  const handleAddRow = () => {
+    dispatch(setAbilities([
+      ...abilities,
+      {
+        id: uuidv4(),
+        name: "",
+        abbreviation: "",
+      },
+    ]));
+  };
+
+  const handleDeleteRow = (item: Ability) => {
+    dispatch(deleteAbility(item.id));
+  };
+
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <DataGrid
@@ -62,6 +78,8 @@ const AbilitiesDataSet = (): JSX.Element => {
         getId={handleGetId}
         onStringValueChange={handleStringValueChanged}
         onIconValueChange={handleIconValueChanged}
+        onAddRow={handleAddRow}
+        onDeleteRow={handleDeleteRow}
       />
     </Box>
   );

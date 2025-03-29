@@ -1,4 +1,4 @@
-import { Color, ColorPicker, HStack, parseColor, Portal } from "@chakra-ui/react";
+import { Color, ColorPicker, HStack, parseColor } from "@chakra-ui/react";
 import { JSX } from "react";
 
 type AppColorPickerProps = {

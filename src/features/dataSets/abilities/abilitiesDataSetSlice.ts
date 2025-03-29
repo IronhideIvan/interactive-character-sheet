@@ -32,7 +32,10 @@ export const abilityDataSetSlice = createSlice({
     upsertAbility: (state, action: PayloadAction<Ability>) => {
       state.abilities = upsert(action.payload, state.abilities, a => a.id === action.payload.id);
     },
+    deleteAbility: (state, action: PayloadAction<string>) => {
+      state.abilities = state.abilities.filter(a => a.id !== action.payload);
+    },
   },
 });
 
-export const { setAbilities, upsertAbility } = abilityDataSetSlice.actions;
+export const { setAbilities, upsertAbility, deleteAbility } = abilityDataSetSlice.actions;
