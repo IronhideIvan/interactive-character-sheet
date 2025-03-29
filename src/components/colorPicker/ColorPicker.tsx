@@ -21,17 +21,15 @@ const AppColorPicker = ({ color, onColorChange }: AppColorPickerProps): JSX.Elem
         <ColorPicker.Input />
         <ColorPicker.Trigger />
       </ColorPicker.Control>
-      <Portal>
-        <ColorPicker.Positioner>
-          <ColorPicker.Content>
-            <ColorPicker.Area />
-            <HStack>
-              <ColorPicker.EyeDropper size="xs" variant="outline" />
-              <ColorPicker.Sliders />
-            </HStack>
-          </ColorPicker.Content>
-        </ColorPicker.Positioner>
-      </Portal>
+      <ColorPicker.Positioner>
+        <ColorPicker.Content>
+          <ColorPicker.Area />
+          <HStack>
+            <ColorPicker.EyeDropper size="xs" variant="outline" />
+            <ColorPicker.Sliders />
+          </HStack>
+        </ColorPicker.Content>
+      </ColorPicker.Positioner>
     </ColorPicker.Root>
   );
 };

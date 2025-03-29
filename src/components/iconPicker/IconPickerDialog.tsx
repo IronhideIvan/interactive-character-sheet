@@ -16,6 +16,7 @@ const IconPickerDialog = ({ open, onClose, title, ...props }: IconPickerDialogPr
       size={"lg"}
       scrollBehavior={"outside"}
       unmountOnExit={true}
+      modal={false}
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
