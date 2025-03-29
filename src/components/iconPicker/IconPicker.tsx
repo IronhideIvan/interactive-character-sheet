@@ -8,7 +8,8 @@ const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
 
 const IconPicker = (): JSX.Element => {
-  const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, 50)]);
+  const searchLimit = 100;
+  const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const allIconCount = allGiKeys.length + allFaKey.length;
@@ -17,14 +18,14 @@ const IconPicker = (): JSX.Element => {
     setSearchTerm(term);
 
     if (term.length === 0) {
-      setSearchResults([...allGiKeys.slice(0, 50)]);
+      setSearchResults([...allGiKeys.slice(0, searchLimit)]);
     }
 
     const lowercaseTerm = term.toLowerCase();
 
     const results: string[] = [];
     for (let i = 0; i < allGiKeys.length; i++) {
-      if (results.length >= 10) {
+      if (results.length >= searchLimit) {
         break;
       }
 
@@ -35,7 +36,7 @@ const IconPicker = (): JSX.Element => {
     }
 
     for (let i = 0; i < allFaKey.length; i++) {
-      if (results.length >= 100) {
+      if (results.length >= searchLimit) {
         break;
       }
 
