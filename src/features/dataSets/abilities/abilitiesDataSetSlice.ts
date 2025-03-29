@@ -7,7 +7,16 @@ export type AbilityDataSetState = {
 };
 
 const initialState: AbilityDataSetState = {
-  abilities: [],
+  abilities: [
+    {
+      id: "str",
+      name: "Strength",
+    },
+    {
+      id: "dec",
+      name: "Dexterity",
+    },
+  ],
 };
 
 export const abilityDataSetSlice = createSlice({

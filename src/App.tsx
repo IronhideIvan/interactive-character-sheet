@@ -6,10 +6,8 @@ function App() {
   return (
     <Box>
       <NavBar />
-      <Flex justify="center">
-        <Flex justify="stretch" width={{ base: "100%", lg: "50rem", xl: "60rem" }}>
-          <AppRoutes />
-        </Flex>
+      <Flex justify="center" width={{ base: "100%", lg: "50rem", xl: "60rem" }}>
+        <AppRoutes />
       </Flex>
     </Box>
   );
