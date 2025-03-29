@@ -1,10 +1,11 @@
-import { Box, Color, Field, Grid, GridItem, GridItemProps, Input, parseColor, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Card, Color, Field, Grid, GridItem, GridItemProps, HStack, Input, parseColor, Separator, Stack, Text } from "@chakra-ui/react";
 import { JSX, useState } from "react";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
 import IconCard from "./IconCard";
 import AppColorPicker from "../colorPicker/ColorPicker";
 import { Icon } from "@/types/data/icon";
+import DynamicIcon from "../icons/DynamicIcon";
 
 const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
@@ -19,6 +20,7 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
   const [iconColor, setIconColor] = useState<Color>(defaultIcon ? parseColor(defaultIcon.color) : parseColor("#eb5e41"));
+  const [selectIconId, setSelectedIconId] = useState<string | undefined>(defaultIcon?.id);
 
   const allIconCount = allGiKeys.length + allFaKey.length;
 
@@ -62,8 +64,16 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
   };
 
   const handleIconSelect = (iconId: string) => {
+    setSelectedIconId(iconId);
+  };
+
+  const handleConfirmClick = () => {
+    if (!selectIconId) {
+      return;
+    }
+
     onSelect({
-      id: iconId,
+      id: selectIconId,
       color: iconColor.toString("hex"),
     });
   };
@@ -78,26 +88,56 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
       overflow={"hidden"}
       p={2}
     >
-      <Stack justifyContent={"center"}>
-        <Box display={"flex"} justifyContent={"center"}>
-          <AppColorPicker color={iconColor} onColorChange={handleColorChange} />
+      <HStack justifyContent={"center"}>
+        <Stack justifyContent={"center"}>
+          <Box display={"flex"} justifyContent={"center"}>
+            <AppColorPicker color={iconColor} onColorChange={handleColorChange} />
+          </Box>
+          <Box display={"flex"} justifyContent={"center"}>
+            <Field.Root maxWidth={"20rem"}>
+              <Field.Label>Search</Field.Label>
+              <Input
+                value={searchTerm}
+                onChange={(e) => {
+                  handleSearchTermChange(e.target.value);
+                }}
+                placeholder="Campfire"
+              />
+            </Field.Root>
+          </Box>
+        </Stack>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          height={"100%"}
+          alignItems={"center"}
+        >
+          <Card.Root>
+            <Card.Header paddingTop={0} paddingBottom={1}>
+              <Text>Preview</Text>
+            </Card.Header>
+            <Card.Body paddingTop={2} paddingBottom={4}>
+              <Box
+                height={"3rem"}
+                width={"3rem"}
+              >
+                {selectIconId && (
+                  <DynamicIcon iconId={selectIconId ?? ""} color={iconColor.toString("hex")} />
+                )}
+              </Box>
+            </Card.Body>
+          </Card.Root>
         </Box>
-        <Box display={"flex"} justifyContent={"center"}>
-          <Field.Root maxWidth={"20rem"}>
-            <Field.Label>Search</Field.Label>
-            <Input
-              value={searchTerm}
-              onChange={(e) => {
-                handleSearchTermChange(e.target.value);
-              }}
-              placeholder="Campfire"
-            />
-          </Field.Root>
-        </Box>
-        <Box display={"flex"} justifyContent={"center"}>
-          <Text>Showing {searchResults.length} of {allIconCount} (Max: {searchLimit})</Text>
-        </Box>
-      </Stack>
+      </HStack>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        paddingBottom={3}
+        paddingTop={3}
+      >
+        <Text>Showing {searchResults.length} of {allIconCount} (Max: {searchLimit})</Text>
+      </Box>
+      <Separator />
       <Grid
         flexDirection={"row"}
         width={"100%"}
@@ -113,6 +153,9 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
           );
         })}
       </Grid>
+      <Button colorPalette={"blue"} onClick={handleConfirmClick}>
+        Confirm
+      </Button>
     </Box>
   );
 };
