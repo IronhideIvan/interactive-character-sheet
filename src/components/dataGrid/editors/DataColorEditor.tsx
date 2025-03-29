@@ -10,7 +10,13 @@ type DataColorEditorProps = {
 
 const DataColorEditor = ({ icon, onClick }: DataColorEditorProps): JSX.Element => {
   return (
-    <Button onClick={onClick} variant={"ghost"} maxHeight={"2rem"}>
+    <Button
+      onClick={onClick}
+      variant={"ghost"}
+      width={"100%"}
+      minWidth={"3rem"}
+      maxHeight={"2rem"}
+    >
       {icon && (
         <DynamicIcon iconId={icon.id} color={icon.color} />
       )}

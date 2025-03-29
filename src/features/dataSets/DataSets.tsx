@@ -59,10 +59,10 @@ const DataSets = ({ children }: { children: ReactNode; }): JSX.Element => {
           onValueChange={e => handleValueChanged(e.value)}
         >
           <Select.HiddenSelect />
-          <Select.Label>Select framework</Select.Label>
+          <Select.Label>Select data set</Select.Label>
           <Select.Control>
             <Select.Trigger>
-              <Select.ValueText placeholder="Select framework" />
+              <Select.ValueText placeholder="Select data set" />
             </Select.Trigger>
             <Select.IndicatorGroup>
               <Select.Indicator />
