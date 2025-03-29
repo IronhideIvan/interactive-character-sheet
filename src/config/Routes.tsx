@@ -1,3 +1,4 @@
+import IconPicker from "@/components/iconPicker/IconPicker";
 import BasicInformationSection from "@/features/characterSheet/basicInformation/BasicInformationSection";
 import AbilitiesDataSet from "@/features/dataSets/abilities/AbilitiesDataSet";
 import { JSX } from "react";
@@ -21,6 +22,15 @@ export const appRoutes: Route[] = [
       {
         index: true,
         element: <AbilitiesDataSet />,
+      },
+    ],
+  },
+  {
+    path: "sandbox",
+    routes: [
+      {
+        index: true,
+        element: <IconPicker />,
       },
     ],
   },

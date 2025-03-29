@@ -9,6 +9,9 @@ const NavBar = (): JSX.Element => {
     if (location.pathname.toLowerCase().includes("/data")) {
       return "data";
     }
+    if (location.pathname.toLowerCase().includes("/sandbox")) {
+      return "sandbox";
+    }
     else {
       return "char";
     }
@@ -18,6 +21,10 @@ const NavBar = (): JSX.Element => {
     switch (val) {
       case "data": {
         navigate("data");
+        break;
+      }
+      case "sandbox": {
+        navigate("sandbox");
         break;
       }
       default: {
@@ -32,6 +39,7 @@ const NavBar = (): JSX.Element => {
         <Tabs.List justifyContent={"center"}>
           <Tabs.Trigger value="char">Character Sheet</Tabs.Trigger>
           <Tabs.Trigger value="data">Data</Tabs.Trigger>
+          <Tabs.Trigger value="sandbox">Sandbox</Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>
     </Box>
