@@ -40,10 +40,10 @@ export const basicInformationSlice = createSlice({
   initialState,
   reducers: {
     setName: (state, action: PayloadAction<string>) => {
-      state.latest.background = action.payload;
+      state.latest.name = action.payload;
     },
     setBackground: (state, action: PayloadAction<string>) => {
-      state.latest.name = action.payload;
+      state.latest.background = action.payload;
     },
     setSpecies: (state, action: PayloadAction<string>) => {
       state.latest.species = action.payload;
@@ -70,11 +70,23 @@ export const basicInformationSlice = createSlice({
       state.initial = cloneDeep(action.payload);
     },
     resetState: (state) => {
-      state.initial = cloneDeep(state.latest);
+      state.latest = cloneDeep(state.initial);
     },
   },
 });
 
-export const { setName, resetState, setInitial } = basicInformationSlice.actions;
+export const {
+  setName,
+  resetState,
+  setInitial,
+  setSpecies,
+  setCharacterLevel,
+  setXP,
+  setArmorClass,
+  setDeathSaves,
+  setClasses,
+  setHitDice,
+  setBackground,
+} = basicInformationSlice.actions;
 
 export default basicInformationSlice.reducer;
