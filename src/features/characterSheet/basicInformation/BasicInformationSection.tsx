@@ -77,7 +77,7 @@ const BasicInformationSection = (): JSX.Element => {
             fontWeight={"bold"}
             value={characterBackground}
             onValueChange={handleBackgroundChange}
-            label="Baclground"
+            label="Background"
           />
         </GridItem>
       </SimpleGrid>
