@@ -4,12 +4,16 @@ import { JSX, ReactNode } from "react";
 type FloatingDrawerProps = DrawerRootProps & {
   title?: string;
   footer?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 const FloatingDrawer = ({ title, footer, children, ...props }: FloatingDrawerProps): JSX.Element => {
   return (
-    <Drawer.Root {...props}>
+    <Drawer.Root
+      {...props}
+      unmountOnExit={true}
+      modal={false}
+    >
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner padding={4}>
