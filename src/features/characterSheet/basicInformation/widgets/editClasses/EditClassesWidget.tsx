@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { CharacterClass } from "@/types/character/characterClass";
 import { JSX } from "react";
 import { setClasses } from "../../basicInformationSlice";
-import FloatingDrawer from "@/components/floatingDrawer/FloatingDrawer";
+import FloatingDrawer from "@/components/FloatingDrawer";
 import EditClassesDataGrid from "./EditClassesDataGrid";
 import { Flex } from "@chakra-ui/react";
 import cloneDeep from "lodash.clonedeep";

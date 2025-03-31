@@ -1,11 +1,12 @@
-import SectionHeaderEditable from "@/components/sectionHeaderEditable/SectionHeaderEditable";
+import SectionHeaderEditable from "@/components/SectionHeaderEditable";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { JSX, useState } from "react";
 import { setBackground, setName, setSpecies } from "./basicInformationSlice";
-import ImportantTextField from "@/components/fields/importantTextField";
+import FloatingLabelTextField from "@/components/FloatingLabelTextField";
 import EditClassesWidget from "./widgets/editClasses/EditClassesWidget";
 import EditClassesField from "./widgets/editClasses/EditClassesField";
+import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
 
 const BasicInformationSection = (): JSX.Element => {
   const { name: characterName, species, background: characterBackground, classes: characterClasses } = useAppSelector((state) => {
@@ -59,7 +60,7 @@ const BasicInformationSection = (): JSX.Element => {
           )}
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
-          <ImportantTextField
+          <FloatingLabelTextField
             textAlign={"center"}
             paddingY={6}
             textStyle={"lg"}
@@ -70,7 +71,7 @@ const BasicInformationSection = (): JSX.Element => {
           />
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
-          <ImportantTextField
+          <FloatingLabelTextField
             textAlign={"center"}
             paddingY={6}
             textStyle={"lg"}
@@ -79,6 +80,9 @@ const BasicInformationSection = (): JSX.Element => {
             onValueChange={handleBackgroundChange}
             label="Background"
           />
+        </GridItem>
+        <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
+          <CharacterLevelWidget />
         </GridItem>
       </SimpleGrid>
     </Box>

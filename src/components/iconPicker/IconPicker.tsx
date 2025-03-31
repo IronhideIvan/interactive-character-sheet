@@ -3,9 +3,9 @@ import { JSX, useMemo, useState } from "react";
 import * as allGameIcons from "react-icons/gi";
 import * as allFontAwesomeIcons from "react-icons/fa";
 import IconCard from "./IconCard";
-import AppColorPicker from "../colorPicker/ColorPicker";
+import AppColorPicker from "../ColorPicker";
 import { Icon } from "@/types/data/icon";
-import DynamicIcon from "../icons/DynamicIcon";
+import DynamicIcon from "../DynamicIcon";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMostRecentColor } from "./iconPickerSlice";
 

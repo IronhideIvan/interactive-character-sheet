@@ -5,9 +5,9 @@ import DataTextEditor from "./editors/DataTextEditor";
 import { Icon } from "@/types/data/icon";
 import DataColorEditor from "./editors/DataColorEditor";
 import IconPickerDialog from "../iconPicker/IconPickerDialog";
-import DynamicIcon from "../icons/DynamicIcon";
+import DynamicIcon from "../DynamicIcon";
 import { FaPlus, FaTrash, FaUndo } from "react-icons/fa";
-import ConfirmIconButton from "../buttons/ConfirmIconButton";
+import ConfirmIconButton from "../ConfirmIconButton";
 import DataNumberEditor from "./editors/DataNumberEditor";
 
 type DataGridProps<T> = {

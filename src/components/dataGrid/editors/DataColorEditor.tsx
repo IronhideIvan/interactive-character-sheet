@@ -1,4 +1,4 @@
-import DynamicIcon from "@/components/icons/DynamicIcon";
+import DynamicIcon from "@/components/DynamicIcon";
 import { Icon } from "@/types/data/icon";
 import { Button } from "@chakra-ui/react";
 import { JSX } from "react";

@@ -1,5 +1,6 @@
+import FloatingLabel from "@/components/FloatingLabel";
 import { CharacterClass } from "@/types/character/characterClass";
-import { Box, Button, defineStyle, Flex, Text, TextProps } from "@chakra-ui/react";
+import { Button, Text, TextProps } from "@chakra-ui/react";
 import { JSX, useMemo } from "react";
 
 type EditClassesFieldProps = {
@@ -26,49 +27,19 @@ const EditClassesField = ({ classes, onClick, ...textProps }: EditClassesFieldPr
   }, [classes]);
 
   return (
-    <Box display={"flex"} width={"100%"} height={"100%"}>
-      <Box
-        position={"relative"}
-        display={"flex"}
+    <FloatingLabel label="Class & Level" floating={displayValue.length > 0}>
+      <Button
         width={"100%"}
         height={"100%"}
+        variant={"outline"}
+        onClick={onClick}
       >
-        <Button
-          width={"100%"}
-          height={"100%"}
-          variant={"outline"}
-          onClick={onClick}
-        >
-          <Text {...textProps}>
-            {displayValue}
-          </Text>
-        </Button>
-        <Flex css={floatingLabelStyles} transform={displayValue.length > 0 ? "translate(0, 50%)" : undefined}>
-          <Box>
-            <Text bg={"bg"} textStyle={"sm"}>Class & Level</Text>
-          </Box>
-        </Flex>
-      </Box>
-    </Box>
+        <Text {...textProps}>
+          {displayValue}
+        </Text>
+      </Button>
+    </FloatingLabel>
   );
 };
-
-const floatingLabelStyles = defineStyle({
-  pos: "absolute",
-  width: "100%",
-  height: "100%",
-  justifyContent: "center",
-  alignItems: "center",
-  pointerEvents: "none",
-  fontWeight: "normal",
-  transition: "transform",
-  color: "fg",
-  userSelect: "none",
-  // transform: "translate(0, -50%)",
-  // _peerPlaceholderShown: {
-  //   color: "fg.muted",
-  //   transform: "translate(0, -100%)",
-  // }
-});
 
 export default EditClassesField;

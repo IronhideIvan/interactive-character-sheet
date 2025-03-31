@@ -4,10 +4,11 @@ import { JSX } from "react";
 type TextFieldProps = {
   value: string;
   label: string;
-  onValueChange: (value: string) => void;
+  onValueChange?: (value: string) => void;
+  readonly?: boolean;
 } & InputProps;
 
-const ImportantTextField = ({ value, label, onValueChange, ...props }: TextFieldProps): JSX.Element => {
+const FloatingLabelTextField = ({ value, label, onValueChange, ...props }: TextFieldProps): JSX.Element => {
   return (
     <Field.Root>
       <Box pos="relative" w="full">
@@ -16,7 +17,7 @@ const ImportantTextField = ({ value, label, onValueChange, ...props }: TextField
           className="peer"
           placeholder=""
           value={value}
-          onChange={e => onValueChange(e.target.value)}
+          onChange={e => onValueChange?.(e.target.value)}
         />
         <Field.Label css={floatingStyles}>
           <Text padding={"2px"} bg={"bg"}>{label}</Text>
@@ -46,4 +47,4 @@ const floatingStyles = defineStyle({
   },
 });
 
-export default ImportantTextField;
+export default FloatingLabelTextField;

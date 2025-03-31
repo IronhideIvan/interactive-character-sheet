@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { JSX } from "react";
-import DynamicIcon from "../icons/DynamicIcon";
+import DynamicIcon from "../DynamicIcon";
 
 type IconCardProps = {
   iconId: string;
