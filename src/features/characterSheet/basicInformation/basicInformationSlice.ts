@@ -30,7 +30,6 @@ export const baseInformation: BasicInformation = {
     totalAc: 0,
   },
   deathSaves: {
-    max: 3,
     successCount: 0,
     failCount: 0,
   },
