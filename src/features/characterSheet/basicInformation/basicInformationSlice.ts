@@ -13,7 +13,7 @@ export type BasicInformationState = {
   initial: BasicInformation;
 };
 
-const baseInformation: BasicInformation = {
+export const baseInformation: BasicInformation = {
   name: "",
   characterLevel: 0,
   background: "",

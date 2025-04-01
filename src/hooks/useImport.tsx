@@ -1,4 +1,4 @@
-import { resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
+import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetProfBonusesState, setInitial as setInitialProfBonuses } from "@/features/dataSets/proficiencyBonuses/proficiencyBonusDataSetSlice";
 import { resetState as resetSkillsState, setInitial as setInitialSkills } from "@/features/dataSets/skills/skillsDataSetSlice";
@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { store } from "@/redux/store";
 import { SaveFile } from "@/types/saveFile";
 import saveAs from "file-saver";
+import cloneDeep from "lodash.clonedeep";
 
 export const useImport = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +55,10 @@ export const useExport = () => {
 
 const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) => {
   if (saveFile?.character?.basicInformation) {
+    const bi = saveFile.character.basicInformation;
+    if (!bi.hitPoints) {
+      bi.hitPoints = cloneDeep(baseInformation.hitPoints);
+    }
     dispatch(setInitialBasicInformation(saveFile.character.basicInformation));
   }
   if (saveFile?.data?.abilities) {
