@@ -3,8 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Box, Field, Flex, HStack, IconButton, NumberInput, Text, VStack } from "@chakra-ui/react";
 import { JSX, ReactNode } from "react";
 import { setDeathSaves } from "../../basicInformationSlice";
-import ConfirmIconButton from "@/components/ConfirmIconButton";
-import { FaMinus, FaPlus, FaUndo } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa";
 import { GiAngelOutfit, GiDeathZone } from "react-icons/gi";
 
 const DeathSavesWidget = (): JSX.Element => {
