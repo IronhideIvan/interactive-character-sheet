@@ -4,7 +4,7 @@ import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { JSX, useState } from "react";
 import { setBackground, setName, setSpecies } from "./basicInformationSlice";
 import FloatingLabelTextField from "@/components/FloatingLabelTextField";
-import EditClassesWidget from "./widgets/editClasses/EditClassesWidget";
+import EditClassesDrawer from "./widgets/editClasses/EditClassesDrawer";
 import EditClassesField from "./widgets/editClasses/EditClassesField";
 import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
 import HitPointsWidget from "./widgets/hitPointsWidget/HitPointsWidget";
@@ -57,7 +57,7 @@ const BasicInformationSection = (): JSX.Element => {
             onClick={handleClassesOpen}
           />
           {isClassesWidgetOpen && (
-            <EditClassesWidget open={isClassesWidgetOpen} onClose={handleClassesClose} />
+            <EditClassesDrawer open={isClassesWidgetOpen} onClose={handleClassesClose} />
           )}
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>

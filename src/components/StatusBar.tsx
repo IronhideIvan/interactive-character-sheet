@@ -16,7 +16,6 @@ const StatusBar = ({ max, current, temp }: StatusBarProps): JSX.Element => {
   const percentage = max <= 0 ? 0 : Math.floor((current.value / max) * 100);
   return (
     <Box
-      data-testid="test-component"
       display={"flex"}
       flexDir={"row"}
       width={"100%"}

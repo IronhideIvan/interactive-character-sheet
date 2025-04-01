@@ -25,7 +25,7 @@ const FloatingLabel = ({ children, label, floating }: TextFieldProps): JSX.Eleme
         </Box>
         <Flex css={floatingLabelStyles} transform={floating ? "translate(0, 50%)" : undefined}>
           <Box>
-            <Text bg={"bg"} textStyle={"sm"}>{label}</Text>
+            <Text borderRadius={"sm"} bg={"bg"} textStyle={"sm"}>{label}</Text>
           </Box>
         </Flex>
       </Box>

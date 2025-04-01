@@ -7,12 +7,12 @@ import EditClassesDataGrid from "./EditClassesDataGrid";
 import { Flex } from "@chakra-ui/react";
 import cloneDeep from "lodash.clonedeep";
 
-type EditClassesWidgetProps = {
+type EditClassesDrawerProps = {
   open: boolean;
   onClose: () => void;
 };
 
-const EditClassesWidget = (props: EditClassesWidgetProps): JSX.Element => {
+const EditClassesDrawer = (props: EditClassesDrawerProps): JSX.Element => {
   const { classes } = useAppSelector(state => state.basicInformation.latest);
   const { classes: initialClasses } = useAppSelector(state => state.basicInformation.initial);
   const dispatch = useAppDispatch();
@@ -49,4 +49,4 @@ const EditClassesWidget = (props: EditClassesWidgetProps): JSX.Element => {
   );
 };
 
-export default EditClassesWidget;
+export default EditClassesDrawer;
