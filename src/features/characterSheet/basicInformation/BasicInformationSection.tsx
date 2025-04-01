@@ -7,6 +7,7 @@ import FloatingLabelTextField from "@/components/FloatingLabelTextField";
 import EditClassesWidget from "./widgets/editClasses/EditClassesWidget";
 import EditClassesField from "./widgets/editClasses/EditClassesField";
 import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
+import HitPointsWidget from "./widgets/hitPointsWidget/HitPointsWidget";
 
 const BasicInformationSection = (): JSX.Element => {
   const { name: characterName, species, background: characterBackground, classes: characterClasses } = useAppSelector((state) => {
@@ -83,6 +84,9 @@ const BasicInformationSection = (): JSX.Element => {
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
           <CharacterLevelWidget />
+        </GridItem>
+        <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
+          <HitPointsWidget />
         </GridItem>
       </SimpleGrid>
     </Box>

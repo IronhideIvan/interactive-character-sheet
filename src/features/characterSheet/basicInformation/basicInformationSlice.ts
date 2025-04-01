@@ -6,6 +6,7 @@ import { CharacterClass } from "@/types/character/characterClass";
 import { HitDice } from "@/types/character/hitDice";
 import { ArmorClass } from "@/types/character/armorClass";
 import { DeathSaves } from "@/types/character/deathSaves";
+import { HitPoints } from "@/types/character/hitPoints";
 
 export type BasicInformationState = {
   latest: BasicInformation;
@@ -20,6 +21,11 @@ const baseInformation: BasicInformation = {
   classes: [],
   xp: 0,
   hitDice: [],
+  hitPoints: {
+    temp: 0,
+    current: 0,
+    max: 0,
+  },
   armorClass: {
     totalAc: 0,
   },
@@ -54,6 +60,9 @@ export const basicInformationSlice = createSlice({
     setXP: (state, action: PayloadAction<number>) => {
       state.latest.xp = action.payload;
     },
+    setHP: (state, action: PayloadAction<HitPoints>) => {
+      state.latest.hitPoints = { ...action.payload };
+    },
     setArmorClass: (state, action: PayloadAction<ArmorClass>) => {
       state.latest.armorClass = action.payload;
     },
@@ -82,6 +91,7 @@ export const {
   setSpecies,
   setCharacterLevel,
   setXP,
+  setHP,
   setArmorClass,
   setDeathSaves,
   setClasses,
