@@ -8,6 +8,7 @@ import EditClassesDrawer from "./widgets/editClasses/EditClassesDrawer";
 import EditClassesField from "./widgets/editClasses/EditClassesField";
 import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
 import HitPointsWidget from "./widgets/hitPointsWidget/HitPointsWidget";
+import HitDiceWidget from "./widgets/hitDiceWidget/HitDiceWidget";
 
 const BasicInformationSection = (): JSX.Element => {
   const { name: characterName, species, background: characterBackground, classes: characterClasses } = useAppSelector((state) => {
@@ -87,6 +88,9 @@ const BasicInformationSection = (): JSX.Element => {
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
           <HitPointsWidget />
+        </GridItem>
+        <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
+          <HitDiceWidget />
         </GridItem>
       </SimpleGrid>
     </Box>

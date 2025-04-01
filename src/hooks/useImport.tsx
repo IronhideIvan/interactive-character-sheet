@@ -56,8 +56,14 @@ export const useExport = () => {
 const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) => {
   if (saveFile?.character?.basicInformation) {
     const bi = saveFile.character.basicInformation;
+    if (!bi.classes) {
+      bi.classes = cloneDeep(baseInformation.classes);
+    }
     if (!bi.hitPoints) {
       bi.hitPoints = cloneDeep(baseInformation.hitPoints);
+    }
+    if (!bi.hitDice) {
+      bi.hitDice = cloneDeep(baseInformation.hitDice);
     }
     dispatch(setInitialBasicInformation(saveFile.character.basicInformation));
   }
