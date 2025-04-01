@@ -11,7 +11,7 @@ const DataNumberEditor = ({ value, onValueChanged }: DataNumberEditorProps): JSX
     <NumberInput.Root
       width={"100%"}
       value={value.toString()}
-      onValueChange={e => onValueChanged(parseInt(e.value))}
+      onValueChange={e => onValueChanged(e.valueAsNumber)}
       allowMouseWheel
     >
       <NumberInput.Control />

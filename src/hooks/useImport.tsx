@@ -54,6 +54,16 @@ export const useExport = () => {
 };
 
 const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) => {
+  if (saveFile?.data?.abilities) {
+    dispatch(setInitialAbilitiesData(saveFile.data.abilities));
+  }
+  if (saveFile?.data?.proficiencyBonuses) {
+    dispatch(setInitialProfBonuses(saveFile.data.proficiencyBonuses));
+  }
+  if (saveFile?.data?.skills) {
+    dispatch(setInitialSkills(saveFile.data.skills));
+  }
+
   if (saveFile?.character?.basicInformation) {
     const bi = saveFile.character.basicInformation;
     if (!bi.classes) {
@@ -66,14 +76,5 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
       bi.hitDice = cloneDeep(baseInformation.hitDice);
     }
     dispatch(setInitialBasicInformation(saveFile.character.basicInformation));
-  }
-  if (saveFile?.data?.abilities) {
-    dispatch(setInitialAbilitiesData(saveFile.data.abilities));
-  }
-  if (saveFile?.data?.proficiencyBonuses) {
-    dispatch(setInitialProfBonuses(saveFile.data.proficiencyBonuses));
-  }
-  if (saveFile?.data?.skills) {
-    dispatch(setInitialSkills(saveFile.data.skills));
   }
 };
