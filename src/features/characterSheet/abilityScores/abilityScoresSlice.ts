@@ -17,8 +17,14 @@ export const abilityScoresSlice = createSlice({
   name: "abilityScores",
   initialState,
   reducers: {
-    upsertAbility: (state, action: PayloadAction<AbilityScore>) => {
+    setAbilityScores: (state, action: PayloadAction<AbilityScore[]>) => {
+      state.latest = cloneDeep(action.payload);
+    },
+    upsertAbilityScore: (state, action: PayloadAction<AbilityScore>) => {
       state.latest = upsert(action.payload, state.latest, item => item.abilityId === action.payload.abilityId);
+    },
+    deleteAbilityScore: (state, action: PayloadAction<string>) => {
+      state.latest = state.latest.filter(as => as.abilityId !== action.payload);
     },
     setInitial: (state, action: PayloadAction<AbilityScore[]>) => {
       state.initial = cloneDeep(action.payload);
@@ -30,7 +36,9 @@ export const abilityScoresSlice = createSlice({
 });
 
 export const {
-  upsertAbility,
+  setAbilityScores,
+  upsertAbilityScore,
+  deleteAbilityScore,
   setInitial,
   resetState,
 } = abilityScoresSlice.actions;

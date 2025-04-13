@@ -1,15 +1,40 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Ability } from "@/types/data/ability";
-import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
-import { deleteAbility, resetState, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
+import { deleteAbility, resetState as resetAbilityState, setAbilities, upsertAbility } from "./abilitiesDataSetSlice";
 import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
+import { AbilityScore } from "@/types/character/abilityScore";
+import { deleteAbilityScore, resetState as resetAbilityScoreState, setAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 
 const AbilitiesDataSet = (): JSX.Element => {
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
+  const abilityScores = useAppSelector(state => state.abilityScores.latest);
   const dispatch = useAppDispatch();
+
+  const resetAbilityScores = (changedAbilities: Ability[]) => {
+    const newScores: AbilityScore[] = new Array(changedAbilities.length);
+    for (let i = 0; i < newScores.length; i++) {
+      const newAbility = changedAbilities[i];
+
+      const existingScoreIndex = abilityScores.findIndex(as => as.abilityId === newAbility.id);
+      if (existingScoreIndex >= 0) {
+        newScores[i] = abilityScores[i];
+      }
+      else {
+        newScores[i] = {
+          abilityId: newAbility.id,
+          baseScore: 10,
+          modifier: 0,
+          proficiency: false,
+          baseSavingThrow: 0,
+        };
+      }
+    }
+
+    dispatch(setAbilityScores(newScores));
+  };
 
   const handleGetId = (item: Ability) => {
     return item.id;
@@ -40,22 +65,27 @@ const AbilitiesDataSet = (): JSX.Element => {
   };
 
   const handleAddRow = () => {
-    dispatch(setAbilities([
+    const newAbilities: Ability[] = [
       ...abilities,
       {
         id: uuidv4(),
         name: "",
         abbreviation: "",
       },
-    ]));
+    ];
+
+    dispatch(setAbilities(newAbilities));
+    resetAbilityScores(newAbilities);
   };
 
   const handleDeleteRow = (item: Ability) => {
     dispatch(deleteAbility(item.id));
+    dispatch(deleteAbilityScore(item.id));
   };
 
   const handleRevertAllChanges = () => {
-    dispatch(resetState());
+    dispatch(resetAbilityState());
+    dispatch(resetAbilityScoreState());
   };
 
   const handleGetFriendlyName = (item: Ability) => {
