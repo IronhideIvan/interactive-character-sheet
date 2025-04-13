@@ -1,16 +1,11 @@
 import FloatingLabel from "@/components/FloatingLabel";
 import { InfoTip } from "@/components/ToggleTip";
-import { useAppSelector } from "@/redux/hooks";
+import { useCharacterLevel } from "@/hooks/useCharacterLevel";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { JSX } from "react";
 
 const CharacterLevelWidget = (): JSX.Element => {
-  const characterClasses = useAppSelector(state => state.basicInformation.latest.classes);
-
-  let classSum = 0;
-  characterClasses.forEach((c) => {
-    classSum += c.level;
-  });
+  const characterLevel = useCharacterLevel();
 
   return (
     <FloatingLabel label="Character Level" floating>
@@ -24,7 +19,7 @@ const CharacterLevelWidget = (): JSX.Element => {
         borderRadius={"md"}
       >
         <Text userSelect={"none"}>
-          {classSum}
+          {characterLevel}
         </Text>
         <Box position={"absolute"} right={"4px"} top={0}>
           <InfoTip showArrow positioning={{ placement: "top" }}>

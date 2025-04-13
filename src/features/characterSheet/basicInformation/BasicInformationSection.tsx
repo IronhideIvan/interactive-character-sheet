@@ -4,12 +4,13 @@ import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { JSX } from "react";
 import { setBackground, setName, setSpecies } from "./basicInformationSlice";
 import FloatingLabelTextField from "@/components/FloatingLabelTextField";
-import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
+import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidget";
 import HitPointsWidget from "./widgets/hitPointsWidget/HitPointsWidget";
 import HitDiceWidget from "./widgets/hitDiceWidget/HitDiceWidget";
 import ArmorClassWidget from "./widgets/armorClassWidget.tsx/ArmorClassWidget";
 import DeathSavesWidget from "./widgets/deathSavesWidget/DeathSavesWidget";
 import EditClassesWidget from "./widgets/editClasses/EditClassesWidget";
+import ProficienyBonusWidget from "./widgets/profBonusWidget.tsx/ProficienyBonusWidget";
 
 const BasicInformationSection = (): JSX.Element => {
   const { name: characterName, species, background: characterBackground } = useAppSelector((state) => {
@@ -70,6 +71,9 @@ const BasicInformationSection = (): JSX.Element => {
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
           <CharacterLevelWidget />
+        </GridItem>
+        <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
+          <ProficienyBonusWidget />
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
           <HitPointsWidget />
