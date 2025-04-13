@@ -1,14 +1,37 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Skill } from "@/types/data/skill";
-import { JSX } from "react";
+import { JSX, useMemo } from "react";
 import { deleteSkill, resetState, setSkills, upsertSkill } from "./skillsDataSetSlice";
 import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
+import { createListCollection } from "@chakra-ui/react";
+import { DataDropdownItem } from "@/components/dataGrid/editors/DataDropdownEditor";
 
 const SkillsDataSet = (): JSX.Element => {
   const skills = useAppSelector(state => state.skillsDataSet.latest);
+  const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const dispatch = useAppDispatch();
+
+  const abilityList = useMemo(() => {
+    return createListCollection<DataDropdownItem>({
+      items:
+      [
+        {
+          id: "",
+          label: "",
+        },
+        ...abilities.map((a): DataDropdownItem => {
+          return {
+            id: a.id,
+            label: a.name,
+            icon: a.icon,
+          };
+        }),
+      ],
+      itemToValue: item => item.id,
+    });
+  }, [abilities]);
 
   const handleGetId = (item: Skill) => {
     return item.id;
@@ -32,6 +55,23 @@ const SkillsDataSet = (): JSX.Element => {
   const handleIconValueChanged = (item: Skill, key: keyof Skill, value: Icon) => {
     if (key === "icon") {
       dispatch(upsertSkill({ ...item, icon: value }));
+    }
+  };
+
+  const provideReferenceOptions = (key: keyof Skill) => {
+    if (key === "abilityId") {
+      return abilityList;
+    }
+  };
+
+  const handleReferenceValueChanged = (item: Skill, key: keyof Skill, value: string[]) => {
+    if (value.length === 0) {
+      return;
+    }
+
+    if (key === "abilityId") {
+      const id = value[0];
+      dispatch(upsertSkill({ ...item, abilityId: id.length === 0 ? undefined : value[0] }));
     }
   };
 
@@ -71,11 +111,19 @@ const SkillsDataSet = (): JSX.Element => {
           key: "icon",
           type: "icon",
         },
+        {
+          name: "Ability Modifier",
+          key: "abilityId",
+          type: "reference",
+          minWidth: "10rem",
+        },
       ]}
       getId={handleGetId}
       getFriendlyName={handleGetFriendlyName}
+      getReferenceOptions={provideReferenceOptions}
       onStringValueChange={handleStringValueChanged}
       onIconValueChange={handleIconValueChanged}
+      onReferenceValueChange={handleReferenceValueChanged}
       onAddRow={handleAddRow}
       onDeleteRow={handleDeleteRow}
       onRevertAllChanges={handleRevertAllChanges}
