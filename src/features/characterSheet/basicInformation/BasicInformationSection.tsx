@@ -1,23 +1,21 @@
 import SectionHeaderEditable from "@/components/SectionHeaderEditable";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
-import { JSX, useState } from "react";
+import { JSX } from "react";
 import { setBackground, setName, setSpecies } from "./basicInformationSlice";
 import FloatingLabelTextField from "@/components/FloatingLabelTextField";
-import EditClassesDrawer from "./widgets/editClasses/EditClassesDrawer";
-import EditClassesField from "./widgets/editClasses/EditClassesField";
 import CharacterLevelWidget from "./widgets/characterLevelWidget/CharacterLevelWidgget";
 import HitPointsWidget from "./widgets/hitPointsWidget/HitPointsWidget";
 import HitDiceWidget from "./widgets/hitDiceWidget/HitDiceWidget";
 import ArmorClassWidget from "./widgets/armorClassWidget.tsx/ArmorClassWidget";
 import DeathSavesWidget from "./widgets/deathSavesWidget/DeathSavesWidget";
+import EditClassesWidget from "./widgets/editClasses/EditClassesWidget";
 
 const BasicInformationSection = (): JSX.Element => {
-  const { name: characterName, species, background: characterBackground, classes: characterClasses } = useAppSelector((state) => {
+  const { name: characterName, species, background: characterBackground } = useAppSelector((state) => {
     return state.basicInformation.latest;
   });
   const dispatch = useAppDispatch();
-  const [isClassesWidgetOpen, setIsClassesWidgetOpen] = useState(false);
 
   const handleNameChange = (newName: string) => {
     dispatch(setName(newName));
@@ -29,14 +27,6 @@ const BasicInformationSection = (): JSX.Element => {
 
   const handleBackgroundChange = (value: string) => {
     dispatch(setBackground(value));
-  };
-
-  const handleClassesOpen = () => {
-    setIsClassesWidgetOpen(true);
-  };
-
-  const handleClassesClose = () => {
-    setIsClassesWidgetOpen(false);
   };
 
   return (
@@ -54,15 +44,7 @@ const BasicInformationSection = (): JSX.Element => {
         rowGap={4}
       >
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
-          <EditClassesField
-            textStyle={"lg"}
-            fontWeight={"bold"}
-            classes={characterClasses}
-            onClick={handleClassesOpen}
-          />
-          {isClassesWidgetOpen && (
-            <EditClassesDrawer open={isClassesWidgetOpen} onClose={handleClassesClose} />
-          )}
+          <EditClassesWidget />
         </GridItem>
         <GridItem colSpan={{ base: 12, sm: 6, md: 4 }}>
           <FloatingLabelTextField
