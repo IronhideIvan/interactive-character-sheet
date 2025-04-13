@@ -1,3 +1,4 @@
+import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetProfBonusesState, setInitial as setInitialProfBonuses } from "@/features/dataSets/proficiencyBonuses/proficiencyBonusDataSetSlice";
@@ -20,6 +21,7 @@ export const useImport = () => {
       dispatch(resetAbilitiesDataState());
       dispatch(resetProfBonusesState());
       dispatch(resetSkillsState());
+      dispatch(resetAbilityScoresState());
     });
   };
 
@@ -29,6 +31,7 @@ export const useImport = () => {
 export const useExport = () => {
   const dispatch = useAppDispatch();
   const basicInformation = useAppSelector(state => state.basicInformation.latest);
+  const abilityScores = useAppSelector(state => state.abilityScores.latest);
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
   const skills = useAppSelector(state => state.skillsDataSet.latest);
@@ -37,6 +40,7 @@ export const useExport = () => {
     const fileContents: SaveFile = {
       character: {
         basicInformation: basicInformation,
+        abilityScores: abilityScores,
       },
       data: {
         abilities: abilities,
@@ -76,5 +80,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
       bi.hitDice = cloneDeep(baseInformation.hitDice);
     }
     dispatch(setInitialBasicInformation(saveFile.character.basicInformation));
+  }
+
+  if (saveFile?.character?.abilityScores) {
+    dispatch(setInitialAbilityScores(saveFile.character.abilityScores));
   }
 };
