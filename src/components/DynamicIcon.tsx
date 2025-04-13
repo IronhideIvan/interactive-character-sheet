@@ -5,18 +5,20 @@ import * as allFontAwesomeIcons from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
 
 type DynamicIconProps = {
-  iconId: string;
+  iconId?: string;
 } & IconBaseProps;
 
 const DynamicIcon = ({ iconId, ...baseProps }: DynamicIconProps): JSX.Element => {
   let Icon: IconType | undefined;
-  if (iconId.startsWith("Gi")) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Icon = (allGameIcons as any)[iconId] as IconType;
-  }
-  else if (iconId.startsWith("Fa")) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Icon = (allFontAwesomeIcons as any)[iconId] as IconType;
+  if (iconId) {
+    if (iconId.startsWith("Gi")) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Icon = (allGameIcons as any)[iconId] as IconType;
+    }
+    else if (iconId.startsWith("Fa")) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Icon = (allFontAwesomeIcons as any)[iconId] as IconType;
+    }
   }
 
   if (Icon === undefined) {

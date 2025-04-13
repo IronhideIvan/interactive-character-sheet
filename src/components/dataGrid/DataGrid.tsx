@@ -1,6 +1,6 @@
 import { JSX, useCallback, useState } from "react";
 import { ColumnInfo } from "./dataGridTypes";
-import { Box, IconButton, Table, VStack } from "@chakra-ui/react";
+import { Box, IconButton, ListCollection, Table, VStack } from "@chakra-ui/react";
 import DataTextEditor from "./editors/DataTextEditor";
 import { Icon } from "@/types/data/icon";
 import DataColorEditor from "./editors/DataColorEditor";
@@ -9,15 +9,18 @@ import DynamicIcon from "../DynamicIcon";
 import { FaPlus, FaTrash, FaUndo } from "react-icons/fa";
 import ConfirmIconButton from "../ConfirmIconButton";
 import DataNumberEditor from "./editors/DataNumberEditor";
+import { DataDropdownEditor, DataDropdownItem } from "./editors/DataDropdownEditor";
 
 type DataGridProps<T> = {
   items: T[];
   columnInfo: ColumnInfo<T>[];
   getId: (item: T) => string;
   getFriendlyName?: (item: T) => string;
+  getReferenceOptions?: (columnKey: keyof T) => ListCollection<DataDropdownItem> | undefined;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
   onNumberValueChange?: (item: T, columnKey: keyof T, value: number) => void;
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
+  onReferenceValueChange?: (item: T, columnKey: keyof T, value: string[]) => void;
   onAddRow?: () => void;
   onDeleteRow?: (item: T) => void;
   onRevertAllChanges?: () => void;
@@ -38,6 +41,8 @@ const DataGrid = <T,>(
     onAddRow,
     onDeleteRow,
     onRevertAllChanges,
+    getReferenceOptions,
+    onReferenceValueChange,
   }: DataGridProps<T>): JSX.Element => {
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
@@ -132,6 +137,39 @@ const DataGrid = <T,>(
           />
         );
       }
+      case "reference":
+      {
+        if (!getReferenceOptions) {
+          return getDefaultValue(item, ci);
+        }
+
+        const referenceOptions = getReferenceOptions(ci.key);
+        if (!referenceOptions) {
+          return getDefaultValue(item, ci);
+        }
+
+        const id = getValue<string>(item, ci.key);
+
+        if (ci.readonly) {
+          const displayValue = referenceOptions.items.find(i => i.id === id);
+          if (displayValue) {
+            return displayValue.label;
+          }
+          else {
+            return getDefaultValue(item, ci);
+          }
+        }
+
+        return (
+          <DataDropdownEditor
+            collection={referenceOptions}
+            selectedItemIds={id ? [id] : []}
+            onSelectionChange={(ids: string[]) => {
+              onReferenceValueChange?.(item, ci.key, ids);
+            }}
+          />
+        );
+      }
 
       default:
         return getDefaultValue(item, ci);
@@ -139,9 +177,11 @@ const DataGrid = <T,>(
   }, [
     getDefaultValue,
     getId,
+    getReferenceOptions,
     getValue,
     handleIconDialogOpen,
     onNumberValueChange,
+    onReferenceValueChange,
     onStringValueChange,
   ]);
 
@@ -176,8 +216,10 @@ const DataGrid = <T,>(
                   <Table.ColumnHeader
                     minW={"3rem"}
                     padding={0}
+                    paddingX={1}
                     textAlign={"center"}
                     key={ci.key.toString()}
+                    minWidth={ci.minWidth}
                   >{ci.name}
                   </Table.ColumnHeader>
                 );
