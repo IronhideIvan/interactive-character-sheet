@@ -1,4 +1,4 @@
-import BasicInformationSection from "@/features/characterSheet/basicInformation/BasicInformationSection";
+import CharacterSheet from "@/features/characterSheet/CharacterSheet";
 import AbilitiesDataSet from "@/features/dataSets/abilities/AbilitiesDataSet";
 import DataSets from "@/features/dataSets/DataSets";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
@@ -15,7 +15,7 @@ export type Route = {
 
 export const appRoutes: Route[] = [
   {
-    element: <BasicInformationSection />,
+    element: <CharacterSheet />,
     index: true,
   },
   {

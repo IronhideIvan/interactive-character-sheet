@@ -1,7 +1,8 @@
 import FloatingLabel from "@/components/FloatingLabel";
 import { InfoTip } from "@/components/ToggleTip";
+import WidgetPaper from "@/components/WidgetPaper";
 import { useCharacterLevel } from "@/hooks/useCharacterLevel";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { JSX } from "react";
 
 const CharacterLevelWidget = (): JSX.Element => {
@@ -9,15 +10,7 @@ const CharacterLevelWidget = (): JSX.Element => {
 
   return (
     <FloatingLabel label="Character Level" floating>
-      <Flex
-        w={"100%"}
-        h={"100%"}
-        justifyContent={"center"}
-        py={3}
-        borderWidth={"1px"}
-        borderColor={"border"}
-        borderRadius={"md"}
-      >
+      <WidgetPaper>
         <Text userSelect={"none"}>
           {characterLevel}
         </Text>
@@ -26,7 +19,7 @@ const CharacterLevelWidget = (): JSX.Element => {
             <Text textStyle={"md"}>This is a calculated field</Text>
           </InfoTip>
         </Box>
-      </Flex>
+      </WidgetPaper>
     </FloatingLabel>
   );
 };

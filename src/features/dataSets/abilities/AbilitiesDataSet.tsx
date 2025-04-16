@@ -26,9 +26,7 @@ const AbilitiesDataSet = (): JSX.Element => {
         newScores[i] = {
           abilityId: newAbility.id,
           baseScore: 10,
-          modifier: 0,
           proficiency: false,
-          baseSavingThrow: 0,
         };
       }
     }
