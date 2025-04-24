@@ -7,6 +7,7 @@ import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
 import { AbilityScore } from "@/types/character/abilityScore";
 import { deleteAbilityScore, resetState as resetAbilityScoreState, setAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
+import { ProficiencyLevel } from "@/types/character/score";
 
 const AbilitiesDataSet = (): JSX.Element => {
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
@@ -25,8 +26,10 @@ const AbilitiesDataSet = (): JSX.Element => {
       else {
         newScores[i] = {
           abilityId: newAbility.id,
-          baseScore: 10,
-          proficiency: false,
+          score: {
+            baseValue: 10,
+            proficiencyLevel: ProficiencyLevel.None,
+          },
         };
       }
     }

@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { HitPoints } from "@/types/character/hitPoints";
-import { Field, NumberInput, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { JSX } from "react";
 import { setHP } from "../../basicInformationSlice";
+import NumberEditor from "@/components/NumberEditor";
 
 const HitPointsEditor = (): JSX.Element => {
   const characterHitPoints = useAppSelector(state => state.basicInformation.latest.hitPoints);
@@ -35,42 +36,9 @@ const HitPointsEditor = (): JSX.Element => {
 
   return (
     <VStack>
-      <Field.Root>
-        <Field.Label>Max</Field.Label>
-        <NumberInput.Root
-          width={"100%"}
-          allowMouseWheel
-          value={characterHitPoints.max.toString()}
-          onValueChange={e => handleMaxChange(e.valueAsNumber)}
-        >
-          <NumberInput.Control />
-          <NumberInput.Input />
-        </NumberInput.Root>
-      </Field.Root>
-      <Field.Root>
-        <Field.Label>Current</Field.Label>
-        <NumberInput.Root
-          width={"100%"}
-          allowMouseWheel
-          value={characterHitPoints.current.toString()}
-          onValueChange={e => handleCurrentChange(e.valueAsNumber)}
-        >
-          <NumberInput.Control />
-          <NumberInput.Input />
-        </NumberInput.Root>
-      </Field.Root>
-      <Field.Root>
-        <Field.Label>Temp</Field.Label>
-        <NumberInput.Root
-          width={"100%"}
-          allowMouseWheel
-          value={characterHitPoints.temp.toString()}
-          onValueChange={e => handleTempChange(e.valueAsNumber)}
-        >
-          <NumberInput.Control />
-          <NumberInput.Input />
-        </NumberInput.Root>
-      </Field.Root>
+      <NumberEditor label="Max" value={characterHitPoints.max} onValueChange={handleMaxChange} />
+      <NumberEditor label="Current" value={characterHitPoints.current} onValueChange={handleCurrentChange} />
+      <NumberEditor label="Temp" value={characterHitPoints.temp} onValueChange={handleTempChange} />
     </VStack>
   );
 };
