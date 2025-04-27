@@ -7,9 +7,10 @@ import WidgetPaper from "./WidgetPaper";
 type ScoreEditorProps = {
   score: Score;
   onChange: (score: Score) => void;
+  hideBaseValueEditor?: boolean;
 };
 
-const ScoreEditor = ({ score, onChange }: ScoreEditorProps): JSX.Element => {
+const ScoreEditor = ({ score, onChange, hideBaseValueEditor }: ScoreEditorProps): JSX.Element => {
   const handleValueChange = (newValue: number) => {
     onChange({
       baseValue: newValue,
@@ -26,7 +27,9 @@ const ScoreEditor = ({ score, onChange }: ScoreEditorProps): JSX.Element => {
 
   return (
     <VStack gap={3}>
-      <NumberEditor label="Score" value={score.baseValue} onValueChange={handleValueChange} />
+      {!hideBaseValueEditor && (
+        <NumberEditor label="Score" value={score.baseValue} onValueChange={handleValueChange} />
+      )}
       <Field.Root>
         <Field.Label>Proficiency Level</Field.Label>
         <WidgetPaper>

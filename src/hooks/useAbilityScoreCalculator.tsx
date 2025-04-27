@@ -19,7 +19,6 @@ export const useAbilityScoreCalculator = () => {
     }
 
     return {
-      ...abilityScore,
       totalScore: totalScore,
       modifier: modifier,
       savingThrow: savingThrow,

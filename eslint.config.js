@@ -9,7 +9,11 @@ import stylistic from "@stylistic/eslint-plugin";
 export default tseslint.config(
   { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, stylistic.configs.recommended],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      stylistic.configs.recommended,
+    ],
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -21,11 +25,7 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
       "@stylistic": stylistic,
     },
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
+    settings: { react: { version: "detect" } },
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
@@ -47,12 +47,36 @@ export default tseslint.config(
           generics: "always-multiline",
         },
       ],
+      "@stylistic/max-len": [
+        "error",
+        {
+          code: 120,
+          ignoreUrls: true,
+          ignoreTrailingComments: true,
+          ignoreComments: true,
+          ignoreStrings: true,
+          ignoreRegExpLiterals: true,
+        },
+      ],
       "@stylistic/jsx-curly-brace-presence": "off",
-      "@stylistic/jsx-one-expression-per-line": ["error", { allow: "non-jsx" }],
+      "@stylistic/jsx-one-expression-per-line": [
+        "error",
+        { allow: "non-jsx" },
+      ],
       "@stylistic/jsx-quotes": ["error", "prefer-double"],
       "@stylistic/indent": ["error", 2],
-      "@stylistic/array-bracket-newline": ["error", { multiline: true }],
-      "@stylistic/array-element-newline": ["error", { consistent: true, multiline: true, minItems: 4 }],
+      "@stylistic/array-bracket-newline": [
+        "error",
+        { multiline: true },
+      ],
+      "@stylistic/array-element-newline": [
+        "error",
+        {
+          consistent: true,
+          multiline: true,
+          minItems: 3,
+        },
+      ],
       "@stylistic/brace-style": ["error", "stroustrup"],
       "@stylistic/function-paren-newline": ["error", "consistent"],
       "@stylistic/quotes": ["error", "double"],
@@ -60,7 +84,15 @@ export default tseslint.config(
       "@stylistic/no-multi-spaces": "error",
       "@stylistic/no-extra-semi": "error",
       "@stylistic/semi": ["error", "always"],
-      "@stylistic/jsx-max-props-per-line": ["error", { maximum: { single: 3, multi: 1 } }],
+      "@stylistic/jsx-max-props-per-line": [
+        "error",
+        {
+          maximum: {
+            single: 3,
+            multi: 1,
+          },
+        },
+      ],
       "@stylistic/jsx-wrap-multilines": "error",
       "@stylistic/quote-props": ["error", "as-needed"],
       "@stylistic/member-delimiter-style": [
@@ -75,6 +107,24 @@ export default tseslint.config(
             requireLast: true,
           },
           multilineDetection: "brackets",
+        },
+      ],
+      "@stylistic/object-property-newline": ["error", { allowAllPropertiesOnSameLine: true }],
+      "@stylistic/object-curly-newline": [
+        "error",
+        {
+          ObjectExpression: {
+            multiline: true,
+            minProperties: 4,
+          },
+          ObjectPattern: {
+            multiline: true,
+            minProperties: 4,
+          },
+          ImportDeclaration: "never",
+          ExportDeclaration: "never",
+          TSTypeLiteral: "always",
+          TSInterfaceBody: "always",
         },
       ],
       // Off because this rule is broken.

@@ -7,11 +7,38 @@ import { Icon } from "@/types/data/icon";
 import { v4 as uuidv4 } from "uuid";
 import { createListCollection } from "@chakra-ui/react";
 import { DataDropdownItem } from "@/components/dataGrid/editors/DataDropdownEditor";
+import { SkillScore } from "@/types/character/skillScore";
+import { setSkillScores } from "@/features/characterSheet/skills/skillsSlice";
+import { ProficiencyLevel } from "@/types/character/score";
 
 const SkillsDataSet = (): JSX.Element => {
   const skills = useAppSelector(state => state.skillsDataSet.latest);
+  const skillScores = useAppSelector(state => state.skillScores.latest);
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const dispatch = useAppDispatch();
+
+  const resetSkillScores = (changedSkills: Skill[]) => {
+    const newScores: SkillScore[] = new Array(changedSkills.length);
+    for (let i = 0; i < newScores.length; i++) {
+      const newSkill = changedSkills[i];
+
+      const existingScoreIndex = skillScores.findIndex(ss => ss.skillId === newSkill.id);
+      if (existingScoreIndex >= 0) {
+        newScores[i] = skillScores[i];
+      }
+      else {
+        newScores[i] = {
+          skillId: newSkill.id,
+          score: {
+            baseValue: 0,
+            proficiencyLevel: ProficiencyLevel.None,
+          },
+        };
+      }
+    }
+
+    dispatch(setSkillScores(newScores));
+  };
 
   const abilityList = useMemo(() => {
     return createListCollection<DataDropdownItem>({
@@ -76,13 +103,15 @@ const SkillsDataSet = (): JSX.Element => {
   };
 
   const handleAddRow = () => {
-    dispatch(setSkills([
+    const newSkills: Skill[] = [
       ...skills,
       {
         id: uuidv4(),
         name: "",
       },
-    ]));
+    ];
+    dispatch(setSkills(newSkills));
+    resetSkillScores(newSkills);
   };
 
   const handleDeleteRow = (item: Skill) => {
