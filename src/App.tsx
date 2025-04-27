@@ -16,9 +16,10 @@ function App() {
         <Flex
           justify="center"
           height={"100%"}
-          overflow={"hidden"}
+          overflow={"auto"}
           alignItems={"start"}
           width={{ base: "100%", lg: "50rem", xl: "60rem" }}
+          paddingBottom={"4rem"}
         >
           <AppRoutes />
         </Flex>
