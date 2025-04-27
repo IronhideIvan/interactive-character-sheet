@@ -1,5 +1,6 @@
 import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
+import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetProfBonusesState, setInitial as setInitialProfBonuses } from "@/features/dataSets/proficiencyBonuses/proficiencyBonusDataSetSlice";
 import { resetState as resetSkillsState, setInitial as setInitialSkills } from "@/features/dataSets/skills/skillsDataSetSlice";
@@ -22,6 +23,7 @@ export const useImport = () => {
       dispatch(resetProfBonusesState());
       dispatch(resetSkillsState());
       dispatch(resetAbilityScoresState());
+      dispatch(resetSkillScoresState());
     });
   };
 
@@ -32,6 +34,7 @@ export const useExport = () => {
   const dispatch = useAppDispatch();
   const basicInformation = useAppSelector(state => state.basicInformation.latest);
   const abilityScores = useAppSelector(state => state.abilityScores.latest);
+  const skillScores = useAppSelector(state => state.skillScores.latest);
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
   const skills = useAppSelector(state => state.skillsDataSet.latest);
@@ -41,6 +44,7 @@ export const useExport = () => {
       character: {
         basicInformation: basicInformation,
         abilityScores: abilityScores,
+        skills: skillScores,
       },
       data: {
         abilities: abilities,
@@ -84,5 +88,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.character?.abilityScores) {
     dispatch(setInitialAbilityScores(saveFile.character.abilityScores));
+  }
+
+  if (saveFile?.character?.skills) {
+    dispatch(setInitialSkillScores(saveFile.character.skills));
   }
 };
