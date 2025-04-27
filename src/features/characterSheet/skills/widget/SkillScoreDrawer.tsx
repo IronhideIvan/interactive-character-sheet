@@ -6,7 +6,7 @@ import { Score } from "@/types/character/score";
 import { SkillScore } from "@/types/character/skillScore";
 import { Ability } from "@/types/data/ability";
 import { Skill } from "@/types/data/skill";
-import { Box, Separator, VStack } from "@chakra-ui/react";
+import { Separator, VStack } from "@chakra-ui/react";
 import cloneDeep from "lodash.clonedeep";
 import { JSX, useMemo } from "react";
 import SkillModifierLabel from "./SkillModifierLabel";

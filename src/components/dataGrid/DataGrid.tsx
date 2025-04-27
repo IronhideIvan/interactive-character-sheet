@@ -6,7 +6,7 @@ import { Icon } from "@/types/data/icon";
 import DataColorEditor from "./editors/DataColorEditor";
 import IconPickerDialog from "../iconPicker/IconPickerDialog";
 import DynamicIcon from "../DynamicIcon";
-import { FaPlus, FaTrash, FaUndo } from "react-icons/fa";
+import { FaPlus, FaRegEdit, FaTrash, FaUndo } from "react-icons/fa";
 import ConfirmIconButton from "../ConfirmIconButton";
 import DataNumberEditor from "./editors/DataNumberEditor";
 import { DataDropdownEditor, DataDropdownItem } from "./editors/DataDropdownEditor";
@@ -24,6 +24,7 @@ type DataGridProps<T> = {
   onAddRow?: () => void;
   onDeleteRow?: (item: T) => void;
   onRevertAllChanges?: () => void;
+  onEditClick?: (item: T) => void;
 };
 
 // The comma dangle is necessary here to allow typescript to differentiate
@@ -43,6 +44,7 @@ const DataGrid = <T,>(
     onRevertAllChanges,
     getReferenceOptions,
     onReferenceValueChange,
+    onEditClick,
   }: DataGridProps<T>): JSX.Element => {
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
@@ -69,7 +71,11 @@ const DataGrid = <T,>(
     setSelectedItem (item);
     setSelectedColumn(columnInfo);
     setIsIconDialogOpen(true);
-  }, [getId, getValue, items]);
+  }, [
+    getId,
+    getValue,
+    items,
+  ]);
 
   const handleIconDialogClose = () => {
     setIsIconDialogOpen(false);
@@ -211,6 +217,15 @@ const DataGrid = <T,>(
                   )}
                 </Table.ColumnHeader>
               )}
+              {onEditClick && (
+                <Table.ColumnHeader
+                  minW={"3rem"}
+                  padding={0}
+                  paddingX={1}
+                  textAlign={"center"}
+                  key={"table.edit"}
+                />
+              )}
               {columnInfo.map((ci) => {
                 return (
                   <Table.ColumnHeader
@@ -240,12 +255,23 @@ const DataGrid = <T,>(
                         onConfirmClick={() => {
                           onDeleteRow(item);
                         }}
-                        confirm={{
-                          variant: "outline",
-                        }}
+                        confirm={{ variant: "outline" }}
                       >
                         <FaTrash />
                       </ConfirmIconButton>
+                    </Table.Cell>
+                  )}
+                  {onEditClick && (
+                    <Table.Cell key={"table.actions"} padding={1}>
+                      <IconButton
+                        size={"sm"}
+                        variant={"ghost"}
+                        rounded={"full"}
+                        color={"gray"}
+                        onClick={() => onEditClick(item)}
+                      >
+                        <FaRegEdit />
+                      </IconButton>
                     </Table.Cell>
                   )}
                   {columnInfo.map((ci) => {

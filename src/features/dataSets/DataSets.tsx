@@ -12,6 +12,11 @@ const navRoutes: NavRoutes = {
       friendlyName: "Abilities",
     },
     {
+      path: "/features",
+      value: "/data/features",
+      friendlyName: "Features",
+    },
+    {
       path: "/prof",
       value: "/data/prof",
       friendlyName: "Proficiency Bonus",

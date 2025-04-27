@@ -1,6 +1,7 @@
 import CharacterSheet from "@/features/characterSheet/CharacterSheet";
 import AbilitiesDataSet from "@/features/dataSets/abilities/AbilitiesDataSet";
 import DataSets from "@/features/dataSets/DataSets";
+import FeaturesDataSet from "@/features/dataSets/features/FeaturesDataSet";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
 import SkillsDataSet from "@/features/dataSets/skills/SkillsDataSet";
 import { JSX } from "react";
@@ -34,6 +35,14 @@ export const appRoutes: Route[] = [
         element: (
           <DataSets>
             <AbilitiesDataSet />
+          </DataSets>
+        ),
+      },
+      {
+        path: "features",
+        element: (
+          <DataSets>
+            <FeaturesDataSet />
           </DataSets>
         ),
       },

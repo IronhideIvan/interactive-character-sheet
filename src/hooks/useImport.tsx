@@ -2,6 +2,7 @@ import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityS
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
 import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
+import { resetState as resetFeaturesState, setInitial as setInitialFeatures } from "@/features/dataSets/features/featuresDataSetSlice";
 import { resetState as resetProfBonusesState, setInitial as setInitialProfBonuses } from "@/features/dataSets/proficiencyBonuses/proficiencyBonusDataSetSlice";
 import { resetState as resetSkillsState, setInitial as setInitialSkills } from "@/features/dataSets/skills/skillsDataSetSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -24,6 +25,7 @@ export const useImport = () => {
       dispatch(resetSkillsState());
       dispatch(resetAbilityScoresState());
       dispatch(resetSkillScoresState());
+      dispatch(resetFeaturesState());
     });
   };
 
@@ -38,6 +40,7 @@ export const useExport = () => {
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
   const skills = useAppSelector(state => state.skillsDataSet.latest);
+  const features = useAppSelector(state => state.featuresDataSet.latest);
 
   const saveFile = () => {
     const fileContents: SaveFile = {
@@ -50,6 +53,7 @@ export const useExport = () => {
         abilities: abilities,
         proficiencyBonuses: profBonuses,
         skills: skills,
+        features: features,
       },
     };
 
@@ -70,6 +74,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
   }
   if (saveFile?.data?.skills) {
     dispatch(setInitialSkills(saveFile.data.skills));
+  }
+  if (saveFile?.data?.features) {
+    dispatch(setInitialFeatures(saveFile.data.features));
   }
 
   if (saveFile?.character?.basicInformation) {

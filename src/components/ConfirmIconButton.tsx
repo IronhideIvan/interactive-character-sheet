@@ -8,7 +8,9 @@ type ConfirmIconButtonProps = {
   onConfirmClick?: () => void;
 } & IconButtonProps;
 
-const ConfirmIconButton = ({ confirm: confirmProps, children, onConfirmClick, ...baseProps }: ConfirmIconButtonProps): JSX.Element => {
+const ConfirmIconButton = ({
+  confirm: confirmProps, children, onConfirmClick, ...baseProps
+}: ConfirmIconButtonProps): JSX.Element => {
   const [isConfirming, setIsConfirming] = useState(false);
 
   const handleClick = () => {
