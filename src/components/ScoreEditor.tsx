@@ -32,8 +32,11 @@ const ScoreEditor = ({ score, onChange, hideBaseValueEditor }: ScoreEditorProps)
       )}
       <Field.Root>
         <Field.Label>Proficiency Level</Field.Label>
-        <WidgetPaper>
-          <RadioGroup.Root value={score.proficiencyLevel} onValueChange={e => handleProficiencyChange(e.value as ProficiencyLevel)}>
+        <WidgetPaper paddingX={3}>
+          <RadioGroup.Root
+            value={score.proficiencyLevel}
+            onValueChange={e => handleProficiencyChange(e.value as ProficiencyLevel)}
+          >
             <HStack gap="6" alignItems={"start"}>
               {proficiencyLevelItems.map(item => (
                 <RadioGroup.Item key={item.value} value={item.value}>
@@ -50,7 +53,9 @@ const ScoreEditor = ({ score, onChange, hideBaseValueEditor }: ScoreEditorProps)
   );
 };
 
-const proficiencyLevelItems: { label: string; value: ProficiencyLevel; }[] = [
+const proficiencyLevelItems: {
+  label: string; value: ProficiencyLevel;
+}[] = [
   { label: "None", value: ProficiencyLevel.None },
   { label: "Proficiency", value: ProficiencyLevel.Proficiency },
   { label: "Expertise", value: ProficiencyLevel.Expertise },

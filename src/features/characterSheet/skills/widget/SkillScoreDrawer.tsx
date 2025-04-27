@@ -92,21 +92,21 @@ const SkillScoreDrawer = ({
       onOpenChange={det => handleOpenChange(det.open)}
     >
       <VStack>
-        <Box>
-          <ScoreEditor score={skillScore.score} onChange={handleScoreChange} hideBaseValueEditor />
-          <Separator flex={"1"} />
-        </Box>
-        {skillModifierList.map((map, i) => {
-          return (
-            <SkillModifierLabel
-              key={map.ability.id}
-              skillScore={map.skillScore}
-              ability={map.ability}
-              abilityModifier={map.abilityModifier}
-              isPrimary={i === 0}
-            />
-          );
-        })}
+        <ScoreEditor score={skillScore.score} onChange={handleScoreChange} hideBaseValueEditor />
+        <Separator width={"100%"} />
+        <VStack alignItems={"end"}>
+          {skillModifierList.map((map, i) => {
+            return (
+              <SkillModifierLabel
+                key={map.ability.id}
+                skillScore={map.skillScore}
+                ability={map.ability}
+                abilityModifier={map.abilityModifier}
+                isPrimary={i === 0}
+              />
+            );
+          })}
+        </VStack>
       </VStack>
     </FloatingDrawer>
   );
