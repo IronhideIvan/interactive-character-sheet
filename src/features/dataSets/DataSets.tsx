@@ -38,7 +38,9 @@ const selectCollection = createListCollection({
   }),
 });
 
-const DataSets = ({ children }: { children: ReactNode; }): JSX.Element => {
+const DataSets = ({ children }: {
+  children: ReactNode;
+}): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedRoute = useMemo(() => {

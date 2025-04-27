@@ -6,7 +6,9 @@ import SkillsSection from "./skills/SkillsSection";
 
 const CharacterSheet = (): JSX.Element => {
   return (
-    <VStack>
+    <VStack
+      paddingBottom={"3rem"}
+    >
       <BasicInformationSection />
       <AbilityScoresSection columnSpan={{ base: 12, sm: 6, md: 4 }} />
       <SkillsSection columnSpan={{ base: 6, sm: 4, md: 3 }} />
