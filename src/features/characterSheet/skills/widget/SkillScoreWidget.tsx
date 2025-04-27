@@ -20,10 +20,12 @@ type SkillScoreWidgetProps = {
 
 const SkillScoreWidget = ({ skillScore, skill }: SkillScoreWidgetProps): JSX.Element => {
   const { isOpen, open, close } = useModal();
+  const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const abilityScores = useAppSelector(state => state.abilityScores.latest);
   const calculateAbility = useAbilityScoreCalculator();
   const calculateSkill = useSkillScoreCalculator();
 
+  const primaryAbility = abilities.find(a => a.id === skill.abilityId);
   const primaryAbilityScore = abilityScores.find(as => as.abilityId === skill.abilityId);
 
   const calculatedAbilityScore: CalculatedAbilityScore = useMemo(() => primaryAbilityScore
@@ -68,7 +70,7 @@ const SkillScoreWidget = ({ skillScore, skill }: SkillScoreWidgetProps): JSX.Ele
             {skill.name}
           </Text>
           <Text>
-            {getBonusWithOperator(calculatedSkillScore.modifier)}
+            {getBonusWithOperator(calculatedSkillScore.modifier)}{primaryAbility ? ` (${primaryAbility.abbreviation})` : ""}
           </Text>
         </VStack>
       </Button>
