@@ -2,24 +2,31 @@ import DataGrid from "@/components/dataGrid/DataGrid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Feature } from "@/types/data/feature";
 import { Box } from "@chakra-ui/react";
-import { JSX } from "react";
-import { deleteFeature, resetState, setFeatures, upsertFeature } from "./featuresDataSetSlice";
-import { Icon } from "@/types/data/icon";
+import { JSX, useState } from "react";
+import { deleteFeature, resetState, upsertFeature } from "./featuresDataSetSlice";
 import { v4 as uuidv4 } from "uuid";
+import { useModal } from "@/hooks/useModal";
+import FeatureEditor from "./FeatureEditor";
+import cloneDeep from "lodash.clonedeep";
 
 const FeaturesDataSet = (): JSX.Element => {
+  const { open, isOpen, close } = useModal();
   const features = useAppSelector(state => state.featuresDataSet.latest);
   const dispatch = useAppDispatch();
+  const [workingFeature, setWorkingFeature] = useState<Feature | undefined>();
 
   const handleGetId = (item: Feature) => {
     return item.id;
   };
 
   const handleAddRow = () => {
-    // dispatch(setFeatures([
-    //   ...features,
-    //   { id: uuidv4() },
-    // ]));
+    setWorkingFeature({
+      id: uuidv4(),
+      name: "",
+      shortDescription: "",
+      description: "",
+    });
+    open();
   };
 
   const handleDeleteRow = (item: Feature) => {
@@ -35,7 +42,28 @@ const FeaturesDataSet = (): JSX.Element => {
   };
 
   const handleEditRowClick = (item: Feature) => {
-    console.log(`item: ${item.id}`);
+    setWorkingFeature(cloneDeep(item));
+    open();
+  };
+
+  const handleWorkingFeatureChange = (updatedFeature: Feature) => {
+    setWorkingFeature(updatedFeature);
+  };
+
+  const handleSaveWorkingFeature = () => {
+    if (workingFeature) {
+      dispatch(upsertFeature(workingFeature));
+    }
+    close();
+  };
+
+  const handleCancelWorkingFeature = () => {
+    setWorkingFeature(undefined);
+    close();
+  };
+
+  const handleCloseWorkingFeature = () => {
+    close();
   };
 
   return (
@@ -50,7 +78,7 @@ const FeaturesDataSet = (): JSX.Element => {
             readonly: true,
           },
           {
-            name: "Description",
+            name: "Tooltip",
             key: "shortDescription",
             type: "text",
             readonly: true,
@@ -63,6 +91,17 @@ const FeaturesDataSet = (): JSX.Element => {
         onRevertAllChanges={handleRevertAllChanges}
         onEditClick={handleEditRowClick}
       />
+      {isOpen && workingFeature && (
+        <FeatureEditor
+          key={workingFeature.id}
+          feature={workingFeature}
+          isOpen={isOpen}
+          onSave={handleSaveWorkingFeature}
+          onClose={handleCloseWorkingFeature}
+          onCancel={handleCancelWorkingFeature}
+          onChange={handleWorkingFeatureChange}
+        />
+      )}
     </Box>
   );
 };
