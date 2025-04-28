@@ -1,9 +1,11 @@
 import { ActionButtonType } from "@/components/dialog/actionButtonTypes";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
-import FloatingLabelTextField from "@/components/FloatingLabelTextField";
+import TextEditor from "@/components/TextEditor";
 import { Feature } from "@/types/data/feature";
-import { VStack } from "@chakra-ui/react";
+import { Field, VStack } from "@chakra-ui/react";
+import MDEditor from "@uiw/react-md-editor";
 import { JSX } from "react";
+import rehypeSanitize from "rehype-sanitize";
 
 type FeatureEditorProps = {
   feature: Feature;
@@ -31,6 +33,13 @@ const FeatureEditor = ({
     });
   };
 
+  const handleDescriptionChange = (newValue: string) => {
+    onChange({
+      ...feature,
+      description: newValue,
+    });
+  };
+
   return (
     <SimpleDialog
       open={isOpen}
@@ -41,17 +50,32 @@ const FeatureEditor = ({
       actionButtonsType={ActionButtonType.SaveCancel}
     >
       <VStack gap={6}>
-        <FloatingLabelTextField
+        <TextEditor
           label="Name"
-          textAlign={"center"}
           value={feature.name}
           onValueChange={handleNameChange}
         />
-        <FloatingLabelTextField
+        <TextEditor
           label="Tooltip"
           value={feature.shortDescription}
           onValueChange={handleShortDescriptionChange}
         />
+        <Field.Root height={"100%"} width={"100%"}>
+          <Field.Label>Description</Field.Label>
+          <MDEditor
+            style={{ width: "100%" }}
+            value={feature.description}
+            onChange={(newValue) => {
+              if (newValue) {
+                handleDescriptionChange(newValue);
+              }
+            }}
+            previewOptions={{ rehypePlugins: [[rehypeSanitize]] }}
+            height={"100%"}
+            visibleDragbar={false}
+            minHeight={300}
+          />
+        </Field.Root>
       </VStack>
     </SimpleDialog>
   );

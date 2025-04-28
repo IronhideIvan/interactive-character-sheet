@@ -25,14 +25,14 @@ const SimpleDialog = ({
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
+        <Dialog.Content maxHeight={"98vh"}>
           {title
             && (
-              <Dialog.Header paddingBottom={0}>
+              <Dialog.Header paddingBottom={2}>
                 <Dialog.Title>{title}</Dialog.Title>
               </Dialog.Header>
             )}
-          <Dialog.Body>
+          <Dialog.Body overflow={"auto"}>
             {children}
           </Dialog.Body>
           <Dialog.CloseTrigger asChild>
