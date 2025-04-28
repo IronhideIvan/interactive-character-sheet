@@ -9,6 +9,7 @@ import AbilityScoreDrawer from "./AbilityScoreDrawer";
 import { useModal } from "@/hooks/useModal";
 import { useAppDispatch } from "@/redux/hooks";
 import { upsertAbilityScore } from "../abilityScoresSlice";
+import ProficiencyLevelIcon from "@/components/ProficiencyLevelIcon";
 
 type AbilityScoreWidgetProps = {
   abilityScore: AbilityScore;
@@ -34,7 +35,14 @@ const AbilityScoreWidget = ({ abilityScore, ability }: AbilityScoreWidgetProps):
         height={"100%"}
         onClick={open}
       >
-        <VStack>
+        <VStack pos={"relative"} width={"100%"}>
+          <ProficiencyLevelIcon
+            position={"absolute"}
+            right={0}
+            top={0}
+            mr={-1}
+            proficiencyLevel={abilityScore.score.proficiencyLevel}
+          />
           <Text>
             {ability.name}
           </Text>
