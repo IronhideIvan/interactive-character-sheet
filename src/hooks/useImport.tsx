@@ -1,5 +1,6 @@
 import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
+import { resetState as resetCharacterFeaturesState, setInitial as setInitialCharacterFeatures } from "@/features/characterSheet/features/characterFeaturesSlice";
 import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetFeaturesState, setInitial as setInitialFeatures } from "@/features/dataSets/features/featuresDataSetSlice";
@@ -21,10 +22,12 @@ export const useImport = () => {
 
       dispatch(resetBasicInformationState());
       dispatch(resetAbilitiesDataState());
-      dispatch(resetProfBonusesState());
-      dispatch(resetSkillsState());
       dispatch(resetAbilityScoresState());
       dispatch(resetSkillScoresState());
+      dispatch(resetCharacterFeaturesState());
+
+      dispatch(resetProfBonusesState());
+      dispatch(resetSkillsState());
       dispatch(resetFeaturesState());
     });
   };
@@ -37,6 +40,8 @@ export const useExport = () => {
   const basicInformation = useAppSelector(state => state.basicInformation.latest);
   const abilityScores = useAppSelector(state => state.abilityScores.latest);
   const skillScores = useAppSelector(state => state.skillScores.latest);
+  const characterFeatures = useAppSelector(state => state.characterFeatures.latest);
+
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
   const skills = useAppSelector(state => state.skillsDataSet.latest);
@@ -48,6 +53,7 @@ export const useExport = () => {
         basicInformation: basicInformation,
         abilityScores: abilityScores,
         skills: skillScores,
+        features: characterFeatures,
       },
       data: {
         abilities: abilities,
@@ -99,5 +105,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.character?.skills) {
     dispatch(setInitialSkillScores(saveFile.character.skills));
+  }
+
+  if (saveFile?.character?.features) {
+    dispatch(setInitialCharacterFeatures(saveFile.character.features));
   }
 };

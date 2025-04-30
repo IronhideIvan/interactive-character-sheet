@@ -7,12 +7,14 @@ import { iconPickerSlice } from "@/components/iconPicker/iconPickerSlice";
 import { abilityScoresSlice } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { skillScoresSlice } from "@/features/characterSheet/skills/skillsSlice";
 import { FeaturesDataSetSliceSlice } from "@/features/dataSets/features/featuresDataSetSlice";
+import { characterFeaturesSlice } from "@/features/characterSheet/features/characterFeaturesSlice";
 
 export const store = configureStore({
   reducer: {
     basicInformation: basicInformationSlice.reducer,
     abilityScores: abilityScoresSlice.reducer,
     skillScores: skillScoresSlice.reducer,
+    characterFeatures: characterFeaturesSlice.reducer,
     abilitiesDataSet: abilityDataSetSlice.reducer,
     proficiencyBonusDataSet: proficiencyBonusDataSetSlice.reducer,
     skillsDataSet: skillsDataSetSliceSlice.reducer,
