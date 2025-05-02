@@ -8,6 +8,7 @@ import { Icon } from "@/types/data/icon";
 import DynamicIcon from "../DynamicIcon";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMostRecentColor } from "./iconPickerSlice";
+import { filterResultsBySearchTerm } from "@/utils/searchUtils";
 
 const allGiKeys = Object.keys(allGameIcons);
 const allFaKey = Object.keys(allFontAwesomeIcons);
@@ -23,7 +24,9 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
   const defaultColor = useMemo(() => parseColor(mostRecentColor), [mostRecentColor]);
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [iconColor, setIconColor] = useState<Color>(defaultIcon ? parseColor(defaultIcon.color) : parseColor(mostRecentColor));
+  const [iconColor, setIconColor] = useState<Color>(defaultIcon
+    ? parseColor(defaultIcon.color)
+    : parseColor(mostRecentColor));
   const [selectIconId, setSelectedIconId] = useState<string | undefined>(defaultIcon?.id);
   const dispatch = useAppDispatch();
 
@@ -34,31 +37,25 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
 
     if (term.length === 0) {
       setSearchResults([...allGiKeys.slice(0, searchLimit)]);
+      return;
     }
-
-    const lowercaseTerm = term.toLowerCase();
 
     const results: string[] = [];
-    for (let i = 0; i < allGiKeys.length; i++) {
-      if (results.length >= searchLimit) {
-        break;
-      }
+    results.push(...filterResultsBySearchTerm({
+      searchTerm: term,
+      source: allGiKeys,
+      resultLimit: searchLimit,
+      getString: item => item,
+    }));
 
-      const key = allGiKeys[i];
-      if (key.toLowerCase().includes(lowercaseTerm)) {
-        results.push(key);
-      }
-    }
-
-    for (let i = 0; i < allFaKey.length; i++) {
-      if (results.length >= searchLimit) {
-        break;
-      }
-
-      const key = allFaKey[i];
-      if (key.toLowerCase().includes(lowercaseTerm)) {
-        results.push(key);
-      }
+    const remainingItems = searchLimit - results.length;
+    if (remainingItems > 0) {
+      results.push(...filterResultsBySearchTerm({
+        searchTerm: term,
+        source: allFaKey,
+        resultLimit: remainingItems,
+        getString: item => item,
+      }));
     }
 
     setSearchResults(results);

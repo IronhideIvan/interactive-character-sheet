@@ -27,6 +27,22 @@ export const characterFeaturesSlice = createSlice({
     deleteCharacterFeature: (state, action: PayloadAction<string>) => {
       state.latest = state.latest.filter(a => a.id !== action.payload);
     },
+    resetCharacterFeature: (state, action: PayloadAction<CharacterFeatureSection>) => {
+      const original = state.initial.find(s => s.id === action.payload.id);
+      if (original) {
+        state.latest = upsert(cloneDeep(original), state.latest, a => a.id === action.payload.id);
+      }
+      else {
+        state.latest = upsert(
+          {
+            ...cloneDeep(action.payload),
+            features: [],
+          },
+          state.latest,
+          a => a.id === action.payload.id,
+        );
+      }
+    },
     setInitial: (state, action: PayloadAction<CharacterFeatureSection[]>) => {
       state.initial = cloneDeep(action.payload);
     },
@@ -40,6 +56,7 @@ export const {
   setCharacterFeatures,
   upsertCharacterFeature,
   deleteCharacterFeature,
+  resetCharacterFeature,
   resetState,
   setInitial,
 } = characterFeaturesSlice.actions;

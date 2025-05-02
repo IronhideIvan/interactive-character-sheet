@@ -19,8 +19,8 @@ const ProficiencyLevelIcon = ({ proficiencyLevel, ...props }: ProficiencyLevelIc
       {proficiencyLevel === ProficiencyLevel.Expertise
         ? (
           <>
-            <GiCheckMark style={iconStyles} />
-            <GiCheckMark style={iconStyles} />
+            <GiCheckMark key={"check-1"} style={iconStyles} />
+            <GiCheckMark key={"check-2"} style={iconStyles} />
           </>
         )
         : proficiencyLevel === ProficiencyLevel.Proficiency

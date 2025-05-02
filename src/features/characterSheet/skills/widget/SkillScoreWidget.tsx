@@ -66,10 +66,10 @@ const SkillScoreWidget = ({ skillScore, skill }: SkillScoreWidgetProps): JSX.Ele
             mr={-1}
             proficiencyLevel={skillScore.score.proficiencyLevel}
           />
-          <Text>
+          <Text key={"name"}>
             {skill.name}
           </Text>
-          <Text>
+          <Text key={"op"}>
             {getBonusWithOperator(calculatedSkillScore.modifier)}{primaryAbility ? ` (${primaryAbility.abbreviation})` : ""}
           </Text>
         </VStack>

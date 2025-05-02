@@ -5,7 +5,7 @@ import SectionTitle from "@/components/SectionTitle";
 import { useModal } from "@/hooks/useModal";
 import FeaturesSectionDrawer from "./sectionEdit/FeaturesSectionDrawer";
 import { CharacterFeatureSection } from "@/types/character/characterFeature";
-import { resetState, setCharacterFeatures } from "./characterFeaturesSlice";
+import { resetCharacterFeature, resetState, setCharacterFeatures, upsertCharacterFeature } from "./characterFeaturesSlice";
 
 const FeaturesSection = (): JSX.Element => {
   const characterFeatures = useAppSelector(state => state.characterFeatures.latest);
@@ -22,6 +22,14 @@ const FeaturesSection = (): JSX.Element => {
 
   const handleResetEverything = () => {
     dispatch(resetState());
+  };
+
+  const handleChangeSection = (updatedSection: CharacterFeatureSection) => {
+    dispatch(upsertCharacterFeature(updatedSection));
+  };
+
+  const handleResetSection = (section: CharacterFeatureSection) => {
+    dispatch(resetCharacterFeature(section));
   };
 
   return (
@@ -45,12 +53,8 @@ const FeaturesSection = (): JSX.Element => {
           onClose={close}
           onChangeEverything={handleChangeEverything}
           onResetEverything={handleResetEverything}
-          onChangeSection={() => {
-            console.log("CHANGE SECTION");
-          }}
-          onResetSection={() => {
-            console.log("RESET SECTION");
-          }}
+          onChangeSection={handleChangeSection}
+          onResetSection={handleResetSection}
         />
       )}
     </VStack>
