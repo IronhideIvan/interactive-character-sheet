@@ -20,4 +20,9 @@ export type SaveFile = {
     skills: Skill[];
     features: Feature[];
   };
+  version: {
+    major: number;
+    minor: number;
+    patch: number;
+  };
 };
