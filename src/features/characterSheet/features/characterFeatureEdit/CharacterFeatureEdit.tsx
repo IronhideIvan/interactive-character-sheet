@@ -8,9 +8,8 @@ import FilteredFeaturesDataSet from "./FilteredFeaturesDataSet";
 import cloneDeep from "lodash.clonedeep";
 import { useModal } from "@/hooks/useModal";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
-import MDEditor from "@uiw/react-md-editor";
-import rehypeSanitize from "rehype-sanitize";
 import { filterResultsBySearchTerm } from "@/utils/searchUtils";
+import MarkdownPreview from "@/components/markdown/MarkdownPreview";
 
 type CharacterFeatureEditProps = {
   characterFeatureSection: CharacterFeatureSection;
@@ -100,11 +99,7 @@ const CharacterFeatureEdit = ({
           title={selectedFeature.name}
           onClose={closeFeatureDetails}
         >
-          <MDEditor.Markdown
-            style={{ width: "100%" }}
-            source={selectedFeature.description}
-            rehypePlugins={[rehypeSanitize]}
-          />
+          <MarkdownPreview source={selectedFeature.description} />
         </SimpleDialog>
       )}
     </VStack>
