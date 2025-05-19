@@ -14,7 +14,7 @@ const SectionTitle = ({ label, showEditButton, onEditButtonClick }: SectionTitle
       <Separator flex={"1"} />
       <Text flexShrink={"0"}>{label}</Text>
       {showEditButton && (
-        <IconButton flexShrink={"0"}>
+        <IconButton flexShrink={"0"} variant={"ghost"}>
           <FaRegEdit onClick={() => {
             onEditButtonClick?.();
           }}

@@ -1,27 +1,27 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
-import { CharacterFeatureSection } from "@/types/character/characterFeature";
+import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { upsert } from "@/utils/arrayUtils";
 
 type FeaturesSectionDataSet = {
-  characterFeatures: CharacterFeatureSection[];
-  onChange: (updatedSections: CharacterFeatureSection[]) => void;
+  characterFeatures: CharacterFeatureGroup[];
+  onChange: (updatedSections: CharacterFeatureGroup[]) => void;
   reset: () => void;
 };
 
 const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: FeaturesSectionDataSet): JSX.Element => {
-  const handleGetId = (item: CharacterFeatureSection) => {
+  const handleGetId = (item: CharacterFeatureGroup) => {
     return item.id;
   };
 
   const handleStringValueChanged = (
-    item: CharacterFeatureSection,
-    columnKey: keyof CharacterFeatureSection,
+    item: CharacterFeatureGroup,
+    columnKey: keyof CharacterFeatureGroup,
     value: string,
   ) => {
-    let newItem: CharacterFeatureSection | undefined;
+    let newItem: CharacterFeatureGroup | undefined;
     switch (columnKey) {
       case "name":
         newItem = { ...item, name: value };
@@ -46,7 +46,7 @@ const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: Features
     ]);
   };
 
-  const handleDeleteRow = (item: CharacterFeatureSection) => {
+  const handleDeleteRow = (item: CharacterFeatureGroup) => {
     onChange(characterFeatures.filter(it => it.id !== item.id));
   };
 
@@ -54,7 +54,7 @@ const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: Features
     reset();
   };
 
-  const handleGetFriendlyName = (item: CharacterFeatureSection) => {
+  const handleGetFriendlyName = (item: CharacterFeatureGroup) => {
     return item.name.length === 0 ? "Unknown" : item.name;
   };
 

@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { upsert } from "@/utils/arrayUtils";
 import cloneDeep from "lodash.clonedeep";
-import { CharacterFeatureSection } from "@/types/character/characterFeature";
+import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 
 export type CharacterFeaturesSlice = {
-  latest: CharacterFeatureSection[];
-  initial: CharacterFeatureSection[];
+  latest: CharacterFeatureGroup[];
+  initial: CharacterFeatureGroup[];
 };
 
 const initialState: CharacterFeaturesSlice = {
@@ -18,16 +18,16 @@ export const characterFeaturesSlice = createSlice({
   name: "characterFeaturesDataSet",
   initialState,
   reducers: {
-    setCharacterFeatures: (state, action: PayloadAction<CharacterFeatureSection[]>) => {
+    setCharacterFeatures: (state, action: PayloadAction<CharacterFeatureGroup[]>) => {
       state.latest = [...action.payload];
     },
-    upsertCharacterFeature: (state, action: PayloadAction<CharacterFeatureSection>) => {
+    upsertCharacterFeature: (state, action: PayloadAction<CharacterFeatureGroup>) => {
       state.latest = upsert(action.payload, state.latest, a => a.id === action.payload.id);
     },
     deleteCharacterFeature: (state, action: PayloadAction<string>) => {
       state.latest = state.latest.filter(a => a.id !== action.payload);
     },
-    resetCharacterFeature: (state, action: PayloadAction<CharacterFeatureSection>) => {
+    resetCharacterFeature: (state, action: PayloadAction<CharacterFeatureGroup>) => {
       const original = state.initial.find(s => s.id === action.payload.id);
       if (original) {
         state.latest = upsert(cloneDeep(original), state.latest, a => a.id === action.payload.id);
@@ -43,7 +43,7 @@ export const characterFeaturesSlice = createSlice({
         );
       }
     },
-    setInitial: (state, action: PayloadAction<CharacterFeatureSection[]>) => {
+    setInitial: (state, action: PayloadAction<CharacterFeatureGroup[]>) => {
       state.initial = cloneDeep(action.payload);
     },
     resetState: (state) => {

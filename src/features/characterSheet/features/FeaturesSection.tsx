@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { Text, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { JSX } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import { useModal } from "@/hooks/useModal";
 import FeaturesSectionDrawer from "./sectionEdit/FeaturesSectionDrawer";
-import { CharacterFeatureSection } from "@/types/character/characterFeature";
+import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { resetCharacterFeature, resetState, setCharacterFeatures, upsertCharacterFeature } from "./characterFeaturesSlice";
+import CharacterFeatureSection from "./characterFeatureSection/CharacterFeatureSection";
 
 const FeaturesSection = (): JSX.Element => {
   const characterFeatures = useAppSelector(state => state.characterFeatures.latest);
@@ -16,7 +17,7 @@ const FeaturesSection = (): JSX.Element => {
     open();
   };
 
-  const handleChangeEverything = (updatedSections: CharacterFeatureSection[]) => {
+  const handleChangeEverything = (updatedSections: CharacterFeatureGroup[]) => {
     dispatch(setCharacterFeatures(updatedSections));
   };
 
@@ -24,11 +25,11 @@ const FeaturesSection = (): JSX.Element => {
     dispatch(resetState());
   };
 
-  const handleChangeSection = (updatedSection: CharacterFeatureSection) => {
+  const handleChangeSection = (updatedSection: CharacterFeatureGroup) => {
     dispatch(upsertCharacterFeature(updatedSection));
   };
 
-  const handleResetSection = (section: CharacterFeatureSection) => {
+  const handleResetSection = (section: CharacterFeatureGroup) => {
     dispatch(resetCharacterFeature(section));
   };
 
@@ -39,10 +40,10 @@ const FeaturesSection = (): JSX.Element => {
         showEditButton
         onEditButtonClick={handleEditButtonClick}
       />
-      <VStack>
+      <VStack width={"100%"} justifyContent={"center"}>
         {characterFeatures.map((f) => {
           return (
-            <Text key={f.id}>{f.name}</Text>
+            <CharacterFeatureSection key={f.id} group={f} />
           );
         })}
       </VStack>

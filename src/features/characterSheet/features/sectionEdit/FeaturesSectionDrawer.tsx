@@ -1,5 +1,5 @@
 import FloatingDrawer from "@/components/FloatingDrawer";
-import { CharacterFeatureSection } from "@/types/character/characterFeature";
+import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { JSX, useMemo, useState } from "react";
 import FeaturesSectionDataSet from "./FeaturesSectionDataSet";
 import { useModal } from "@/hooks/useModal";
@@ -11,12 +11,12 @@ import CharacterFeaturesDataSet from "./CharacterFeatureDataSet";
 
 type FeaturesSectionDrawerProps = {
   open: boolean;
-  characterFeatures: CharacterFeatureSection[];
+  characterFeatures: CharacterFeatureGroup[];
   onClose: () => void;
-  onChangeEverything: (updatedSections: CharacterFeatureSection[]) => void;
-  onChangeSection: (updatedSection: CharacterFeatureSection) => void;
+  onChangeEverything: (updatedSections: CharacterFeatureGroup[]) => void;
+  onChangeSection: (updatedSection: CharacterFeatureGroup) => void;
   onResetEverything: () => void;
-  onResetSection: (section: CharacterFeatureSection) => void;
+  onResetSection: (section: CharacterFeatureGroup) => void;
 };
 
 const FeaturesSectionDrawer = ({
@@ -40,7 +40,7 @@ const FeaturesSectionDrawer = ({
     }
   };
 
-  const selectedSection: CharacterFeatureSection | undefined = useMemo(() => {
+  const selectedSection: CharacterFeatureGroup | undefined = useMemo(() => {
     return selectedSectionId
       ? characterFeatures.find(cf => cf.id === selectedSectionId)
       : undefined;

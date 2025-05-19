@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/redux/hooks";
-import { CharacterFeatureSection } from "@/types/character/characterFeature";
+import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { Feature } from "@/types/data/feature";
 import { Field, Input, VStack } from "@chakra-ui/react";
 import { JSX, useMemo, useState } from "react";
@@ -12,8 +12,8 @@ import { filterResultsBySearchTerm } from "@/utils/searchUtils";
 import MarkdownPreview from "@/components/markdown/MarkdownPreview";
 
 type CharacterFeatureEditProps = {
-  characterFeatureSection: CharacterFeatureSection;
-  onChange: (updatedSection: CharacterFeatureSection) => void;
+  characterFeatureSection: CharacterFeatureGroup;
+  onChange: (updatedSection: CharacterFeatureGroup) => void;
   onRevert: () => void;
 };
 

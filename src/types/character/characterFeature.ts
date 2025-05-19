@@ -1,4 +1,4 @@
-export type CharacterFeatureSection = {
+export type CharacterFeatureGroup = {
   id: string;
   name: string;
   features: CharacterFeature[];
