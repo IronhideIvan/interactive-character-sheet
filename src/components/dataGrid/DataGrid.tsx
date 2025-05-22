@@ -246,7 +246,7 @@ const DataGrid = <T,>(
               return (
                 <Table.Row key={getId(item)}>
                   {onDeleteRow && (
-                    <Table.Cell key={"table.actions"} padding={1}>
+                    <Table.Cell key={"table.actions.delete"} padding={1}>
                       <ConfirmIconButton
                         size={"sm"}
                         variant={"ghost"}
@@ -262,7 +262,7 @@ const DataGrid = <T,>(
                     </Table.Cell>
                   )}
                   {onEditClick && (
-                    <Table.Cell key={"table.actions"} padding={1}>
+                    <Table.Cell key={"table.actions.edit"} padding={1}>
                       <IconButton
                         size={"sm"}
                         variant={"ghost"}

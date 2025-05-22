@@ -31,9 +31,9 @@ const CharacterFeatureCard = ({ feature }: CharacterFeatureCardProps): JSX.Eleme
       >
         <FaEye />
       </IconButton>
-      <VStack>
+      <VStack p={2}>
         <Text>{feature.name}</Text>
-        <Text>{feature.shortDescription}</Text>
+        <Text textAlign={"center"}>{feature.shortDescription}</Text>
       </VStack>
       {isFeatureDetailsOpen && (
         <SimpleDialog

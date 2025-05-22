@@ -1,6 +1,7 @@
 import { ActionButtonType } from "@/components/dialog/actionButtonTypes";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import MarkdownEditor from "@/components/markdown/MarkdownEditor";
+import TagsEditor from "@/components/TagsEditor";
 import TextEditor from "@/components/TextEditor";
 import { Feature } from "@/types/data/feature";
 import { Field, VStack } from "@chakra-ui/react";
@@ -39,6 +40,13 @@ const FeatureEditor = ({
     });
   };
 
+  const handleTagsChange = (newValue: string[]) => {
+    onChange({
+      ...feature,
+      tags: [...newValue],
+    });
+  };
+
   return (
     <SimpleDialog
       open={isOpen}
@@ -51,13 +59,18 @@ const FeatureEditor = ({
       <VStack gap={6}>
         <TextEditor
           label="Name"
-          value={feature.name}
+          value={feature.name ?? ""}
           onValueChange={handleNameChange}
         />
         <TextEditor
           label="Tooltip"
-          value={feature.shortDescription}
+          value={feature.shortDescription ?? ""}
           onValueChange={handleShortDescriptionChange}
+        />
+        <TagsEditor
+          label="Tags"
+          value={feature.tags ?? []}
+          onValueChange={handleTagsChange}
         />
         <Field.Root height={"100%"} width={"100%"}>
           <Field.Label>Description</Field.Label>

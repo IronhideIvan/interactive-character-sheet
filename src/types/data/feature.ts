@@ -3,4 +3,5 @@ export type Feature = {
   name: string;
   shortDescription: string;
   description: string;
+  tags: string[];
 };
