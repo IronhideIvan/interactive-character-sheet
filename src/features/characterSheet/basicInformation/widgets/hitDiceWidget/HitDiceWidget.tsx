@@ -36,6 +36,7 @@ const HitDiceWidget = (): JSX.Element => {
         borderWidth={"1px"}
         borderColor={"border"}
         borderRadius={"md"}
+        minHeight={"2.5rem"}
       >
         <Button
           flex={"1"}

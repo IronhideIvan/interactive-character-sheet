@@ -33,6 +33,7 @@ const EditClassesField = ({ classes, onClick, ...textProps }: EditClassesFieldPr
         height={"100%"}
         variant={"outline"}
         onClick={onClick}
+        minHeight={"3rem"}
       >
         <Text {...textProps}>
           {displayValue}

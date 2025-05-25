@@ -20,6 +20,7 @@ const HitPointsWidget = (): JSX.Element => {
         borderWidth={"1px"}
         borderColor={"border"}
         borderRadius={"md"}
+        minHeight={"3.1rem"}
       >
         <Button
           flex={"1"}
@@ -34,7 +35,11 @@ const HitPointsWidget = (): JSX.Element => {
             flex={"1"}
             rowGap={0}
           >
-            <StatusBar max={characterHitPoints.max} current={{ value: characterHitPoints.current }} temp={{ value: characterHitPoints.temp }} />
+            <StatusBar
+              max={characterHitPoints.max}
+              current={{ value: characterHitPoints.current }}
+              temp={{ value: characterHitPoints.temp }}
+            />
             <Box margin={-1.5}>
               <Text textStyle={"sm"}>
                 {characterHitPoints.current}/{characterHitPoints.max}
