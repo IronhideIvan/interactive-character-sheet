@@ -15,7 +15,9 @@ type DataDropdownEditorProps = {
   onSelectionChange: (ids: string[]) => void;
 } & SelectRootProps;
 
-export const DataDropdownEditor = ({ collection, selectedItemIds, onSelectionChange, ...rootProps }: DataDropdownEditorProps): JSX.Element => {
+export const DataDropdownEditor = ({
+  collection, selectedItemIds, onSelectionChange, ...rootProps
+}: DataDropdownEditorProps): JSX.Element => {
   const handleItemSelected = (value: string[]) => {
     onSelectionChange(value);
   };

@@ -8,7 +8,9 @@ type TextFieldProps = {
   readonly?: boolean;
 } & InputProps;
 
-const FloatingLabelTextField = ({ value, label, onValueChange, ...props }: TextFieldProps): JSX.Element => {
+const FloatingLabelTextField = ({
+  value, label, onValueChange, ...props
+}: TextFieldProps): JSX.Element => {
   return (
     <Field.Root>
       <Box pos="relative" w="full">
