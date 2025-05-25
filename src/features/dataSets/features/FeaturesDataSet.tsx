@@ -25,6 +25,7 @@ const FeaturesDataSet = (): JSX.Element => {
       name: "",
       shortDescription: "",
       description: "",
+      caption: "",
       tags: [],
     });
     open();
@@ -81,6 +82,12 @@ const FeaturesDataSet = (): JSX.Element => {
           {
             name: "Tags",
             key: "tags",
+            type: "text",
+            readonly: true,
+          },
+          {
+            name: "Caption",
+            key: "caption",
             type: "text",
             readonly: true,
           },

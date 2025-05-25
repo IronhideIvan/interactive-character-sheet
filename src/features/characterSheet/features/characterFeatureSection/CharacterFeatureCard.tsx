@@ -33,6 +33,7 @@ const CharacterFeatureCard = ({ feature }: CharacterFeatureCardProps): JSX.Eleme
       </IconButton>
       <VStack p={2}>
         <Text>{feature.name}</Text>
+        <Text>{feature.caption}</Text>
         <Text textAlign={"center"}>{feature.shortDescription}</Text>
       </VStack>
       {isFeatureDetailsOpen && (

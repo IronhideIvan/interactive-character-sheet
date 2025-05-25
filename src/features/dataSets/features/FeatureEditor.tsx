@@ -26,6 +26,13 @@ const FeatureEditor = ({
     });
   };
 
+  const handleCaptionChange = (newValue: string) => {
+    onChange({
+      ...feature,
+      caption: newValue,
+    });
+  };
+
   const handleShortDescriptionChange = (newValue: string) => {
     onChange({
       ...feature,
@@ -63,7 +70,12 @@ const FeatureEditor = ({
           onValueChange={handleNameChange}
         />
         <TextEditor
-          label="Tooltip"
+          label="Caption"
+          value={feature.caption ?? ""}
+          onValueChange={handleCaptionChange}
+        />
+        <TextEditor
+          label="Short Description"
           value={feature.shortDescription ?? ""}
           onValueChange={handleShortDescriptionChange}
         />
