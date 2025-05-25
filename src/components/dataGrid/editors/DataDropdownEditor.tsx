@@ -1,6 +1,6 @@
 import DynamicIcon from "@/components/DynamicIcon";
 import { Icon } from "@/types/data/icon";
-import { Box, HStack, ListCollection, Portal, Select, SelectRootProps } from "@chakra-ui/react";
+import { Box, HStack, ListCollection, Select, SelectRootProps } from "@chakra-ui/react";
 import { JSX } from "react";
 
 export type DataDropdownItem = {
@@ -21,8 +21,6 @@ export const DataDropdownEditor = ({
   const handleItemSelected = (value: string[]) => {
     onSelectionChange(value);
   };
-
-  console.log("ITEM COUNT: ".concat(collection.items.length.toString()));
 
   const selectedItem: DataDropdownItem | undefined
     = selectedItemIds.length > 0
@@ -61,28 +59,26 @@ export const DataDropdownEditor = ({
           <Select.Indicator />
         </Select.IndicatorGroup>
       </Select.Control>
-      <Portal>
-        <Select.Positioner>
-          <Select.Content>
-            {collection.items.map(item => (
-              <Select.Item item={item} key={item.id} minHeight={"16px"}>
-                <HStack paddingY={1} alignItems={"center"}>
-                  <Box height={"1.5rem"} maxHeight={30}>
-                    {item.icon && (
-                      <DynamicIcon
-                        iconId={item.icon.id}
-                        color={item.icon.color}
-                      />
-                    )}
-                  </Box>
-                  {item.label}
-                </HStack>
-                <Select.ItemIndicator />
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Positioner>
-      </Portal>
+      <Select.Positioner>
+        <Select.Content>
+          {collection.items.map(item => (
+            <Select.Item item={item} key={item.id} minHeight={"16px"}>
+              <HStack paddingY={1} alignItems={"center"}>
+                <Box height={"1.5rem"} maxHeight={30}>
+                  {item.icon && (
+                    <DynamicIcon
+                      iconId={item.icon.id}
+                      color={item.icon.color}
+                    />
+                  )}
+                </Box>
+                {item.label}
+              </HStack>
+              <Select.ItemIndicator />
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Positioner>
     </Select.Root>
   );
 };

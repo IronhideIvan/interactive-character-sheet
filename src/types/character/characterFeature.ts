@@ -1,3 +1,5 @@
+import { CustomNote } from "../common/customNote";
+
 export type CharacterFeatureGroup = {
   id: string;
   name: string;
@@ -6,4 +8,5 @@ export type CharacterFeatureGroup = {
 
 export type CharacterFeature = {
   featureId: string;
+  notes?: CustomNote[];
 };

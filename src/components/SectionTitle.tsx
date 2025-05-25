@@ -1,4 +1,4 @@
-import { HStack, IconButton, Separator, Text } from "@chakra-ui/react";
+import { HStack, IconButton, Separator, Text, TextProps } from "@chakra-ui/react";
 import { JSX } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
@@ -6,13 +6,15 @@ type SectionTitleProps = {
   label: string;
   showEditButton?: boolean;
   onEditButtonClick?: () => void;
-};
+} & Pick<TextProps, "textStyle">;
 
-const SectionTitle = ({ label, showEditButton, onEditButtonClick }: SectionTitleProps): JSX.Element => {
+const SectionTitle = ({
+  label, showEditButton, onEditButtonClick, ...props
+}: SectionTitleProps): JSX.Element => {
   return (
     <HStack width={"100%"}>
       <Separator flex={"1"} />
-      <Text flexShrink={"0"}>{label}</Text>
+      <Text {...props} flexShrink={"0"}>{label}</Text>
       {showEditButton && (
         <IconButton flexShrink={"0"} variant={"ghost"}>
           <FaRegEdit onClick={() => {

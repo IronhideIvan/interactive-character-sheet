@@ -1,6 +1,6 @@
-import FloatingLabelTextField from "@/components/FloatingLabelTextField";
 import { JSX } from "react";
 import { CustomNoteTextFieldProps } from "../customNoteFieldProps";
+import TextEditor from "@/components/TextEditor";
 
 const CustomNoteTextField = ({ note, onChange }: CustomNoteTextFieldProps): JSX.Element => {
   const handleValueChange = (value: string) => {
@@ -11,7 +11,7 @@ const CustomNoteTextField = ({ note, onChange }: CustomNoteTextFieldProps): JSX.
   };
 
   return (
-    <FloatingLabelTextField
+    <TextEditor
       label={note.name}
       value={note.value.string ?? ""}
       onValueChange={handleValueChange}

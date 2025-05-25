@@ -43,7 +43,7 @@ const FeaturesSection = (): JSX.Element => {
       <VStack width={"100%"} justifyContent={"center"}>
         {characterFeatures.map((f) => {
           return (
-            <CharacterFeatureSection key={f.id} group={f} />
+            <CharacterFeatureSection key={f.id} group={f} onChange={handleChangeSection} />
           );
         })}
       </VStack>

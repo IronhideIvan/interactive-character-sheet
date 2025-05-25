@@ -80,13 +80,12 @@ const CustomNotesManager = ({ customNotes, onChange }: CustomNotesManagerProps):
             name: "Name",
             key: "name",
             type: "text",
-            readonly: true,
           },
           {
             name: "Type",
             key: "type",
             type: "reference",
-            readonly: true,
+            minWidth: "10rem",
           },
         ]}
         getId={(item) => {

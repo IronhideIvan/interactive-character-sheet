@@ -15,7 +15,7 @@ const TextEditor = ({
       <Field.Label>{label}</Field.Label>
       <Input
         {...props}
-        width={"100%"}
+        width={props.width ? props.width : "100%"}
         value={value.toString()}
         onChange={e => onValueChange(e.target.value)}
       />

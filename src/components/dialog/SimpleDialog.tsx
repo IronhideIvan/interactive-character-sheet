@@ -1,4 +1,4 @@
-import { CloseButton, Dialog } from "@chakra-ui/react";
+import { CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { JSX, ReactNode } from "react";
 import { ActionButtonProps, ActionButtonType } from "./actionButtonTypes";
 import { ActionButtons } from "./ActionButtons";
@@ -24,27 +24,29 @@ const SimpleDialog = ({
       modal={false}
     >
       <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content maxHeight={"98vh"}>
-          {title
-            && (
-              <Dialog.Header paddingBottom={2}>
-                <Dialog.Title>{title}</Dialog.Title>
-              </Dialog.Header>
-            )}
-          <Dialog.Body overflow={"auto"}>
-            {children}
-          </Dialog.Body>
-          <Dialog.CloseTrigger asChild>
-            <CloseButton size="sm" onClick={onClose} />
-          </Dialog.CloseTrigger>
-          <Dialog.Footer>
-            {actionButtonsType && (
-              <ActionButtons {...actionButtonProps} buttonType={actionButtonsType} />
-            )}
-          </Dialog.Footer>
-        </Dialog.Content>
-      </Dialog.Positioner>
+      <Portal>
+        <Dialog.Positioner>
+          <Dialog.Content maxHeight={"98vh"}>
+            {title
+              && (
+                <Dialog.Header paddingBottom={2}>
+                  <Dialog.Title>{title}</Dialog.Title>
+                </Dialog.Header>
+              )}
+            <Dialog.Body overflow={"auto"}>
+              {children}
+            </Dialog.Body>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" onClick={onClose} />
+            </Dialog.CloseTrigger>
+            <Dialog.Footer>
+              {actionButtonsType && (
+                <ActionButtons {...actionButtonProps} buttonType={actionButtonsType} />
+              )}
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
     </Dialog.Root>
   );
 };
