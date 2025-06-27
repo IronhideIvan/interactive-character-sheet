@@ -37,6 +37,7 @@ const FeaturesSection = (): JSX.Element => {
     <VStack width={"100%"}>
       <SectionTitle
         label="Feature Groups"
+        textStyle={"xl"}
         showEditButton
         onEditButtonClick={handleEditButtonClick}
       />

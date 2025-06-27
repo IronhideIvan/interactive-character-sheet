@@ -1,17 +1,31 @@
-import { Collapsible } from "@chakra-ui/react";
-import { JSX, ReactNode } from "react";
+import { Collapsible, IconButton } from "@chakra-ui/react";
+import { JSX, ReactNode, useState } from "react";
 import { SectionTitle, SectionTitleProps } from "./SectionTitle";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 type CollapsibleSectionProps = {
   children?: ReactNode;
 } & SectionTitleProps;
 
 const CollapsibleSection = ({ children, ...sectionTitleProps }: CollapsibleSectionProps): JSX.Element => {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <Collapsible.Root defaultOpen={true} width={"100%"}>
-      <Collapsible.Trigger width={"100%"}>
-        <SectionTitle {...sectionTitleProps} />
-      </Collapsible.Trigger>
+    <Collapsible.Root open={isOpen} width={"100%"}>
+      <SectionTitle
+        leftActions={isOpen
+          ? (
+            <IconButton flexShrink={"0"} variant={"ghost"} onClick={() => setIsOpen(false)}>
+              <FaChevronUp />
+            </IconButton>
+          )
+          : (
+            <IconButton flexShrink={"0"} variant={"ghost"} onClick={() => setIsOpen(true)}>
+              <FaChevronDown />
+            </IconButton>
+          )}
+        {...sectionTitleProps}
+      />
       <Collapsible.Content>
         {children}
       </Collapsible.Content>

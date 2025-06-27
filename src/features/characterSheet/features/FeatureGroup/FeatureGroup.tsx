@@ -49,7 +49,12 @@ const FeatureGroup = ({ group, onChange }: FeatureGroupProps): JSX.Element => {
   }, [group, onChange]);
 
   return (
-    <CollapsibleSection label={group.name} showEditButton onEditButtonClick={openSectionDialog}>
+    <CollapsibleSection
+      label={group.name}
+      textStyle={"lg"}
+      showEditButton
+      onEditButtonClick={openSectionDialog}
+    >
       {group.notes && group.notes.length > 0 && (
         <>
           <SectionTitle

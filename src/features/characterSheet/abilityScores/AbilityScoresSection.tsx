@@ -14,7 +14,7 @@ const AbilityScoresSection = ({ columnSpan }: AbilityScoresSection): JSX.Element
 
   return (
     <VStack width={"100%"}>
-      <SectionTitle label="Ability Scores" />
+      <SectionTitle label="Ability Scores" textStyle={"xl"} />
       <SimpleGrid
         gap={2}
         justifyContent={"center"}
