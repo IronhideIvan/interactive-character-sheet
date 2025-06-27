@@ -6,7 +6,7 @@ import { useModal } from "@/hooks/useModal";
 import FeaturesSectionDrawer from "./sectionEdit/FeaturesSectionDrawer";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { resetCharacterFeature, resetState, setCharacterFeatures, upsertCharacterFeature } from "./characterFeaturesSlice";
-import CharacterFeatureSection from "./characterFeatureSection/CharacterFeatureSection";
+import FeatureGroup from "./FeatureGroup/FeatureGroup";
 
 const FeaturesSection = (): JSX.Element => {
   const characterFeatures = useAppSelector(state => state.characterFeatures.latest);
@@ -43,7 +43,7 @@ const FeaturesSection = (): JSX.Element => {
       <VStack width={"100%"} justifyContent={"center"}>
         {characterFeatures.map((f) => {
           return (
-            <CharacterFeatureSection key={f.id} group={f} onChange={handleChangeSection} />
+            <FeatureGroup key={f.id} group={f} onChange={handleChangeSection} />
           );
         })}
       </VStack>

@@ -4,7 +4,7 @@ import { JSX, useMemo, useState } from "react";
 import FeaturesSectionDataSet from "./FeaturesSectionDataSet";
 import { useModal } from "@/hooks/useModal";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
-import CharacterFeatureEdit from "../characterFeatureEdit/CharacterFeatureEdit";
+import FeatureGroupEdit from "../FeatureGroup/FeatureGroupEdit";
 import { Box, VStack } from "@chakra-ui/react";
 import { SectionTitle } from "@/components/SectionTitle";
 import CharacterFeaturesDataSet from "./CharacterFeatureDataSet";
@@ -82,7 +82,7 @@ const FeaturesSectionDrawer = ({
           onClose={closeSectionDialog}
           title={selectedSection.name}
         >
-          <CharacterFeatureEdit
+          <FeatureGroupEdit
             featureGroup={selectedSection}
             onChange={onChangeSection}
             onRevertFeatureList={() => {

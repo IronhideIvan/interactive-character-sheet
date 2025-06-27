@@ -3,7 +3,7 @@ import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { Feature } from "@/types/data/feature";
 import { Field, Input, VStack } from "@chakra-ui/react";
 import { JSX, useCallback, useMemo, useState } from "react";
-import CharacterFeatureEditDataSet from "./CharacterFeatureEditDataSet";
+import FeatureGroupEditDataSet from "./FeatureGroupEditDataSet";
 import FilteredFeaturesDataSet from "./FilteredFeaturesDataSet";
 import cloneDeep from "lodash.clonedeep";
 import { useModal } from "@/hooks/useModal";
@@ -15,17 +15,17 @@ import CustomNotesManager from "@/components/notes/CustomNotesManager";
 import { CustomNote } from "@/types/common/customNote";
 import TextEditor from "@/components/TextEditor";
 
-type CharacterFeatureEditProps = {
+type FeatureGroupEditProps = {
   featureGroup: CharacterFeatureGroup;
   onChange: (updatedSection: CharacterFeatureGroup) => void;
   onRevertFeatureList?: () => void;
 };
 
-const CharacterFeatureEdit = ({
+const FeatureGroupEdit = ({
   featureGroup,
   onChange,
   onRevertFeatureList: onRevert,
-}: CharacterFeatureEditProps): JSX.Element => {
+}: FeatureGroupEditProps): JSX.Element => {
   const allFeatures = useAppSelector(state => state.featuresDataSet.latest);
   const { isOpen: isFeatureDetailsOpen, open: openFeatureDetails, close: closeFeatureDetails } = useModal();
   const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
@@ -112,7 +112,7 @@ const CharacterFeatureEdit = ({
           placeholder="Fighting Style"
         />
       </Field.Root>
-      <CharacterFeatureEditDataSet
+      <FeatureGroupEditDataSet
         characterFeatures={sectionFeatures}
         onRevertAllChanges={onRevert}
       />
@@ -136,4 +136,4 @@ const CharacterFeatureEdit = ({
   );
 };
 
-export default CharacterFeatureEdit;
+export default FeatureGroupEdit;

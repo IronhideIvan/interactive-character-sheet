@@ -3,13 +3,13 @@ import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
 import { Feature } from "@/types/data/feature";
 
-type CharacterFeatureEditDataSetProps = {
+type FeatureGroupEditDataSetProps = {
   characterFeatures: Feature[];
   onRevertAllChanges?: () => void;
 };
 
-const CharacterFeatureEditDataSet = (
-  { characterFeatures, onRevertAllChanges }: CharacterFeatureEditDataSetProps,
+const FeatureGroupEditDataSet = (
+  { characterFeatures, onRevertAllChanges }: FeatureGroupEditDataSetProps,
 ): JSX.Element => {
   const handleGetId = (item: Feature) => {
     return item.id;
@@ -39,4 +39,4 @@ const CharacterFeatureEditDataSet = (
   );
 };
 
-export default CharacterFeatureEditDataSet;
+export default FeatureGroupEditDataSet;

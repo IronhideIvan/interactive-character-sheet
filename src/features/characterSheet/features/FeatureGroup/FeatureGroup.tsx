@@ -2,22 +2,22 @@ import CollapsibleSection from "@/components/CollapsibleSection";
 import { useFeatureFinder } from "@/hooks/useFeatureFinder";
 import { CharacterFeature, CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { JSX, useCallback } from "react";
-import CharacterFeatureCard from "./CharacterFeatureCard";
+import CharacterFeatureCard from "../characterFeature/CharacterFeatureCard";
 import { GridItem, SimpleGrid } from "@chakra-ui/react";
 import { upsert } from "@/utils/arrayUtils";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import { useModal } from "@/hooks/useModal";
-import CharacterFeatureEdit from "../characterFeatureEdit/CharacterFeatureEdit";
+import FeatureGroupEdit from "./FeatureGroupEdit";
 import { SectionTitle } from "@/components/SectionTitle";
 import CustomNoteField from "@/components/notes/CustomNoteField";
 import { CustomNote } from "@/types/common/customNote";
 
-type CharacterFeatureSectionProps = {
+type FeatureGroupProps = {
   group: CharacterFeatureGroup;
   onChange: (updatedGroup: CharacterFeatureGroup) => void;
 };
 
-const CharacterFeatureSection = ({ group, onChange }: CharacterFeatureSectionProps): JSX.Element => {
+const FeatureGroup = ({ group, onChange }: FeatureGroupProps): JSX.Element => {
   const { findFeature } = useFeatureFinder();
   const {
     isOpen: isSectionDialogOpen,
@@ -115,7 +115,7 @@ const CharacterFeatureSection = ({ group, onChange }: CharacterFeatureSectionPro
           onClose={closeSectionDialog}
           title={group.name}
         >
-          <CharacterFeatureEdit
+          <FeatureGroupEdit
             featureGroup={group}
             onChange={handleGroupChange}
           />
@@ -125,4 +125,4 @@ const CharacterFeatureSection = ({ group, onChange }: CharacterFeatureSectionPro
   );
 };
 
-export default CharacterFeatureSection;
+export default FeatureGroup;
