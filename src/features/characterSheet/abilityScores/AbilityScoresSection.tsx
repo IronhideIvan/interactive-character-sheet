@@ -2,7 +2,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { ConditionalValue, GridItem, SimpleGrid, VStack } from "@chakra-ui/react";
 import { JSX } from "react";
 import AbilityScoreWidget from "./widget/AbilityScoreWidget";
-import SectionTitle from "@/components/SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 
 type AbilityScoresSection = {
   columnSpan: ConditionalValue<number | "auto">;

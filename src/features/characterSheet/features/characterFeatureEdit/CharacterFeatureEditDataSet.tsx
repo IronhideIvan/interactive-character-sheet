@@ -5,7 +5,7 @@ import { Feature } from "@/types/data/feature";
 
 type CharacterFeatureEditDataSetProps = {
   characterFeatures: Feature[];
-  onRevertAllChanges: () => void;
+  onRevertAllChanges?: () => void;
 };
 
 const CharacterFeatureEditDataSet = (
@@ -13,10 +13,6 @@ const CharacterFeatureEditDataSet = (
 ): JSX.Element => {
   const handleGetId = (item: Feature) => {
     return item.id;
-  };
-
-  const handleRevertAllChanges = () => {
-    onRevertAllChanges();
   };
 
   const handleGetFriendlyName = (item: Feature) => {
@@ -37,7 +33,7 @@ const CharacterFeatureEditDataSet = (
         ]}
         getId={handleGetId}
         getFriendlyName={handleGetFriendlyName}
-        onRevertAllChanges={handleRevertAllChanges}
+        onRevertAllChanges={onRevertAllChanges}
       />
     </Box>
   );

@@ -2,7 +2,7 @@ import SimpleDialog from "@/components/dialog/SimpleDialog";
 import MarkdownPreview from "@/components/markdown/MarkdownPreview";
 import CustomNoteField from "@/components/notes/CustomNoteField";
 import CustomNotesManager from "@/components/notes/CustomNotesManager";
-import SectionTitle from "@/components/SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 import WidgetPaper from "@/components/WidgetPaper";
 import { useModal } from "@/hooks/useModal";
 import { CharacterFeature } from "@/types/character/characterFeature";

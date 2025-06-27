@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { VStack } from "@chakra-ui/react";
 import { JSX } from "react";
-import SectionTitle from "@/components/SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 import { useModal } from "@/hooks/useModal";
 import FeaturesSectionDrawer from "./sectionEdit/FeaturesSectionDrawer";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
@@ -36,7 +36,7 @@ const FeaturesSection = (): JSX.Element => {
   return (
     <VStack width={"100%"}>
       <SectionTitle
-        label="Features"
+        label="Feature Groups"
         showEditButton
         onEditButtonClick={handleEditButtonClick}
       />

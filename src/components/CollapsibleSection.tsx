@@ -1,17 +1,16 @@
 import { Collapsible } from "@chakra-ui/react";
 import { JSX, ReactNode } from "react";
-import SectionTitle from "./SectionTitle";
+import { SectionTitle, SectionTitleProps } from "./SectionTitle";
 
 type CollapsibleSectionProps = {
-  label: string;
   children?: ReactNode;
-};
+} & SectionTitleProps;
 
-const CollapsibleSection = ({ label, children }: CollapsibleSectionProps): JSX.Element => {
+const CollapsibleSection = ({ children, ...sectionTitleProps }: CollapsibleSectionProps): JSX.Element => {
   return (
     <Collapsible.Root defaultOpen={true} width={"100%"}>
       <Collapsible.Trigger width={"100%"}>
-        <SectionTitle label={label} />
+        <SectionTitle {...sectionTitleProps} />
       </Collapsible.Trigger>
       <Collapsible.Content>
         {children}

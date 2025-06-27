@@ -6,7 +6,7 @@ import { useModal } from "@/hooks/useModal";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import CharacterFeatureEdit from "../characterFeatureEdit/CharacterFeatureEdit";
 import { Box, VStack } from "@chakra-ui/react";
-import SectionTitle from "@/components/SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 import CharacterFeaturesDataSet from "./CharacterFeatureDataSet";
 
 type FeaturesSectionDrawerProps = {
@@ -83,9 +83,9 @@ const FeaturesSectionDrawer = ({
           title={selectedSection.name}
         >
           <CharacterFeatureEdit
-            characterFeatureSection={selectedSection}
+            featureGroup={selectedSection}
             onChange={onChangeSection}
-            onRevert={() => {
+            onRevertFeatureList={() => {
               onResetSection(selectedSection);
             }}
           />

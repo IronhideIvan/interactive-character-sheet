@@ -4,6 +4,7 @@ export type CharacterFeatureGroup = {
   id: string;
   name: string;
   features: CharacterFeature[];
+  notes?: CustomNote[];
 };
 
 export type CharacterFeature = {

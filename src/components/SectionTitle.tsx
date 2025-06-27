@@ -2,13 +2,13 @@ import { HStack, IconButton, Separator, Text, TextProps } from "@chakra-ui/react
 import { JSX } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
-type SectionTitleProps = {
+export type SectionTitleProps = {
   label: string;
   showEditButton?: boolean;
   onEditButtonClick?: () => void;
 } & Pick<TextProps, "textStyle">;
 
-const SectionTitle = ({
+export const SectionTitle = ({
   label, showEditButton, onEditButtonClick, ...props
 }: SectionTitleProps): JSX.Element => {
   return (
@@ -27,5 +27,3 @@ const SectionTitle = ({
     </HStack>
   );
 };
-
-export default SectionTitle;
