@@ -1,3 +1,5 @@
+import { CalculatedField } from "./calculatedField";
+
 export type CustomNoteType = "text" | "boolean" | "number";
 
 export type CustomNote = {
@@ -11,4 +13,5 @@ export type CustomNoteValue = {
   boolean?: boolean;
   string?: string;
   number?: number;
+  calculation?: CalculatedField;
 };
