@@ -42,6 +42,7 @@ const FeaturesSectionDataSet = ({ collectionId }: FeaturesSectionDataSetProps): 
   const handleAddRow = () => {
     dispatch(upsertCharacterFeatureGroup({
       id: uuidv4(),
+      collectionId: collectionId,
       name: "",
       features: [],
     }));

@@ -35,7 +35,6 @@ const CollectionsDataSet = (): JSX.Element => {
       name: "",
       type: GroupCollectionType.CharacterFeatureGroup,
     }));
-    open();
   };
 
   const handleDeleteRow = (item: GroupCollection) => {
