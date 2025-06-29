@@ -10,7 +10,7 @@ import { featuresDataSetSliceSlice } from "@/features/dataSets/features/features
 import { characterFeaturesSlice } from "@/features/characterSheet/features/characterFeature/characterFeaturesSlice";
 import { customNotesSlice } from "@/features/general/notes/customNotesSlice";
 import { featureGroupsSlice } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
-import { groupCollectionsSlice } from "@/features/general/collections/groupCollectionsSlice";
+import { groupCollectionsSlice } from "@/features/dataSets/collections/groupCollectionsSlice";
 
 export const store = configureStore({
   reducer: {

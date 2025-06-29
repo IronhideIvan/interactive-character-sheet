@@ -73,7 +73,11 @@ const NavBar = (): JSX.Element => {
       </HStack>
       <Tabs.Root value={selectedRoute.value} onValueChange={det => handleValueChanged(det.value)} width="100%">
         <Tabs.List justifyContent={"center"}>
-          <Tabs.Trigger key={navRoutes.fallback.value} value={navRoutes.fallback.value}>{navRoutes.fallback.friendlyName}</Tabs.Trigger>
+          <Tabs.Trigger
+            key={navRoutes.fallback.value}
+            value={navRoutes.fallback.value}
+          >{navRoutes.fallback.friendlyName}
+          </Tabs.Trigger>
           {navRoutes.paths.map((p) => {
             return (
               <Tabs.Trigger key={p.value} value={p.value}>{p.friendlyName}</Tabs.Trigger>

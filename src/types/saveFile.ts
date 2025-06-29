@@ -22,10 +22,10 @@ export type SaveFile = {
     proficiencyBonuses: ProficiencyBonus[];
     skills: Skill[];
     features: Feature[];
+    groupCollections: GroupCollection[];
   };
   general: {
     customNotes: CustomNote[];
-    groupCollections: GroupCollection[];
   };
   version: {
     major: number;

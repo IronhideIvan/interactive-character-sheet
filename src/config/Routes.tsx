@@ -1,5 +1,6 @@
 import CharacterSheet from "@/features/characterSheet/CharacterSheet";
 import AbilitiesDataSet from "@/features/dataSets/abilities/AbilitiesDataSet";
+import CollectionsDataSet from "@/features/dataSets/collections/CollectionsDataSet";
 import DataSets from "@/features/dataSets/DataSets";
 import FeaturesDataSet from "@/features/dataSets/features/FeaturesDataSet";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
@@ -35,6 +36,14 @@ export const appRoutes: Route[] = [
         element: (
           <DataSets>
             <AbilitiesDataSet />
+          </DataSets>
+        ),
+      },
+      {
+        path: "collections",
+        element: (
+          <DataSets>
+            <CollectionsDataSet />
           </DataSets>
         ),
       },

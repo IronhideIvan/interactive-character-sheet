@@ -12,6 +12,11 @@ const navRoutes: NavRoutes = {
       friendlyName: "Abilities",
     },
     {
+      path: "/collections",
+      value: "/data/collections",
+      friendlyName: "Collections",
+    },
+    {
       path: "/features",
       value: "/data/features",
       friendlyName: "Features",

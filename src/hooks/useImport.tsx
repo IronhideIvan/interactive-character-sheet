@@ -2,7 +2,7 @@ import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityS
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
 import { resetState as resetCharacterFeaturesState, setInitial as setInitialCharacterFeatures } from "@/features/characterSheet/features/characterFeature/characterFeaturesSlice";
 import { setInitial as setInitialFeatureGroups } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
-import { setInitial } from "@/features/general/collections/groupCollectionsSlice";
+import { setInitial } from "@/features/dataSets/collections/groupCollectionsSlice";
 import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetFeaturesState, setInitial as setInitialFeatures } from "@/features/dataSets/features/featuresDataSetSlice";
@@ -70,11 +70,9 @@ export const useExport = () => {
         proficiencyBonuses: profBonuses,
         skills: skills,
         features: features,
-      },
-      general: {
-        customNotes: customNotes,
         groupCollections: groupCollections,
       },
+      general: { customNotes: customNotes },
       version: {
         major: 0,
         minor: 1,
@@ -94,14 +92,21 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
   if (saveFile?.data?.abilities) {
     dispatch(setInitialAbilitiesData(saveFile.data.abilities));
   }
+
   if (saveFile?.data?.proficiencyBonuses) {
     dispatch(setInitialProfBonuses(saveFile.data.proficiencyBonuses));
   }
+
   if (saveFile?.data?.skills) {
     dispatch(setInitialSkills(saveFile.data.skills));
   }
+
   if (saveFile?.data?.features) {
     dispatch(setInitialFeatures(saveFile.data.features));
+  }
+
+  if (saveFile?.data?.groupCollections) {
+    dispatch(setInitial(saveFile.data.groupCollections));
   }
 
   if (saveFile?.character?.basicInformation) {
@@ -136,9 +141,5 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.general?.customNotes) {
     dispatch(setInitialNotes(saveFile.general.customNotes));
-  }
-
-  if (saveFile?.general?.groupCollections) {
-    dispatch(setInitial(saveFile.general.groupCollections));
   }
 };
