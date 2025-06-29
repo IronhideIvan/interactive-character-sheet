@@ -1,6 +1,6 @@
 import { EntityBase } from "../common/entityBase";
 
-export type CharacterClass = EntityBase & {
-  name: string;
+export type ProficiencyBonus = EntityBase & {
   level: number;
+  bonus: number;
 };

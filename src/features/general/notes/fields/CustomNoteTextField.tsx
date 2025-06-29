@@ -1,8 +1,8 @@
 import { JSX } from "react";
-import { CustomNoteTextFieldProps } from "../customNoteFieldProps";
+import { CustomNoteFieldProps } from "../customNoteFieldProps";
 import TextEditor from "@/components/TextEditor";
 
-const CustomNoteTextField = ({ note, onChange }: CustomNoteTextFieldProps): JSX.Element => {
+const CustomNoteTextField = ({ note, onChange }: CustomNoteFieldProps): JSX.Element => {
   const handleValueChange = (value: string) => {
     onChange({
       ...note,

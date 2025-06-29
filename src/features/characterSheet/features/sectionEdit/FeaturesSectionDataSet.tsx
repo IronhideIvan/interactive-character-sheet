@@ -1,17 +1,21 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { Box } from "@chakra-ui/react";
-import { JSX } from "react";
+import { JSX, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { upsert } from "@/utils/arrayUtils";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { deleteCharacterFeatureGroup, upsertCharacterFeatureGroup } from "../FeatureGroup/featureGroupsSlice";
 
-type FeaturesSectionDataSet = {
-  characterFeatures: CharacterFeatureGroup[];
-  onChange: (updatedSections: CharacterFeatureGroup[]) => void;
-  reset: () => void;
+type FeaturesSectionDataSetProps = {
+  collectionId: string;
 };
 
-const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: FeaturesSectionDataSet): JSX.Element => {
+const FeaturesSectionDataSet = ({ collectionId }: FeaturesSectionDataSetProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const allGroups = useAppSelector(state => state.featureGroups.latest);
+  const collectionGroups = useMemo(() => allGroups.filter(g => g.collectionId === collectionId),
+    [allGroups, collectionId]);
+
   const handleGetId = (item: CharacterFeatureGroup) => {
     return item.id;
   };
@@ -31,27 +35,20 @@ const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: Features
     }
 
     if (newItem) {
-      onChange(upsert(newItem, characterFeatures, it => it.id === newItem.id));
+      dispatch(upsertCharacterFeatureGroup(newItem));
     }
   };
 
   const handleAddRow = () => {
-    onChange([
-      ...characterFeatures,
-      {
-        id: uuidv4(),
-        name: "",
-        features: [],
-      },
-    ]);
+    dispatch(upsertCharacterFeatureGroup({
+      id: uuidv4(),
+      name: "",
+      features: [],
+    }));
   };
 
   const handleDeleteRow = (item: CharacterFeatureGroup) => {
-    onChange(characterFeatures.filter(it => it.id !== item.id));
-  };
-
-  const handleRevertAllChanges = () => {
-    reset();
+    dispatch(deleteCharacterFeatureGroup(item.id));
   };
 
   const handleGetFriendlyName = (item: CharacterFeatureGroup) => {
@@ -61,7 +58,7 @@ const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: Features
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <DataGrid
-        items={characterFeatures}
+        items={collectionGroups}
         columnInfo={[
           {
             name: "Name",
@@ -74,7 +71,6 @@ const FeaturesSectionDataSet = ({ characterFeatures, onChange, reset }: Features
         onStringValueChange={handleStringValueChanged}
         onAddRow={handleAddRow}
         onDeleteRow={handleDeleteRow}
-        onRevertAllChanges={handleRevertAllChanges}
       />
     </Box>
   );

@@ -14,7 +14,7 @@ const initialState: FeatureDataSetState = {
   initial: [],
 };
 
-export const FeaturesDataSetSliceSlice = createSlice({
+export const featuresDataSetSliceSlice = createSlice({
   name: "FeaturesDataSet",
   initialState,
   reducers: {
@@ -42,4 +42,4 @@ export const {
   deleteFeature,
   resetState,
   setInitial,
-} = FeaturesDataSetSliceSlice.actions;
+} = featuresDataSetSliceSlice.actions;

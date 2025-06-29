@@ -1,43 +1,24 @@
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import MarkdownPreview from "@/components/markdown/MarkdownPreview";
-import CustomNoteField from "@/components/notes/CustomNoteField";
-import CustomNotesManager from "@/components/notes/CustomNotesManager";
-import { SectionTitle } from "@/components/SectionTitle";
+import CustomNotesManager from "@/features/general/notes/CustomNotesManager";
 import WidgetPaper from "@/components/WidgetPaper";
 import { useModal } from "@/hooks/useModal";
 import { CharacterFeature } from "@/types/character/characterFeature";
-import { CustomNote } from "@/types/common/customNote";
 import { Feature } from "@/types/data/feature";
-import { upsert } from "@/utils/arrayUtils";
 import { IconButton, Text, VStack } from "@chakra-ui/react";
-import { JSX, useCallback } from "react";
+import { JSX } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaNoteSticky } from "react-icons/fa6";
+import CustomNotesSection from "@/features/general/notes/CustomNotesSection";
 
 type CharacterFeatureCardProps = {
   feature: Feature;
   characterFeature: CharacterFeature;
-  onChange: (updatedCharacterFeature: CharacterFeature) => void;
 };
 
-const CharacterFeatureCard = ({ feature, characterFeature, onChange }: CharacterFeatureCardProps): JSX.Element => {
+const CharacterFeatureCard = ({ feature }: CharacterFeatureCardProps): JSX.Element => {
   const { isOpen: isFeatureDetailsOpen, open: openFeatureDetails, close: closeFeatureDetails } = useModal();
   const { isOpen: isNotesManagerOpen, open: openNotesManager, close: closeNotesManager } = useModal();
-
-  const handleSingleNoteChange = useCallback((updatedNote: CustomNote) => {
-    const currentNotes = characterFeature.notes ?? [];
-    onChange({
-      ...characterFeature,
-      notes: upsert(updatedNote, [...currentNotes], item => item.id === updatedNote.id),
-    });
-  }, [characterFeature, onChange]);
-
-  const handleAllNotesChange = useCallback((newNotes: CustomNote[]) => {
-    onChange({
-      ...characterFeature,
-      notes: newNotes,
-    });
-  }, [characterFeature, onChange]);
 
   return (
     <WidgetPaper pos={"relative"}>
@@ -71,27 +52,7 @@ const CharacterFeatureCard = ({ feature, characterFeature, onChange }: Character
         <Text>{feature.name}</Text>
         <Text>{feature.caption}</Text>
         <Text textAlign={"center"}>{feature.shortDescription}</Text>
-        {characterFeature.notes && characterFeature.notes.length > 0 && (
-          <>
-            <SectionTitle
-              label="Notes"
-              textStyle={"sm"}
-            />
-            {
-              characterFeature.notes.map((n) => {
-                return (
-                  <CustomNoteField
-                    key={n.id}
-                    note={n}
-                    onChange={(newNote) => {
-                      handleSingleNoteChange(newNote);
-                    }}
-                  />
-                );
-              })
-            }
-          </>
-        )}
+        <CustomNotesSection parentId={feature.id} />
       </VStack>
       {isFeatureDetailsOpen && (
         <SimpleDialog
@@ -109,8 +70,7 @@ const CharacterFeatureCard = ({ feature, characterFeature, onChange }: Character
           onClose={closeNotesManager}
         >
           <CustomNotesManager
-            customNotes={characterFeature.notes ?? []}
-            onChange={handleAllNotesChange}
+            parentId={feature.id}
           />
         </SimpleDialog>
       )}

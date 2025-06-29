@@ -1,13 +1,14 @@
+import { CollectionItem } from "@chakra-ui/react";
 import { CustomNote } from "../common/customNote";
+import { EntityBase } from "../common/entityBase";
 
-export type CharacterFeatureGroup = {
-  id: string;
+export type CharacterFeatureGroup = CollectionItem & {
   name: string;
-  features: CharacterFeature[];
   notes?: CustomNote[];
 };
 
-export type CharacterFeature = {
+export type CharacterFeature = EntityBase & {
   featureId: string;
+  groupId: string;
   notes?: CustomNote[];
 };

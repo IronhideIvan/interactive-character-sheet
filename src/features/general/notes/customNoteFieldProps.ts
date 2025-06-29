@@ -1,6 +1,6 @@
 import { CustomNote } from "@/types/common/customNote";
 
-export type CustomNoteTextFieldProps = {
+export type CustomNoteFieldProps = {
   note: CustomNote;
   onChange: (newNote: CustomNote) => void;
 };

@@ -1,8 +1,8 @@
 import { JSX } from "react";
-import { CustomNoteTextFieldProps } from "../customNoteFieldProps";
+import { CustomNoteFieldProps } from "../customNoteFieldProps";
 import NumberEditor from "@/components/NumberEditor";
 
-const CustomNoteNumberField = ({ note, onChange }: CustomNoteTextFieldProps): JSX.Element => {
+const CustomNoteNumberField = ({ note, onChange }: CustomNoteFieldProps): JSX.Element => {
   const handleValueChange = (value: number) => {
     onChange({
       ...note,

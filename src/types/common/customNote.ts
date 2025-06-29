@@ -1,9 +1,10 @@
 import { CalculatedField } from "./calculatedField";
+import { EntityBase } from "./entityBase";
 
 export type CustomNoteType = "text" | "boolean" | "number";
 
-export type CustomNote = {
-  id: string;
+export type CustomNote = EntityBase & {
+  parentId: string;
   type: CustomNoteType;
   value: CustomNoteValue;
   name: string;

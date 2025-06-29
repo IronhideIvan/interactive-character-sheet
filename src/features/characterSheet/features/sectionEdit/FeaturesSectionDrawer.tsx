@@ -1,33 +1,31 @@
 import FloatingDrawer from "@/components/FloatingDrawer";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { JSX, useMemo, useState } from "react";
-import FeaturesSectionDataSet from "./FeaturesSectionDataSet";
 import { useModal } from "@/hooks/useModal";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import FeatureGroupEdit from "../FeatureGroup/FeatureGroupEdit";
 import { Box, VStack } from "@chakra-ui/react";
 import { SectionTitle } from "@/components/SectionTitle";
 import CharacterFeaturesDataSet from "./CharacterFeatureDataSet";
+import FeaturesSectionDataSet from "./FeaturesSectionDataSet";
+import { useAppSelector } from "@/redux/hooks";
 
 type FeaturesSectionDrawerProps = {
+  collectionId: string;
   open: boolean;
-  characterFeatures: CharacterFeatureGroup[];
   onClose: () => void;
   onChangeEverything: (updatedSections: CharacterFeatureGroup[]) => void;
-  onChangeSection: (updatedSection: CharacterFeatureGroup) => void;
   onResetEverything: () => void;
-  onResetSection: (section: CharacterFeatureGroup) => void;
 };
 
 const FeaturesSectionDrawer = ({
+  collectionId,
   open,
-  characterFeatures,
   onClose,
-  onChangeEverything,
-  onChangeSection,
-  onResetEverything,
-  onResetSection,
 }: FeaturesSectionDrawerProps): JSX.Element => {
+  const allFeatureGroups = useAppSelector(state => state.featureGroups.latest);
+  const collectionGroups = useMemo(() => allFeatureGroups.filter(fg => fg.collectionId === collectionId),
+    [allFeatureGroups, collectionId]);
   const [selectedSectionId, setSelectedSectionId] = useState<string | undefined>();
   const {
     isOpen: isSectionDialogOpen,
@@ -42,9 +40,9 @@ const FeaturesSectionDrawer = ({
 
   const selectedSection: CharacterFeatureGroup | undefined = useMemo(() => {
     return selectedSectionId
-      ? characterFeatures.find(cf => cf.id === selectedSectionId)
+      ? collectionGroups.find(cf => cf.id === selectedSectionId)
       : undefined;
-  }, [characterFeatures, selectedSectionId]);
+  }, [collectionGroups, selectedSectionId]);
 
   return (
     <FloatingDrawer
@@ -55,11 +53,9 @@ const FeaturesSectionDrawer = ({
     >
       <VStack>
         <FeaturesSectionDataSet
-          characterFeatures={characterFeatures}
-          onChange={onChangeEverything}
-          reset={onResetEverything}
+          collectionId={collectionId}
         />
-        {characterFeatures.map((s) => {
+        {collectionGroups.map((s) => {
           return (
             <Box key={s.id}>
               <SectionTitle
@@ -70,7 +66,7 @@ const FeaturesSectionDrawer = ({
                   openSectionDialog();
                 }}
               />
-              <CharacterFeaturesDataSet characterFeatures={s.features} />
+              <CharacterFeaturesDataSet groupId={s.id} />
             </Box>
           );
         })}
@@ -84,10 +80,6 @@ const FeaturesSectionDrawer = ({
         >
           <FeatureGroupEdit
             featureGroup={selectedSection}
-            onChange={onChangeSection}
-            onRevertFeatureList={() => {
-              onResetSection(selectedSection);
-            }}
           />
         </SimpleDialog>
       )}

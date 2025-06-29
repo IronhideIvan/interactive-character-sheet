@@ -1,20 +1,26 @@
 import { CustomNote, CustomNoteType } from "@/types/common/customNote";
 import { Box, createListCollection, ListCollection } from "@chakra-ui/react";
-import { JSX, useCallback } from "react";
-import DataGrid from "../dataGrid/DataGrid";
-import { DataDropdownItem } from "../dataGrid/editors/DataDropdownEditor";
-import { upsert } from "@/utils/arrayUtils";
+import { JSX, useCallback, useMemo } from "react";
+import DataGrid from "../../../components/dataGrid/DataGrid";
+import { DataDropdownItem } from "../../../components/dataGrid/editors/DataDropdownEditor";
 import { v4 } from "uuid";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { deleteCustomNote, upsertCustomNote } from "./customNotesSlice";
 
 type CustomNotesManagerProps = {
-  customNotes: CustomNote[];
-  onChange: (newNotes: CustomNote[]) => void;
+  parentId: string;
 };
 
-const CustomNotesManager = ({ customNotes, onChange }: CustomNotesManagerProps): JSX.Element => {
+const CustomNotesManager = ({ parentId }: CustomNotesManagerProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const allNotes = useAppSelector(state => state.customNotes.latest);
+  const parentNotes = useMemo(() => {
+    return allNotes.filter(n => n.parentId === parentId);
+  }, [allNotes, parentId]);
+
   const upsertNote = useCallback((item: CustomNote): void => {
-    onChange(upsert(item, [...customNotes], it => it.id === item.id));
-  }, [customNotes, onChange]);
+    dispatch(upsertCustomNote(item));
+  }, [dispatch]);
 
   const handleGetReferenceOptions = useCallback((columnKey: keyof CustomNote): ListCollection<DataDropdownItem> => {
     if (columnKey === "type") {
@@ -26,23 +32,18 @@ const CustomNotesManager = ({ customNotes, onChange }: CustomNotesManagerProps):
   }, []);
 
   const handleAddRow = useCallback(() => {
-    const newNotes: CustomNote[] = [
-      ...customNotes,
-      {
-        id: v4(),
-        name: "",
-        type: "text",
-        value: {},
-      },
-    ];
-
-    onChange(newNotes);
-  }, [customNotes, onChange]);
+    upsertNote({
+      id: v4(),
+      parentId: parentId,
+      name: "",
+      type: "text",
+      value: {},
+    });
+  }, [parentId, upsertNote]);
 
   const handleDeleteRow = useCallback((item: CustomNote) => {
-    const newNotes: CustomNote[] = customNotes.filter(n => n.id !== item.id);
-    onChange(newNotes);
-  }, [customNotes, onChange]);
+    dispatch(deleteCustomNote(item.id));
+  }, [dispatch]);
 
   const handleStringValueChanged = (item: CustomNote, columnKey: keyof CustomNote, value: string) => {
     let newItem: CustomNote | undefined;
@@ -74,7 +75,7 @@ const CustomNotesManager = ({ customNotes, onChange }: CustomNotesManagerProps):
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <DataGrid
-        items={customNotes}
+        items={parentNotes}
         columnInfo={[
           {
             name: "Name",

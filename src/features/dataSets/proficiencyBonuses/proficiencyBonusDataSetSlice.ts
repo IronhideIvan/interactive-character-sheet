@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { upsert } from "@/utils/arrayUtils";
 import cloneDeep from "lodash.clonedeep";
-import { ProficiencyBonus } from "@/types/data/proficienyBonus";
+import { ProficiencyBonus } from "@/types/data/proficiencyBonus";
 
 export type ProficiencyBonusDataSetState = {
   latest: ProficiencyBonus[];

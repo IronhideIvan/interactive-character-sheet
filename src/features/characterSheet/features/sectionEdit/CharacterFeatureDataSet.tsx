@@ -1,20 +1,23 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
-import { CharacterFeature } from "@/types/character/characterFeature";
 import { Box } from "@chakra-ui/react";
 import { JSX, useMemo } from "react";
 import { Feature } from "@/types/data/feature";
 import { useAppSelector } from "@/redux/hooks";
 
 type CharacterFeaturesDataSetProps = {
-  characterFeatures: CharacterFeature[];
+  groupId: string;
 };
 
-const CharacterFeaturesDataSet = ({ characterFeatures }: CharacterFeaturesDataSetProps): JSX.Element => {
+const CharacterFeaturesDataSet = ({ groupId }: CharacterFeaturesDataSetProps): JSX.Element => {
   const features = useAppSelector(state => state.featuresDataSet.latest);
+  const allCharacterFeatures = useAppSelector(state => state.characterFeatures.latest);
+
+  const parentCharacterFeatures = useMemo(() => allCharacterFeatures.filter(cf => cf.groupId === groupId),
+    [allCharacterFeatures, groupId]);
 
   const filteredFeatures = useMemo(() => {
     const featureList: Feature[] = [];
-    characterFeatures.forEach((cf) => {
+    parentCharacterFeatures.forEach((cf) => {
       const feature = features.find(f => f.id == cf.featureId);
       if (feature) {
         featureList.push(feature);
@@ -22,7 +25,7 @@ const CharacterFeaturesDataSet = ({ characterFeatures }: CharacterFeaturesDataSe
     });
 
     return featureList;
-  }, [characterFeatures, features]);
+  }, [features, parentCharacterFeatures]);
 
   const handleGetId = (item: Feature) => {
     return item.id;

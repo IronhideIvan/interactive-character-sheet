@@ -2,53 +2,55 @@ import { useAppSelector } from "@/redux/hooks";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { Feature } from "@/types/data/feature";
 import { Field, Input, VStack } from "@chakra-ui/react";
-import { JSX, useCallback, useMemo, useState } from "react";
+import { JSX, useMemo, useState } from "react";
 import FeatureGroupEditDataSet from "./FeatureGroupEditDataSet";
 import FilteredFeaturesDataSet from "./FilteredFeaturesDataSet";
-import cloneDeep from "lodash.clonedeep";
 import { useModal } from "@/hooks/useModal";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import { filterResultsBySearchTerm } from "@/utils/searchUtils";
 import MarkdownPreview from "@/components/markdown/MarkdownPreview";
 import { SectionTitle } from "@/components/SectionTitle";
-import CustomNotesManager from "@/components/notes/CustomNotesManager";
-import { CustomNote } from "@/types/common/customNote";
+import CustomNotesManager from "@/features/general/notes/CustomNotesManager";
 import TextEditor from "@/components/TextEditor";
+import { useDispatch } from "react-redux";
+import { deleteCharacterFeature, upsertCharacterFeature } from "../characterFeature/characterFeaturesSlice";
+import { v4 } from "uuid";
+import { upsertCharacterFeatureGroup } from "./featureGroupsSlice";
 
 type FeatureGroupEditProps = {
   featureGroup: CharacterFeatureGroup;
-  onChange: (updatedSection: CharacterFeatureGroup) => void;
-  onRevertFeatureList?: () => void;
 };
 
-const FeatureGroupEdit = ({
-  featureGroup,
-  onChange,
-  onRevertFeatureList: onRevert,
-}: FeatureGroupEditProps): JSX.Element => {
-  const allFeatures = useAppSelector(state => state.featuresDataSet.latest);
+const FeatureGroupEdit = ({ featureGroup }: FeatureGroupEditProps): JSX.Element => {
+  const dispatch = useDispatch();
   const { isOpen: isFeatureDetailsOpen, open: openFeatureDetails, close: closeFeatureDetails } = useModal();
   const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
-  const [filteredFeaturesList, setFilteredFeaturesList] = useState(allFeatures);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const allCharacterFeatures = useAppSelector(state => state.characterFeatures.latest);
+  const groupCharacterFeatures = useMemo(() => {
+    return allCharacterFeatures.filter(cf => cf.groupId === featureGroup.id);
+  }, [allCharacterFeatures, featureGroup.id]);
+
+  const allFeatures = useAppSelector(state => state.featuresDataSet.latest);
+  const [filteredFeaturesList, setFilteredFeaturesList] = useState(allFeatures);
   const sectionFeatures = useMemo(() =>
-    allFeatures.filter(af => featureGroup.features.findIndex(f => af.id === f.featureId) >= 0),
-  [allFeatures, featureGroup.features]);
+    allFeatures.filter(af => groupCharacterFeatures.findIndex(f => af.id === f.featureId) >= 0),
+  [allFeatures, groupCharacterFeatures]);
 
   const handleAddFeature = (feature: Feature) => {
-    const updatedSection = cloneDeep(featureGroup);
-    updatedSection.features = [
-      ...updatedSection.features,
-      { featureId: feature.id },
-    ];
-    onChange(updatedSection);
+    dispatch(upsertCharacterFeature({
+      id: v4(),
+      groupId: featureGroup.id,
+      featureId: feature.id,
+    }));
   };
 
   const handleRemoveFeature = (feature: Feature) => {
-    const updatedSection = cloneDeep(featureGroup);
-    updatedSection.features = updatedSection.features.filter(f => f.featureId !== feature.id);
-    onChange(updatedSection);
+    const existingFeature = groupCharacterFeatures.find(cf => cf.featureId === feature.id);
+    if (existingFeature) {
+      deleteCharacterFeature(existingFeature.id);
+    }
   };
 
   const handleViewFeature = (feature: Feature) => {
@@ -74,18 +76,11 @@ const FeatureGroupEdit = ({
     setFilteredFeaturesList(results);
   };
 
-  const handleNotesChange = useCallback((newNotes: CustomNote[]) => {
-    onChange({
-      ...featureGroup,
-      notes: newNotes,
-    });
-  }, [featureGroup, onChange]);
-
   const handleNameChange = (newValue: string) => {
-    onChange({
+    dispatch(upsertCharacterFeatureGroup({
       ...featureGroup,
       name: newValue,
-    });
+    }));
   };
 
   return (
@@ -97,10 +92,7 @@ const FeatureGroupEdit = ({
         onValueChange={handleNameChange}
       />
       <SectionTitle label="Notes" />
-      <CustomNotesManager
-        customNotes={featureGroup.notes ?? []}
-        onChange={handleNotesChange}
-      />
+      <CustomNotesManager parentId={featureGroup.id} />
       <SectionTitle label="Features" />
       <Field.Root maxWidth={"20rem"}>
         <Field.Label>Search</Field.Label>
@@ -114,7 +106,6 @@ const FeatureGroupEdit = ({
       </Field.Root>
       <FeatureGroupEditDataSet
         characterFeatures={sectionFeatures}
-        onRevertAllChanges={onRevert}
       />
       <FilteredFeaturesDataSet
         characterFeatures={sectionFeatures}

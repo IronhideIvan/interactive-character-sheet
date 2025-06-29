@@ -1,6 +1,6 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { ProficiencyBonus } from "@/types/data/proficienyBonus";
+import { ProficiencyBonus } from "@/types/data/proficiencyBonus";
 import { JSX } from "react";
 import { deleteBonus, resetState, setBonuses, upsertBonus } from "./proficiencyBonusDataSetSlice";
 import { v4 as uuidv4 } from "uuid";

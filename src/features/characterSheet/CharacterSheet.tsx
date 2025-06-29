@@ -1,11 +1,17 @@
 import { VStack } from "@chakra-ui/react";
-import { JSX } from "react";
+import { JSX, useMemo } from "react";
 import BasicInformationSection from "./basicInformation/BasicInformationSection";
 import AbilityScoresSection from "./abilityScores/AbilityScoresSection";
 import SkillsSection from "./skills/SkillsSection";
-import FeaturesSection from "./features/FeaturesSection";
+import FeatureGroupCollectionsSection from "./features/FeatureGroupCollectionsSection";
+import { useAppSelector } from "@/redux/hooks";
+import { GroupCollectionType } from "@/types/common/groupCollection";
 
 const CharacterSheet = (): JSX.Element => {
+  const collections = useAppSelector(state => state.groupCollections.latest);
+  const groupCollections = useMemo(() =>
+    collections.filter(c => c.type === GroupCollectionType.CharacterFeatureGroup), [collections]);
+
   return (
     <VStack
       paddingBottom={"3rem"}
@@ -13,7 +19,11 @@ const CharacterSheet = (): JSX.Element => {
       <BasicInformationSection />
       <AbilityScoresSection columnSpan={{ base: 12, sm: 6, md: 4 }} />
       <SkillsSection columnSpan={{ base: 6, sm: 4, md: 3 }} />
-      <FeaturesSection />
+      {groupCollections.map((gc) => {
+        return (
+          <FeatureGroupCollectionsSection key={gc.id} collection={gc} />
+        );
+      })}
     </VStack>
   );
 };

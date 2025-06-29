@@ -1,10 +1,10 @@
 import { JSX } from "react";
-import { CustomNoteTextFieldProps } from "./customNoteFieldProps";
+import { CustomNoteFieldProps } from "./customNoteFieldProps";
 import CustomNoteTextField from "./fields/CustomNoteTextField";
 import CustomNoteBooleanField from "./fields/CustomNoteBooleanField";
 import CustomNoteNumberField from "./fields/CustomNoteNumberField";
 
-const CustomNoteField = (props: CustomNoteTextFieldProps): JSX.Element => {
+const CustomNoteField = (props: CustomNoteFieldProps): JSX.Element => {
   let retComponent: React.ReactNode;
 
   switch (props.note.type) {

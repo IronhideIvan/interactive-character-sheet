@@ -6,20 +6,26 @@ import { skillsDataSetSliceSlice } from "@/features/dataSets/skills/skillsDataSe
 import { iconPickerSlice } from "@/components/iconPicker/iconPickerSlice";
 import { abilityScoresSlice } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { skillScoresSlice } from "@/features/characterSheet/skills/skillsSlice";
-import { FeaturesDataSetSliceSlice } from "@/features/dataSets/features/featuresDataSetSlice";
-import { characterFeaturesSlice } from "@/features/characterSheet/features/characterFeaturesSlice";
+import { featuresDataSetSliceSlice } from "@/features/dataSets/features/featuresDataSetSlice";
+import { characterFeaturesSlice } from "@/features/characterSheet/features/characterFeature/characterFeaturesSlice";
+import { customNotesSlice } from "@/features/general/notes/customNotesSlice";
+import { featureGroupsSlice } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
+import { groupCollectionsSlice } from "@/features/general/collections/groupCollectionsSlice";
 
 export const store = configureStore({
   reducer: {
-    basicInformation: basicInformationSlice.reducer,
-    abilityScores: abilityScoresSlice.reducer,
-    skillScores: skillScoresSlice.reducer,
-    characterFeatures: characterFeaturesSlice.reducer,
     abilitiesDataSet: abilityDataSetSlice.reducer,
-    proficiencyBonusDataSet: proficiencyBonusDataSetSlice.reducer,
-    skillsDataSet: skillsDataSetSliceSlice.reducer,
-    featuresDataSet: FeaturesDataSetSliceSlice.reducer,
+    abilityScores: abilityScoresSlice.reducer,
+    basicInformation: basicInformationSlice.reducer,
+    characterFeatures: characterFeaturesSlice.reducer,
+    customNotes: customNotesSlice.reducer,
+    featuresDataSet: featuresDataSetSliceSlice.reducer,
+    featureGroups: featureGroupsSlice.reducer,
+    groupCollections: groupCollectionsSlice.reducer,
     iconPicker: iconPickerSlice.reducer,
+    proficiencyBonusDataSet: proficiencyBonusDataSetSlice.reducer,
+    skillScores: skillScoresSlice.reducer,
+    skillsDataSet: skillsDataSetSliceSlice.reducer,
   },
 });
 

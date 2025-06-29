@@ -1,11 +1,14 @@
 import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
-import { resetState as resetCharacterFeaturesState, setInitial as setInitialCharacterFeatures } from "@/features/characterSheet/features/characterFeaturesSlice";
+import { resetState as resetCharacterFeaturesState, setInitial as setInitialCharacterFeatures } from "@/features/characterSheet/features/characterFeature/characterFeaturesSlice";
+import { setInitial as setInitialFeatureGroups } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
+import { setInitial } from "@/features/general/collections/groupCollectionsSlice";
 import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetFeaturesState, setInitial as setInitialFeatures } from "@/features/dataSets/features/featuresDataSetSlice";
 import { resetState as resetProfBonusesState, setInitial as setInitialProfBonuses } from "@/features/dataSets/proficiencyBonuses/proficiencyBonusDataSetSlice";
 import { resetState as resetSkillsState, setInitial as setInitialSkills } from "@/features/dataSets/skills/skillsDataSetSlice";
+import { resetState as resetCustomNotesState, setInitial as setInitialNotes } from "@/features/general/notes/customNotesSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { store } from "@/redux/store";
 import { SaveFile } from "@/types/saveFile";
@@ -29,6 +32,8 @@ export const useImport = () => {
       dispatch(resetProfBonusesState());
       dispatch(resetSkillsState());
       dispatch(resetFeaturesState());
+
+      dispatch(resetCustomNotesState());
     });
   };
 
@@ -41,11 +46,15 @@ export const useExport = () => {
   const abilityScores = useAppSelector(state => state.abilityScores.latest);
   const skillScores = useAppSelector(state => state.skillScores.latest);
   const characterFeatures = useAppSelector(state => state.characterFeatures.latest);
+  const featureGroups = useAppSelector(state => state.featureGroups.latest);
+  const groupCollections = useAppSelector(state => state.groupCollections.latest);
 
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
   const profBonuses = useAppSelector(state => state.proficiencyBonusDataSet.latest);
   const skills = useAppSelector(state => state.skillsDataSet.latest);
   const features = useAppSelector(state => state.featuresDataSet.latest);
+
+  const customNotes = useAppSelector(state => state.customNotes.latest);
 
   const saveFile = () => {
     const fileContents: SaveFile = {
@@ -54,6 +63,7 @@ export const useExport = () => {
         abilityScores: abilityScores,
         skills: skillScores,
         features: characterFeatures,
+        featureGroups: featureGroups,
       },
       data: {
         abilities: abilities,
@@ -61,9 +71,13 @@ export const useExport = () => {
         skills: skills,
         features: features,
       },
+      general: {
+        customNotes: customNotes,
+        groupCollections: groupCollections,
+      },
       version: {
         major: 0,
-        minor: 0,
+        minor: 1,
         patch: 0,
       },
     };
@@ -114,5 +128,17 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.character?.features) {
     dispatch(setInitialCharacterFeatures(saveFile.character.features));
+  }
+
+  if (saveFile?.character?.featureGroups) {
+    dispatch(setInitialFeatureGroups(saveFile.character.featureGroups));
+  }
+
+  if (saveFile?.general?.customNotes) {
+    dispatch(setInitialNotes(saveFile.general.customNotes));
+  }
+
+  if (saveFile?.general?.groupCollections) {
+    dispatch(setInitial(saveFile.general.groupCollections));
   }
 };

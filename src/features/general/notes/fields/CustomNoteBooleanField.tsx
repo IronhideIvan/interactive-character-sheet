@@ -1,8 +1,8 @@
 import { JSX } from "react";
-import { CustomNoteTextFieldProps } from "../customNoteFieldProps";
+import { CustomNoteFieldProps } from "../customNoteFieldProps";
 import LabeledSwitch from "@/components/LabeledSwitch";
 
-const CustomNoteBooleanField = ({ note, onChange }: CustomNoteTextFieldProps): JSX.Element => {
+const CustomNoteBooleanField = ({ note, onChange }: CustomNoteFieldProps): JSX.Element => {
   const handleValueChange = (newValue: boolean) => {
     onChange({
       ...note,

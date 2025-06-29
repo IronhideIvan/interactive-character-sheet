@@ -1,10 +1,12 @@
 import { AbilityScore } from "./character/abilityScore";
 import { BasicInformation } from "./character/basicInformation";
-import { CharacterFeatureGroup } from "./character/characterFeature";
+import { CharacterFeature, CharacterFeatureGroup } from "./character/characterFeature";
 import { SkillScore } from "./character/skillScore";
+import { CustomNote } from "./common/customNote";
+import { GroupCollection } from "./common/groupCollection";
 import { Ability } from "./data/ability";
 import { Feature } from "./data/feature";
-import { ProficiencyBonus } from "./data/proficienyBonus";
+import { ProficiencyBonus } from "./data/proficiencyBonus";
 import { Skill } from "./data/skill";
 
 export type SaveFile = {
@@ -12,13 +14,18 @@ export type SaveFile = {
     basicInformation: BasicInformation;
     abilityScores: AbilityScore[];
     skills: SkillScore[];
-    features: CharacterFeatureGroup[];
+    features: CharacterFeature[];
+    featureGroups: CharacterFeatureGroup[];
   };
   data: {
     abilities: Ability[];
     proficiencyBonuses: ProficiencyBonus[];
     skills: Skill[];
     features: Feature[];
+  };
+  general: {
+    customNotes: CustomNote[];
+    groupCollections: GroupCollection[];
   };
   version: {
     major: number;
