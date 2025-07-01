@@ -9,6 +9,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import CharacterFeaturesDataSet from "./CharacterFeatureDataSet";
 import FeaturesSectionDataSet from "./FeaturesSectionDataSet";
 import { useAppSelector } from "@/redux/hooks";
+import CustomNotesManager from "@/features/general/notes/CustomNotesManager";
 
 type FeaturesSectionDrawerProps = {
   collectionId: string;
@@ -52,15 +53,19 @@ const FeaturesSectionDrawer = ({
       onOpenChange={det => handleOpenChange(det.open)}
     >
       <VStack>
+        <SectionTitle textStyle={"sm"} label="Groups" />
         <FeaturesSectionDataSet
           collectionId={collectionId}
         />
+        <SectionTitle textStyle={"sm"} label="Notes" />
+        <CustomNotesManager parentId={collectionId} />
         {collectionGroups.map((s) => {
           return (
-            <Box key={s.id}>
+            <Box key={s.id} width={"100%"}>
               <SectionTitle
                 label={s.name}
                 showEditButton
+                textStyle={"xs"}
                 onEditButtonClick={() => {
                   setSelectedSectionId(s.id);
                   openSectionDialog();

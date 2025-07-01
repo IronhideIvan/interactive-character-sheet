@@ -1,8 +1,8 @@
 import { resetState as resetAbilityScoresState, setInitial as setInitialAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { baseInformation, resetState as resetBasicInformationState, setInitial as setInitialBasicInformation } from "@/features/characterSheet/basicInformation/basicInformationSlice";
 import { resetState as resetCharacterFeaturesState, setInitial as setInitialCharacterFeatures } from "@/features/characterSheet/features/characterFeature/characterFeaturesSlice";
-import { setInitial as setInitialFeatureGroups } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
-import { setInitial } from "@/features/dataSets/collections/groupCollectionsSlice";
+import { resetState as resetFeatureGroups, setInitial as setInitialFeatureGroups } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
+import { resetState as resetCollectionGroupsState, setInitial as setInitialGroupCollections } from "@/features/dataSets/collections/groupCollectionsSlice";
 import { resetState as resetSkillScoresState, setInitial as setInitialSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { resetState as resetAbilitiesDataState, setInitial as setInitialAbilitiesData } from "@/features/dataSets/abilities/abilitiesDataSetSlice";
 import { resetState as resetFeaturesState, setInitial as setInitialFeatures } from "@/features/dataSets/features/featuresDataSetSlice";
@@ -28,10 +28,12 @@ export const useImport = () => {
       dispatch(resetAbilityScoresState());
       dispatch(resetSkillScoresState());
       dispatch(resetCharacterFeaturesState());
+      dispatch(resetFeatureGroups());
 
       dispatch(resetProfBonusesState());
       dispatch(resetSkillsState());
       dispatch(resetFeaturesState());
+      dispatch(resetCollectionGroupsState());
 
       dispatch(resetCustomNotesState());
     });
@@ -106,7 +108,7 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
   }
 
   if (saveFile?.data?.groupCollections) {
-    dispatch(setInitial(saveFile.data.groupCollections));
+    dispatch(setInitialGroupCollections(saveFile.data.groupCollections));
   }
 
   if (saveFile?.character?.basicInformation) {

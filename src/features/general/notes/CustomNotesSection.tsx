@@ -26,7 +26,7 @@ const CustomNotesSection = ({ parentId }: CustomNotesSectionProps): JSX.Element 
   }
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <SectionTitle
         label="Notes"
         textStyle={"sm"}

@@ -49,7 +49,7 @@ const FeatureGroupEdit = ({ featureGroup }: FeatureGroupEditProps): JSX.Element 
   const handleRemoveFeature = (feature: Feature) => {
     const existingFeature = groupCharacterFeatures.find(cf => cf.featureId === feature.id);
     if (existingFeature) {
-      deleteCharacterFeature(existingFeature.id);
+      dispatch(deleteCharacterFeature(existingFeature.id));
     }
   };
 

@@ -8,6 +8,7 @@ import { CharacterFeatureGroup } from "@/types/character/characterFeature";
 import { resetState, setCharacterFeatures } from "./characterFeature/characterFeaturesSlice";
 import FeatureGroup from "./FeatureGroup/FeatureGroup";
 import { GroupCollection } from "@/types/common/groupCollection";
+import CustomNotesSection from "@/features/general/notes/CustomNotesSection";
 
 type FeatureGroupCollectionsSectionProps = {
   collection: GroupCollection;
@@ -41,6 +42,7 @@ const FeatureGroupCollectionsSection = ({ collection }: FeatureGroupCollectionsS
         showEditButton
         onEditButtonClick={handleEditButtonClick}
       />
+      <CustomNotesSection parentId={collection.id} />
       <VStack width={"100%"} justifyContent={"center"}>
         {collectionFeatureGroups.map((f) => {
           return (
