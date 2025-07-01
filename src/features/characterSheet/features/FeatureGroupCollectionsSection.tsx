@@ -42,7 +42,7 @@ const FeatureGroupCollectionsSection = ({ collection }: FeatureGroupCollectionsS
         showEditButton
         onEditButtonClick={handleEditButtonClick}
       />
-      <CustomNotesSection parentId={collection.id} />
+      <CustomNotesSection parentId={collection.id} columnSpan={{ base: 12, md: 3 }} />
       <VStack width={"100%"} justifyContent={"center"}>
         {collectionFeatureGroups.map((f) => {
           return (

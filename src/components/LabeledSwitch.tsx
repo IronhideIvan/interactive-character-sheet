@@ -1,4 +1,4 @@
-import { Switch } from "@chakra-ui/react";
+import { Switch, Text } from "@chakra-ui/react";
 import { JSX } from "react";
 
 type LabeledSwitchProps = {
@@ -12,12 +12,18 @@ const LabeledSwitch = ({ label, value, onValueChanged }: LabeledSwitchProps): JS
     <Switch.Root
       checked={value}
       onCheckedChange={e => onValueChanged(e.checked)}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+
     >
       <Switch.HiddenInput />
+      <Switch.Label>
+        <Text textAlign={"center"}>{label}</Text>
+      </Switch.Label>
       <Switch.Control>
         <Switch.Thumb />
       </Switch.Control>
-      <Switch.Label>{label}</Switch.Label>
     </Switch.Root>
   );
 };

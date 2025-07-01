@@ -26,7 +26,7 @@ const FeatureGroup = ({ group }: FeatureGroupProps): JSX.Element => {
       showEditButton
       onEditButtonClick={openSectionDialog}
     >
-      <CustomNotesSection parentId={group.id} />
+      <CustomNotesSection parentId={group.id} columnSpan={{ base: 12, md: 3 }} />
       <SectionTitle
         label="Features"
         textStyle={"sm"}
