@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { VStack } from "@chakra-ui/react";
 import { JSX, useMemo } from "react";
-import { SectionTitle } from "@/components/SectionTitle";
 import { useModal } from "@/hooks/useModal";
 import FeaturesSectionDrawer from "./sectionEdit/FeaturesSectionDrawer";
 import { CharacterFeatureGroup } from "@/types/character/characterFeature";
@@ -9,6 +8,7 @@ import { resetState, setCharacterFeatures } from "./characterFeature/characterFe
 import FeatureGroup from "./FeatureGroup/FeatureGroup";
 import { GroupCollection } from "@/types/common/groupCollection";
 import CustomNotesSection from "@/features/general/notes/CustomNotesSection";
+import CollapsibleSection from "@/components/CollapsibleSection";
 
 type FeatureGroupCollectionsSectionProps = {
   collection: GroupCollection;
@@ -36,20 +36,21 @@ const FeatureGroupCollectionsSection = ({ collection }: FeatureGroupCollectionsS
 
   return (
     <VStack width={"100%"}>
-      <SectionTitle
+      <CollapsibleSection
         label={collection.name}
         textStyle={"xl"}
         showEditButton
         onEditButtonClick={handleEditButtonClick}
-      />
-      <CustomNotesSection parentId={collection.id} columnSpan={{ base: 12, md: 3 }} />
-      <VStack width={"100%"} justifyContent={"center"}>
-        {collectionFeatureGroups.map((f) => {
-          return (
-            <FeatureGroup key={f.id} group={f} />
-          );
-        })}
-      </VStack>
+      >
+        <CustomNotesSection parentId={collection.id} columnSpan={{ base: 12, md: 3 }} />
+        <VStack width={"100%"} justifyContent={"center"}>
+          {collectionFeatureGroups.map((f) => {
+            return (
+              <FeatureGroup key={f.id} group={f} />
+            );
+          })}
+        </VStack>
+      </CollapsibleSection>
       {isOpen && (
         <FeaturesSectionDrawer
           collectionId={collection.id}
