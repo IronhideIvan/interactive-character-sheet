@@ -18,7 +18,7 @@ export const customGridsSlice = createSlice({
   name: "customGrids",
   initialState,
   reducers: {
-    setCustomGrid: (state, action: PayloadAction<CustomGrid[]>) => {
+    setCustomGrids: (state, action: PayloadAction<CustomGrid[]>) => {
       state.latest = [...action.payload];
     },
     upsertCustomGrid: (state, action: PayloadAction<CustomGrid>) => {
@@ -50,7 +50,7 @@ export const customGridsSlice = createSlice({
 });
 
 export const {
-  setCustomGrid,
+  setCustomGrids,
   upsertCustomGrid,
   deleteCustomGrid,
   resetCustomGrid,
