@@ -14,6 +14,7 @@ import { store } from "@/redux/store";
 import { SaveFile } from "@/types/saveFile";
 import saveAs from "file-saver";
 import cloneDeep from "lodash.clonedeep";
+import { resetState as resetCustomGridsState, setInitial as setInitialGrids } from "@/features/general/grids/customGridsSlice";
 
 export const useImport = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ export const useImport = () => {
       dispatch(resetCollectionGroupsState());
 
       dispatch(resetCustomNotesState());
+      dispatch(resetCustomGridsState());
     });
   };
 
@@ -57,6 +59,7 @@ export const useExport = () => {
   const features = useAppSelector(state => state.featuresDataSet.latest);
 
   const customNotes = useAppSelector(state => state.customNotes.latest);
+  const customGrids = useAppSelector(state => state.customGrids.latest);
 
   const saveFile = () => {
     const fileContents: SaveFile = {
@@ -74,7 +77,10 @@ export const useExport = () => {
         features: features,
         groupCollections: groupCollections,
       },
-      general: { customNotes: customNotes },
+      general: {
+        customNotes: customNotes,
+        customGrids: customGrids,
+      },
       version: {
         major: 0,
         minor: 1,
@@ -143,5 +149,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.general?.customNotes) {
     dispatch(setInitialNotes(saveFile.general.customNotes));
+  }
+
+  if (saveFile?.general?.customGrids) {
+    dispatch(setInitialGrids(saveFile.general.customGrids));
   }
 };

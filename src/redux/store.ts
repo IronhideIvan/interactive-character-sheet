@@ -11,6 +11,7 @@ import { characterFeaturesSlice } from "@/features/characterSheet/features/chara
 import { customNotesSlice } from "@/features/general/notes/customNotesSlice";
 import { featureGroupsSlice } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
 import { groupCollectionsSlice } from "@/features/dataSets/collections/groupCollectionsSlice";
+import { customGridsSlice } from "@/features/general/grids/customGridsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     abilityScores: abilityScoresSlice.reducer,
     basicInformation: basicInformationSlice.reducer,
     characterFeatures: characterFeaturesSlice.reducer,
+    customGrids: customGridsSlice.reducer,
     customNotes: customNotesSlice.reducer,
     featuresDataSet: featuresDataSetSliceSlice.reducer,
     featureGroups: featureGroupsSlice.reducer,

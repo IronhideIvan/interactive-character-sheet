@@ -2,6 +2,7 @@ import { AbilityScore } from "./character/abilityScore";
 import { BasicInformation } from "./character/basicInformation";
 import { CharacterFeature, CharacterFeatureGroup } from "./character/characterFeature";
 import { SkillScore } from "./character/skillScore";
+import { CustomGrid } from "./common/customGrid";
 import { CustomNote } from "./common/customNote";
 import { GroupCollection } from "./common/groupCollection";
 import { Ability } from "./data/ability";
@@ -26,6 +27,7 @@ export type SaveFile = {
   };
   general: {
     customNotes: CustomNote[];
+    customGrids: CustomGrid[];
   };
   version: {
     major: number;
