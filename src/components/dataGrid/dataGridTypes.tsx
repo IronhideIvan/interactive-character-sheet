@@ -1,4 +1,11 @@
-export type EditorType = "text" | "icon" | "number" | "reference" | "markdown" | "boolean";
+export enum EditorType {
+  Text = "text",
+  Icon = "icon",
+  Number = "number",
+  Reference = "reference",
+  Markdown = "markdown",
+  Boolean = "boolean"
+}
 
 export type ColumnInfo<T> = {
   key: keyof T;

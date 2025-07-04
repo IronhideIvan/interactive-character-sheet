@@ -1,5 +1,5 @@
 import { JSX, useCallback, useState } from "react";
-import { ColumnInfo } from "./dataGridTypes";
+import { ColumnInfo, EditorType } from "./dataGridTypes";
 import { Box, IconButton, ListCollection, Table, VStack } from "@chakra-ui/react";
 import DataTextEditor from "./editors/DataTextEditor";
 import { Icon } from "@/types/data/icon";
@@ -19,6 +19,8 @@ type DataGridProps<T> = {
   getId: (item: T) => string;
   getFriendlyName?: (item: T) => string;
   getReferenceOptions?: (columnKey: keyof T) => ListCollection<DataDropdownItem> | undefined;
+  /** Use this if you need fine-grain control over how the values of properties are fetched */
+  getPropertyValue?: <ValueType>(item: T, columnKey: keyof T, type: EditorType) => ValueType;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
   onBooleanValueChange?: (item: T, columnKey: keyof T, value: boolean) => void;
   onNumberValueChange?: (item: T, columnKey: keyof T, value: number) => void;
@@ -49,6 +51,7 @@ const DataGrid = <T,>(
     getReferenceOptions,
     onReferenceValueChange,
     onEditClick,
+    getPropertyValue,
   }: DataGridProps<T>): JSX.Element => {
   const [isIconDialogOpen, setIsIconDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
@@ -60,9 +63,16 @@ const DataGrid = <T,>(
   }, []);
 
   // eslint-disable-next-line @stylistic/comma-dangle
-  const getValue = useCallback(<K,>(item: T, columnKey: keyof T): K | undefined => {
-    return item[columnKey] as K;
-  }, []);
+  const getValue = useCallback(<K,>(item: T, columnInfo: ColumnInfo<T>): K | undefined => {
+    // If the way to fetch the value of a property is overridden, use that since the parent
+    // intends to have fine-grain control over how values are fetched.
+    if (getPropertyValue) {
+      return getPropertyValue(item, columnInfo.key, columnInfo.type);
+    }
+    else {
+      return item[columnInfo.key] as K;
+    }
+  }, [getPropertyValue]);
 
   const handleIconDialogOpen = useCallback((itemId: string, columnInfo: ColumnInfo<T>) => {
     const item = items.find(it => getId(it) === itemId);
@@ -70,7 +80,7 @@ const DataGrid = <T,>(
       return;
     }
 
-    const icon = getValue<Icon>(item, columnInfo.key);
+    const icon = getValue<Icon>(item, columnInfo);
     setSelectedIcon(icon);
     setSelectedItem (item);
     setSelectedColumn(columnInfo);
@@ -96,12 +106,12 @@ const DataGrid = <T,>(
     switch (ci.type) {
       case "text":
         if (ci.readonly) {
-          return getValue<string>(item, ci.key);
+          return getValue<string>(item, ci);
         }
 
         return (
           <DataTextEditor
-            value={getValue<string>(item, ci.key) ?? ""}
+            value={getValue<string>(item, ci) ?? ""}
             onValueChanged={(v) => {
               if (onStringValueChange) {
                 onStringValueChange(item, ci.key, v);
@@ -114,7 +124,7 @@ const DataGrid = <T,>(
       case "markdown":
         return (
           <DataMarkdownEditor
-            value={getValue<string>(item, ci.key) ?? ""}
+            value={getValue<string>(item, ci) ?? ""}
             onValueChanged={(v) => {
               if (onStringValueChange) {
                 onStringValueChange(item, ci.key, v);
@@ -127,7 +137,7 @@ const DataGrid = <T,>(
       case "boolean":
         return (
           <DataBooleanEditor
-            value={getValue<boolean>(item, ci.key) ?? false}
+            value={getValue<boolean>(item, ci) ?? false}
             onValueChanged={(v) => {
               if (onBooleanValueChange) {
                 onBooleanValueChange(item, ci.key, v);
@@ -138,12 +148,12 @@ const DataGrid = <T,>(
 
       case "number":
         if (ci.readonly) {
-          return getValue<number>(item, ci.key);
+          return getValue<number>(item, ci);
         }
 
         return (
           <DataNumberEditor
-            value={getValue<number>(item, ci.key) ?? 0}
+            value={getValue<number>(item, ci) ?? 0}
             onValueChanged={(v) => {
               if (onNumberValueChange) {
                 onNumberValueChange(item, ci.key, v);
@@ -154,7 +164,7 @@ const DataGrid = <T,>(
 
       case "icon":
       {
-        const icon = getValue<Icon>(item, ci.key);
+        const icon = getValue<Icon>(item, ci);
         if (ci.readonly) {
           if (!icon) {
             return "";
@@ -183,7 +193,7 @@ const DataGrid = <T,>(
           return getDefaultValue(item, ci);
         }
 
-        const id = getValue<string>(item, ci.key);
+        const id = getValue<string>(item, ci);
 
         if (ci.readonly) {
           const displayValue = referenceOptions.items.find(i => i.id === id);
