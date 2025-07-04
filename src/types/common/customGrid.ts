@@ -1,22 +1,30 @@
-import { CustomNoteType, CustomNoteValue } from "./customNote";
 import { EntityBase } from "./entityBase";
 
 export type CustomGrid = EntityBase & {
-  parentId: string;
+  name: string;
   headers: CustomGridHeader[];
   rows: CustomGridRow[];
 };
 
 export type CustomGridHeader = EntityBase & {
   name: string;
-  type: CustomNoteType;
+  type: CustomGridCellType;
 };
 
 export type CustomGridRow = EntityBase & {
   cells: CustomGridCell[];
 };
 
+export type CustomGridCellType = "text" | "boolean" | "number" | "markdown";
+
 export type CustomGridCell = {
   headerId: string;
-  value: CustomNoteValue;
+  type: CustomGridCellType;
+  value: CustomGridValue;
+};
+
+export type CustomGridValue = {
+  boolean?: boolean;
+  string?: string;
+  number?: number;
 };

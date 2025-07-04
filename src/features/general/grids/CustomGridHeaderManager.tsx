@@ -18,6 +18,14 @@ const CustomGridHeaderManager = ({ grid }: CustomGridHeaderManagerProps): JSX.El
   const dispatch = useAppDispatch();
 
   const regenerateGrid = useCallback((existingGrid: CustomGrid, newHeaders: CustomGridHeader[]): CustomGrid => {
+    const getEmptyCell = (header: CustomGridHeader): CustomGridCell => {
+      return {
+        headerId: header.id,
+        value: {},
+        type: header.type,
+      };
+    };
+
     // reorder all row cells, add any that don't exist, and remove any that aren't in the grid
     const newRows: CustomGridRow[] = [];
     existingGrid.rows.forEach((row) => {
@@ -27,14 +35,16 @@ const CustomGridHeaderManager = ({ grid }: CustomGridHeaderManagerProps): JSX.El
       newHeaders.forEach((header) => {
         const cellIndex = oldCells.findIndex(cell => cell.headerId === header.id);
         if (cellIndex >= 0) {
-          const cellToAdd = oldCells.splice(cellIndex, 1);
-          newCells.push(cellToAdd[0]);
+          const cellToAdd = oldCells.splice(cellIndex, 1)[0];
+          if (cellToAdd.type !== header.type) {
+            newCells.push(getEmptyCell(header));
+          }
+          else {
+            newCells.push(cellToAdd);
+          }
         }
         else {
-          newCells.push({
-            headerId: header.id,
-            value: {},
-          });
+          newCells.push(getEmptyCell(header));
         }
       });
 
