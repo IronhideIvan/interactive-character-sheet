@@ -9,6 +9,11 @@ import { matchRoute, matchRouteValue } from "@/utils/navUtils";
 const navRoutes: NavRoutes = {
   paths: [
     {
+      path: "/journal",
+      value: "journal",
+      friendlyName: "Journal",
+    },
+    {
       path: "/data",
       value: "data",
       friendlyName: "Data",

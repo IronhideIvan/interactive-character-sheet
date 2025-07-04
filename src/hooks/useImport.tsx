@@ -15,6 +15,7 @@ import { SaveFile } from "@/types/saveFile";
 import saveAs from "file-saver";
 import cloneDeep from "lodash.clonedeep";
 import { resetState as resetCustomGridsState, setInitial as setInitialGrids } from "@/features/general/grids/customGridsSlice";
+import { resetState as resetJournalEntriesState, setInitial as setInitialJournalEntries } from "@/features/journal/journalEntriesSlice";
 
 export const useImport = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,8 @@ export const useImport = () => {
 
       dispatch(resetCustomNotesState());
       dispatch(resetCustomGridsState());
+
+      dispatch(resetJournalEntriesState());
     });
   };
 
@@ -61,6 +64,8 @@ export const useExport = () => {
   const customNotes = useAppSelector(state => state.customNotes.latest);
   const customGrids = useAppSelector(state => state.customGrids.latest);
 
+  const journalEntries = useAppSelector(state => state.journalEntries.latest);
+
   const saveFile = () => {
     const fileContents: SaveFile = {
       character: {
@@ -81,6 +86,7 @@ export const useExport = () => {
         customNotes: customNotes,
         customGrids: customGrids,
       },
+      journalEntries: journalEntries,
       version: {
         major: 0,
         minor: 1,
@@ -153,5 +159,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.general?.customGrids) {
     dispatch(setInitialGrids(saveFile.general.customGrids));
+  }
+
+  if (saveFile?.journalEntries) {
+    dispatch(setInitialJournalEntries(saveFile.journalEntries));
   }
 };

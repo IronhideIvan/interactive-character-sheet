@@ -9,6 +9,7 @@ import { Ability } from "./data/ability";
 import { Feature } from "./data/feature";
 import { ProficiencyBonus } from "./data/proficiencyBonus";
 import { Skill } from "./data/skill";
+import { JournalEntry } from "./journal/journalEntry";
 
 export type SaveFile = {
   character: {
@@ -29,6 +30,7 @@ export type SaveFile = {
     customNotes: CustomNote[];
     customGrids: CustomGrid[];
   };
+  journalEntries: JournalEntry[];
   version: {
     major: number;
     minor: number;

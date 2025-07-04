@@ -27,6 +27,11 @@ const navRoutes: NavRoutes = {
       friendlyName: "Grids",
     },
     {
+      path: "/journal",
+      value: "/data/journal",
+      friendlyName: "Journal Entries",
+    },
+    {
       path: "/prof",
       value: "/data/prof",
       friendlyName: "Proficiency Bonus",

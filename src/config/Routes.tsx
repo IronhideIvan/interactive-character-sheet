@@ -4,8 +4,10 @@ import CollectionsDataSet from "@/features/dataSets/collections/CollectionsDataS
 import DataSets from "@/features/dataSets/DataSets";
 import FeaturesDataSet from "@/features/dataSets/features/FeaturesDataSet";
 import GridDataSet from "@/features/dataSets/grids/GridsDataSet";
+import JournalEntriesDataset from "@/features/dataSets/journal/JournalEntriesDataset";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
 import SkillsDataSet from "@/features/dataSets/skills/SkillsDataSet";
+import JournalSection from "@/features/journal/JournalSection";
 import { JSX } from "react";
 
 export type Route = {
@@ -19,6 +21,11 @@ export type Route = {
 export const appRoutes: Route[] = [
   {
     element: <CharacterSheet />,
+    index: true,
+  },
+  {
+    path: "journal",
+    element: <JournalSection />,
     index: true,
   },
   {
@@ -61,6 +68,14 @@ export const appRoutes: Route[] = [
         element: (
           <DataSets>
             <GridDataSet />
+          </DataSets>
+        ),
+      },
+      {
+        path: "journal",
+        element: (
+          <DataSets>
+            <JournalEntriesDataset />
           </DataSets>
         ),
       },

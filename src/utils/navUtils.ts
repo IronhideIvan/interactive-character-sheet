@@ -2,6 +2,12 @@ import { NavItem, NavRoutes } from "@/features/navigation/navigation";
 
 export const matchRoute = (currentPathname: string, routes: NavRoutes): NavItem => {
   for (const item of routes.paths) {
+    if (currentPathname.toLowerCase().startsWith(item.path)) {
+      return item;
+    }
+  }
+
+  for (const item of routes.paths) {
     if (currentPathname.toLowerCase().includes(item.path)) {
       return item;
     }
