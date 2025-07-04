@@ -4,6 +4,7 @@ import { ProficiencyBonus } from "@/types/data/proficiencyBonus";
 import { JSX } from "react";
 import { deleteBonus, resetState, setBonuses, upsertBonus } from "./proficiencyBonusDataSetSlice";
 import { v4 as uuidv4 } from "uuid";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const ProficiencyBonusDataSet = (): JSX.Element => {
   const profs = useAppSelector(state => state.proficiencyBonusDataSet.latest);
@@ -57,12 +58,12 @@ const ProficiencyBonusDataSet = (): JSX.Element => {
         {
           name: "Level",
           key: "level",
-          type: "number",
+          type: EditorType.Number,
         },
         {
           name: "Bonus",
           key: "bonus",
-          type: "number",
+          type: EditorType.Number,
         },
       ]}
       getId={handleGetId}

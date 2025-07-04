@@ -4,9 +4,7 @@ export type IconPickerState = {
   mostRecentColor: string;
 };
 
-const initialState: IconPickerState = {
-  mostRecentColor: "#eb5e41",
-};
+const initialState: IconPickerState = { mostRecentColor: "#eb5e41" };
 
 export const iconPickerSlice = createSlice({
   name: "iconPicker",

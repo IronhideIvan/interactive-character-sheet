@@ -5,6 +5,7 @@ import { JSX } from "react";
 import { v4 } from "uuid";
 import { deleteGroupCollection, resetState, upsertGroupCollection } from "./groupCollectionsSlice";
 import DataGrid from "@/components/dataGrid/DataGrid";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const CollectionsDataSet = (): JSX.Element => {
   const collections = useAppSelector(state => state.groupCollections.latest);
@@ -57,7 +58,7 @@ const CollectionsDataSet = (): JSX.Element => {
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
             readonly: false,
           },
         ]}

@@ -8,7 +8,9 @@ import { CalculatedSkillScore } from "@/types/calculated/calculatedSkillScore";
 export const useSkillScoreCalculator = () => {
   const proficiencyBonus = useProficiencyBonus();
 
-  const calculateSkillScore = useCallback((skillScore: SkillScore, abilityModifier: CalculatedAbilityScore | undefined): CalculatedSkillScore => {
+  const calculateSkillScore = useCallback((
+    skillScore: SkillScore, abilityModifier: CalculatedAbilityScore | undefined,
+  ): CalculatedSkillScore => {
     let modifier = (abilityModifier?.modifier ?? 0) + skillScore.score.baseValue;
     if (skillScore.score.proficiencyLevel === ProficiencyLevel.Proficiency) {
       modifier += proficiencyBonus;
@@ -17,9 +19,7 @@ export const useSkillScoreCalculator = () => {
       modifier += proficiencyBonus + proficiencyBonus;
     }
 
-    return {
-      modifier: modifier,
-    };
+    return { modifier: modifier };
   }, [proficiencyBonus]);
 
   return calculateSkillScore;

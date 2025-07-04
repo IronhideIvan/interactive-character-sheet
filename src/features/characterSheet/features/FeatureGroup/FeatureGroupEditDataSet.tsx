@@ -2,6 +2,7 @@ import DataGrid from "@/components/dataGrid/DataGrid";
 import { Box } from "@chakra-ui/react";
 import { JSX } from "react";
 import { Feature } from "@/types/data/feature";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 type FeatureGroupEditDataSetProps = {
   characterFeatures: Feature[];
@@ -27,7 +28,7 @@ const FeatureGroupEditDataSet = (
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
         ]}

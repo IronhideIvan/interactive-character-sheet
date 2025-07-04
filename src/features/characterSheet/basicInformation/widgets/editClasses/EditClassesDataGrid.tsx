@@ -1,4 +1,5 @@
 import DataGrid from "@/components/dataGrid/DataGrid";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 import { CharacterClass } from "@/types/character/characterClass";
 import { upsert } from "@/utils/arrayUtils";
 import { JSX } from "react";
@@ -71,12 +72,12 @@ const EditClassesDataGrid = ({ classes, onClassesChanged, onRevertChanges }: Edi
         {
           name: "Name",
           key: "name",
-          type: "text",
+          type: EditorType.Text,
         },
         {
           name: "Level",
           key: "level",
-          type: "number",
+          type: EditorType.Number,
         },
       ]}
       getId={handleGetId}

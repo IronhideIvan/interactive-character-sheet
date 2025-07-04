@@ -8,6 +8,7 @@ import { resetCustomGrid, upsertCustomGrid } from "./customGridsSlice";
 import { v4 } from "uuid";
 import { CustomNoteType } from "@/types/common/customNote";
 import DataGrid from "@/components/dataGrid/DataGrid";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 type CustomGridHeaderManagerProps = {
   grid: CustomGrid;
@@ -83,7 +84,7 @@ const CustomGridHeaderManager = ({ grid }: CustomGridHeaderManagerProps): JSX.El
     upsertHeader({
       id: v4(),
       name: "",
-      type: "text",
+      type: EditorType.Text,
     });
   }, [upsertHeader]);
 
@@ -136,12 +137,12 @@ const CustomGridHeaderManager = ({ grid }: CustomGridHeaderManagerProps): JSX.El
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
           },
           {
             name: "Type",
             key: "type",
-            type: "reference",
+            type: EditorType.Reference,
             minWidth: "10rem",
           },
         ]}

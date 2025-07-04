@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useModal } from "@/hooks/useModal";
 import FeatureEditor from "./FeatureEditor";
 import cloneDeep from "lodash.clonedeep";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const FeaturesDataSet = (): JSX.Element => {
   const { open, isOpen, close } = useModal();
@@ -76,25 +77,25 @@ const FeaturesDataSet = (): JSX.Element => {
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
           {
             name: "Tags",
             key: "tags",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
           {
             name: "Caption",
             key: "caption",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
           {
             name: "Tooltip",
             key: "shortDescription",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
         ]}

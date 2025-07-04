@@ -26,9 +26,7 @@ export const baseInformation: BasicInformation = {
     current: 0,
     max: 0,
   },
-  armorClass: {
-    totalAc: 0,
-  },
+  armorClass: { totalAc: 0 },
   deathSaves: {
     successCount: 0,
     failCount: 0,

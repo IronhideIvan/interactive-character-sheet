@@ -14,7 +14,7 @@ const DeathSavesWidget = (): JSX.Element => {
     dispatch(setDeathSaves({ ...deathSaves, successCount: value }));
   };
 
-  const handleFailueChange = (value: number) => {
+  const handleFailureChange = (value: number) => {
     dispatch(setDeathSaves({ ...deathSaves, failCount: value }));
   };
 
@@ -40,7 +40,7 @@ const DeathSavesWidget = (): JSX.Element => {
           <DeathSaveInput
             label="Failure"
             value={deathSaves.failCount}
-            onValueChanged={handleFailueChange}
+            onValueChanged={handleFailureChange}
             icon={<GiDeathZone color="red" />}
           />
         </HStack>
@@ -56,7 +56,9 @@ type DeathSaveInputProps = {
   label: string;
 };
 
-const DeathSaveInput = ({ value, onValueChanged, icon, label }: DeathSaveInputProps): JSX.Element => {
+const DeathSaveInput = ({
+  value, onValueChanged, icon, label,
+}: DeathSaveInputProps): JSX.Element => {
   return (
     <Field.Root>
       <NumberInput.Root

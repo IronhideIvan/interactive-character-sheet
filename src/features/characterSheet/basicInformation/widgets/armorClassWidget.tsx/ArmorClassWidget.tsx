@@ -10,9 +10,7 @@ const ArmorClassWidget = (): JSX.Element => {
   const handleAcChange = (value: string) => {
     const valueAsInt = value === "" ? 0 : parseInt(value);
     if (Number.isInteger(valueAsInt)) {
-      dispatch(setArmorClass({
-        totalAc: valueAsInt,
-      }));
+      dispatch(setArmorClass({ totalAc: valueAsInt }));
     }
   };
 

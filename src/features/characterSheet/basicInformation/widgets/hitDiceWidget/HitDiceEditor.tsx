@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { HitDice } from "@/types/character/hitDice";
 import cloneDeep from "lodash.clonedeep";
 import { upsert } from "@/utils/arrayUtils";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const HitDiceEditor = (): JSX.Element => {
   const hitDice = useAppSelector(state => state.basicInformation.latest.hitDice);
@@ -86,22 +87,22 @@ const HitDiceEditor = (): JSX.Element => {
           {
             name: "Note",
             key: "note",
-            type: "text",
+            type: EditorType.Text,
           },
           {
             name: "Hit Die",
             key: "hitDie",
-            type: "number",
+            type: EditorType.Number,
           },
           {
             name: "Max",
             key: "max",
-            type: "number",
+            type: EditorType.Number,
           },
           {
             name: "Used",
             key: "numUsed",
-            type: "number",
+            type: EditorType.Number,
           },
         ]}
         getId={handleGetId}

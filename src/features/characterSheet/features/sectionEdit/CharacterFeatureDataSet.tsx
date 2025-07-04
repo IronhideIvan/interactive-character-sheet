@@ -3,6 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { JSX, useMemo } from "react";
 import { Feature } from "@/types/data/feature";
 import { useAppSelector } from "@/redux/hooks";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 type CharacterFeaturesDataSetProps = {
   groupId: string;
@@ -43,7 +44,7 @@ const CharacterFeaturesDataSet = ({ groupId }: CharacterFeaturesDataSetProps): J
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
             readonly: true,
           },
         ]}

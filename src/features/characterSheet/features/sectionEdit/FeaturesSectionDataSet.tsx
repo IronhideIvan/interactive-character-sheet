@@ -5,6 +5,7 @@ import { JSX, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { deleteCharacterFeatureGroup, upsertCharacterFeatureGroup } from "../FeatureGroup/featureGroupsSlice";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 type FeaturesSectionDataSetProps = {
   collectionId: string;
@@ -64,7 +65,7 @@ const FeaturesSectionDataSet = ({ collectionId }: FeaturesSectionDataSetProps): 
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
           },
         ]}
         getId={handleGetId}

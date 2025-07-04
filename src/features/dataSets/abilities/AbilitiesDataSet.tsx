@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { AbilityScore } from "@/types/character/abilityScore";
 import { deleteAbilityScore, resetState as resetAbilityScoreState, setAbilityScores } from "@/features/characterSheet/abilityScores/abilityScoresSlice";
 import { ProficiencyLevel } from "@/types/character/score";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const AbilitiesDataSet = (): JSX.Element => {
   const abilities = useAppSelector(state => state.abilitiesDataSet.latest);
@@ -100,17 +101,17 @@ const AbilitiesDataSet = (): JSX.Element => {
         {
           name: "Name",
           key: "name",
-          type: "text",
+          type: EditorType.Text,
         },
         {
           name: "Abbreviation",
           key: "abbreviation",
-          type: "text",
+          type: EditorType.Text,
         },
         {
           name: "Icon",
           key: "icon",
-          type: "icon",
+          type: EditorType.Icon,
         },
       ]}
       getId={handleGetId}

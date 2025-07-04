@@ -6,6 +6,7 @@ import { DataDropdownItem } from "../../../components/dataGrid/editors/DataDropd
 import { v4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { deleteCustomNote, upsertCustomNote } from "./customNotesSlice";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 type CustomNotesManagerProps = {
   parentId: string;
@@ -36,7 +37,7 @@ const CustomNotesManager = ({ parentId }: CustomNotesManagerProps): JSX.Element 
       id: v4(),
       parentId: parentId,
       name: "",
-      type: "text",
+      type: EditorType.Text,
       value: {},
     });
   }, [parentId, upsertNote]);
@@ -80,12 +81,12 @@ const CustomNotesManager = ({ parentId }: CustomNotesManagerProps): JSX.Element 
           {
             name: "Name",
             key: "name",
-            type: "text",
+            type: EditorType.Text,
           },
           {
             name: "Type",
             key: "type",
-            type: "reference",
+            type: EditorType.Reference,
             minWidth: "10rem",
           },
         ]}

@@ -7,7 +7,9 @@ type FloatingDrawerProps = DrawerRootProps & {
   children?: ReactNode;
 };
 
-const FloatingDrawer = ({ title, footer, children, ...props }: FloatingDrawerProps): JSX.Element => {
+const FloatingDrawer = ({
+  title, footer, children, ...props
+}: FloatingDrawerProps): JSX.Element => {
   return (
     <Drawer.Root
       {...props}

@@ -36,4 +36,6 @@ export const abilityDataSetSlice = createSlice({
   },
 });
 
-export const { setAbilities, upsertAbility, deleteAbility, resetState, setInitial } = abilityDataSetSlice.actions;
+export const {
+  setAbilities, upsertAbility, deleteAbility, resetState, setInitial,
+} = abilityDataSetSlice.actions;

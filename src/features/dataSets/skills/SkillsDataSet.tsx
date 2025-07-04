@@ -10,6 +10,7 @@ import { DataDropdownItem } from "@/components/dataGrid/editors/DataDropdownEdit
 import { SkillScore } from "@/types/character/skillScore";
 import { setSkillScores } from "@/features/characterSheet/skills/skillsSlice";
 import { ProficiencyLevel } from "@/types/character/score";
+import { EditorType } from "@/components/dataGrid/dataGridTypes";
 
 const SkillsDataSet = (): JSX.Element => {
   const skills = useAppSelector(state => state.skillsDataSet.latest);
@@ -133,17 +134,17 @@ const SkillsDataSet = (): JSX.Element => {
         {
           name: "Name",
           key: "name",
-          type: "text",
+          type: EditorType.Text,
         },
         {
           name: "Icon",
           key: "icon",
-          type: "icon",
+          type: EditorType.Icon,
         },
         {
           name: "Ability Modifier",
           key: "abilityId",
-          type: "reference",
+          type: EditorType.Reference,
           minWidth: "10rem",
         },
       ]}

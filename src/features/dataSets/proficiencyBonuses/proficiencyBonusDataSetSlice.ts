@@ -36,4 +36,6 @@ export const proficiencyBonusDataSetSlice = createSlice({
   },
 });
 
-export const { setBonuses, upsertBonus, deleteBonus, resetState, setInitial } = proficiencyBonusDataSetSlice.actions;
+export const {
+  setBonuses, upsertBonus, deleteBonus, resetState, setInitial,
+} = proficiencyBonusDataSetSlice.actions;

@@ -8,7 +8,9 @@ type IconPickerDialogProps = {
   onClose: () => void;
 } & IconPickerProps;
 
-const IconPickerDialog = ({ open, onClose, title, ...props }: IconPickerDialogProps): JSX.Element => {
+const IconPickerDialog = ({
+  open, onClose, title, ...props
+}: IconPickerDialogProps): JSX.Element => {
   return (
     <Dialog.Root
       placement={"center"}
