@@ -7,6 +7,7 @@ import GridDataSet from "@/features/dataSets/grids/GridsDataSet";
 import JournalEntriesDataset from "@/features/dataSets/journal/JournalEntriesDataset";
 import ProficiencyBonusDataSet from "@/features/dataSets/proficiencyBonuses/ProficiencyBonusDataSet";
 import SkillsDataSet from "@/features/dataSets/skills/SkillsDataSet";
+import CalculatedFieldEditor from "@/features/general/calculatedFields/CalculatedFieldEditor";
 import JournalSection from "@/features/journal/JournalSection";
 import { JSX } from "react";
 
@@ -102,7 +103,7 @@ export const appRoutes: Route[] = [
     routes: [
       {
         index: true,
-        element: <div />,
+        element: <CalculatedFieldEditor />,
       },
     ],
   },
