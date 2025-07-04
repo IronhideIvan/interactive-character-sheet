@@ -41,7 +41,7 @@ const SimpleDialog = ({
             </Dialog.CloseTrigger>
             <Dialog.Footer>
               {actionButtonsType && (
-                <ActionButtons {...actionButtonProps} buttonType={actionButtonsType} />
+                <ActionButtons {...actionButtonProps} buttonType={actionButtonsType} onClose={onClose} />
               )}
             </Dialog.Footer>
           </Dialog.Content>

@@ -10,6 +10,8 @@ import { FaPlus, FaRegEdit, FaTrash, FaUndo } from "react-icons/fa";
 import ConfirmIconButton from "../ConfirmIconButton";
 import DataNumberEditor from "./editors/DataNumberEditor";
 import { DataDropdownEditor, DataDropdownItem } from "./editors/DataDropdownEditor";
+import DataMarkdownEditor from "./editors/DataMarkdownEditor";
+import DataBooleanEditor from "./editors/DataBooleanEditor";
 
 type DataGridProps<T> = {
   items: T[];
@@ -18,6 +20,7 @@ type DataGridProps<T> = {
   getFriendlyName?: (item: T) => string;
   getReferenceOptions?: (columnKey: keyof T) => ListCollection<DataDropdownItem> | undefined;
   onStringValueChange?: (item: T, columnKey: keyof T, value: string) => void;
+  onBooleanValueChange?: (item: T, columnKey: keyof T, value: boolean) => void;
   onNumberValueChange?: (item: T, columnKey: keyof T, value: number) => void;
   onIconValueChange?: (item: T, columnKey: keyof T, value: Icon) => void;
   onReferenceValueChange?: (item: T, columnKey: keyof T, value: string[]) => void;
@@ -37,6 +40,7 @@ const DataGrid = <T,>(
     getId,
     getFriendlyName,
     onStringValueChange,
+    onBooleanValueChange,
     onNumberValueChange,
     onIconValueChange,
     onAddRow,
@@ -104,6 +108,31 @@ const DataGrid = <T,>(
               }
             }}
             placeholder={ci.name}
+          />
+        );
+
+      case "markdown":
+        return (
+          <DataMarkdownEditor
+            value={getValue<string>(item, ci.key) ?? ""}
+            onValueChanged={(v) => {
+              if (onStringValueChange) {
+                onStringValueChange(item, ci.key, v);
+              }
+            }}
+            readonly={ci.readonly}
+          />
+        );
+
+      case "boolean":
+        return (
+          <DataBooleanEditor
+            value={getValue<boolean>(item, ci.key) ?? false}
+            onValueChanged={(v) => {
+              if (onBooleanValueChange) {
+                onBooleanValueChange(item, ci.key, v);
+              }
+            }}
           />
         );
 
@@ -186,6 +215,7 @@ const DataGrid = <T,>(
     getReferenceOptions,
     getValue,
     handleIconDialogOpen,
+    onBooleanValueChange,
     onNumberValueChange,
     onReferenceValueChange,
     onStringValueChange,
