@@ -15,7 +15,12 @@ const CustomGridsSection = ({ grid }: CustomGridsSectionProps): JSX.Element => {
   const { isOpen, open, close } = useModal();
 
   return (
-    <CollapsibleSection label={grid.name} onEditButtonClick={open}>
+    <CollapsibleSection
+      label={grid.name}
+      showEditButton
+      onEditButtonClick={open}
+      textStyle={"lg"}
+    >
       <CustomGridField grid={grid} />
       {isOpen && (
         <SimpleDialog

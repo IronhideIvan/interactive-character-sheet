@@ -11,7 +11,7 @@ const CustomGridsSections = (): JSX.Element => {
   }
 
   return (
-    <CollapsibleSection label="Grids">
+    <CollapsibleSection label="Grids" textStyle={"xl"}>
       {grids.map((g) => {
         return (
           <CustomGridsSection key={g.id} grid={g} />

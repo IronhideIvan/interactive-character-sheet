@@ -22,6 +22,11 @@ const navRoutes: NavRoutes = {
       friendlyName: "Features",
     },
     {
+      path: "/grids",
+      value: "/data/grids",
+      friendlyName: "Grids",
+    },
+    {
       path: "/prof",
       value: "/data/prof",
       friendlyName: "Proficiency Bonus",

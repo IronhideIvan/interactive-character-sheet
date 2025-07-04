@@ -1,4 +1,4 @@
-import { CloseButton, Dialog, Portal } from "@chakra-ui/react";
+import { Box, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { JSX, ReactNode } from "react";
 import { ActionButtonProps, ActionButtonType } from "./actionButtonTypes";
 import { ActionButtons } from "./ActionButtons";
@@ -9,10 +9,17 @@ type SimpleDialogProps = {
   onClose: () => void;
   children?: ReactNode;
   actionButtonsType?: ActionButtonType;
+  topLeftActions?: ReactNode;
 } & ActionButtonProps;
 
 const SimpleDialog = ({
-  open, title, onClose, children, actionButtonsType, ...actionButtonProps
+  open,
+  title,
+  onClose,
+  children,
+  actionButtonsType,
+  topLeftActions,
+  ...actionButtonProps
 }: SimpleDialogProps): JSX.Element => {
   return (
     <Dialog.Root
@@ -27,6 +34,11 @@ const SimpleDialog = ({
       <Portal>
         <Dialog.Positioner>
           <Dialog.Content maxHeight={"98vh"}>
+            {topLeftActions && (
+              <Box left={1} top={1} position={"absolute"}>
+                {topLeftActions}
+              </Box>
+            )}
             {title
               && (
                 <Dialog.Header paddingBottom={2}>

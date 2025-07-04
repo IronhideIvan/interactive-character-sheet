@@ -232,7 +232,7 @@ const DataGrid = <T,>(
   ]);
 
   return (
-    <Box display={"flex"} marginBottom={12}>
+    <Box display={"flex"} justifyContent={"center"} marginBottom={12}>
       <VStack rowGap={0}>
         <Table.Root variant={"outline"} showColumnBorder>
           <Table.Header>

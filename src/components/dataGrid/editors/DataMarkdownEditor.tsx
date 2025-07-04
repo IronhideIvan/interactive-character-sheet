@@ -1,7 +1,7 @@
 import { JSX, useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import { Box, IconButton } from "@chakra-ui/react";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaRegEdit } from "react-icons/fa";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
 import { ActionButtonType } from "@/components/dialog/actionButtonTypes";
 import MarkdownEditor from "@/components/markdown/MarkdownEditor";
@@ -15,12 +15,12 @@ type DataMarkdownEditorProps = {
 
 const DataMarkdownEditor = ({ value, onValueChanged }: DataMarkdownEditorProps): JSX.Element => {
   const { isOpen, open, close } = useModal();
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editText, setEditText] = useState("");
+  const [isEditMode, setIsEditMode] = useState(value === "");
+  const [editText, setEditText] = useState(value);
 
   return (
-    <Box>
-      <IconButton onClick={open}>
+    <Box width={"100%"} display={"flex"} justifyContent={"center"}>
+      <IconButton onClick={open} variant={"ghost"}>
         <FaEye />
       </IconButton>
       {isOpen && (
@@ -37,13 +37,28 @@ const DataMarkdownEditor = ({ value, onValueChanged }: DataMarkdownEditorProps):
             setIsEditMode(false);
             setEditText("");
           }}
+          topLeftActions={isEditMode
+            ? undefined
+            : (
+              <IconButton
+                variant={"ghost"}
+                onClick={() => {
+                  setEditText(value);
+                  setIsEditMode(true);
+                }}
+              >
+                <FaRegEdit />
+              </IconButton>
+            )}
         >
           {isEditMode
             ? (
               <MarkdownEditor value={editText} onChange={newValue => setEditText(newValue)} />
             )
             : (
-              <MarkdownPreview source={value} />
+              <Box width={"100%"} paddingX={6}>
+                <MarkdownPreview source={value} />
+              </Box>
             )}
         </SimpleDialog>
       )}

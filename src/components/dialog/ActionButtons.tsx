@@ -35,15 +35,9 @@ const CloseActionButtons = (props: ActionButtonProps): JSX.Element => {
   return (
     <HStack>
       <Button
-        colorPalette={"blue"}
         variant={"outline"}
-        onClick={props.onSave}
-      >Save
-      </Button>
-      <Button
-        variant={"outline"}
-        onClick={props.onCancel}
-      >Cancel
+        onClick={props.onClose}
+      >Close
       </Button>
     </HStack>
   );
