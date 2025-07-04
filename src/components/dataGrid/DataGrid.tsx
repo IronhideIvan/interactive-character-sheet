@@ -117,7 +117,6 @@ const DataGrid = <T,>(
                 onStringValueChange(item, ci.key, v);
               }
             }}
-            placeholder={ci.name}
           />
         );
 

@@ -99,7 +99,7 @@ const CustomGridHeaderManager = ({ grid }: CustomGridHeaderManagerProps): JSX.El
   }, [upsertHeader]);
 
   const handleDeleteRow = useCallback((item: CustomGridHeader) => {
-    const newHeaders = grid.headers.filter(h => h.id === item.id);
+    const newHeaders = grid.headers.filter(h => h.id !== item.id);
     const newGrid = regenerateGrid(grid, newHeaders);
     dispatch(upsertCustomGrid(newGrid));
   }, [

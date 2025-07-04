@@ -15,13 +15,13 @@ type DataMarkdownEditorProps = {
 
 const DataMarkdownEditor = ({ value, onValueChanged }: DataMarkdownEditorProps): JSX.Element => {
   const { isOpen, open, close } = useModal();
-  const [isEditMode, setIsEditMode] = useState(value === "");
-  const [editText, setEditText] = useState(value);
+  const [isEditMode, setIsEditMode] = useState(value.length === 0);
+  const [editText, setEditText] = useState(value.length === 0 ? "" : value);
 
   return (
     <Box width={"100%"} display={"flex"} justifyContent={"center"}>
       <IconButton onClick={open} variant={"ghost"}>
-        <FaEye />
+        {value.length === 0 ? <FaRegEdit /> : <FaEye />}
       </IconButton>
       {isOpen && (
         <SimpleDialog
