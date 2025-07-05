@@ -7,8 +7,7 @@ import { v4 } from "uuid";
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { EditorType } from "@/components/dataGrid/dataGridTypes";
 import { resetDataSet, upsertDataSet } from "./dataSetSlice";
-import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValueType } from "@/types/data/dataset";
-import { ID } from "@/types/common/entityBase";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValueType, Dictionary } from "@/types/data/dataset";
 import { buildEmptyCell, convertToRowCell } from "./dataSetUtils";
 
 type DataSetHeaderManagerProps = {
@@ -21,8 +20,8 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
   const regenerateDataSet = useCallback((existingDataSet: DataSetProto, newHeaders: DataSetHeader[]): DataSetProto => {
     // reorder all row cells, add any that don't exist, and remove any that aren't in the grid
     const newRows: DataSetRow[] = [];
-    const newCellDict: Map<ID, DataSetCell> = new Map();
-    const oldCellDict: Map<ID, DataSetCell> = new Map(existingDataSet.cells);
+    const newCellDict: Dictionary<DataSetCell> = {};
+    const oldCellDict: Dictionary<DataSetCell> = { ...existingDataSet.cells };
 
     existingDataSet.rows.forEach((row) => {
       const newRowCells: DataSetRowCell[] = [];
@@ -32,7 +31,7 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
         const rowCellIndex = oldRowCells.findIndex(cell => cell.headerId === header.id);
         if (rowCellIndex >= 0) {
           const rowCellToAdd = oldRowCells.splice(rowCellIndex, 1)[0];
-          let existingCell = oldCellDict.get(rowCellToAdd.cellId);
+          let existingCell = oldCellDict[rowCellToAdd.cellId];
           if (!existingCell) {
             existingCell = buildEmptyCell(header);
           }
@@ -41,12 +40,12 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
             existingCell = buildEmptyCell(header);
           }
 
-          newCellDict.set(existingCell.id, existingCell);
+          newCellDict[existingCell.id] = existingCell;
           newRowCells.push(convertToRowCell(existingCell));
         }
         else {
           const newCell = buildEmptyCell(header);
-          newCellDict.set(newCell.id, newCell);
+          newCellDict[newCell.id] = newCell;
           newRowCells.push(convertToRowCell(newCell));
         }
       });
