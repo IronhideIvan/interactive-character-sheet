@@ -1,11 +1,15 @@
 import { EntityBase, ID } from "../common/entityBase";
 import { Icon } from "./icon";
 
+export type Dictionary<T> = {
+  [id: ID]: T;
+};
+
 export type DataSetProto = EntityBase & {
   name: string;
   headers: DataSetHeader[];
   rows: DataSetRow[];
-  cells: Map<ID, DataSetCell>;
+  cells: Dictionary<DataSetCell>;
 };
 
 export type DataSetHeader = EntityBase & {

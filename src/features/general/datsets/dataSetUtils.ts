@@ -1,5 +1,4 @@
-import { ID } from "@/types/common/entityBase";
-import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValue, DataSetValueType } from "@/types/data/dataset";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValue, DataSetValueType, Dictionary } from "@/types/data/dataset";
 import { v4 } from "uuid";
 
 const getDefaultCellValueByType = (headerType: DataSetValueType): DataSetValue => {
@@ -29,12 +28,12 @@ export const convertToRowCell = (cell: DataSetCell): DataSetRowCell => {
 };
 
 export const addNewRowToDataSet = (dataset: DataSetProto): DataSetProto => {
-  const newCells: Map<ID, DataSetCell> = new Map(dataset.cells);
+  const newCells: Dictionary<DataSetCell> = { ...dataset.cells };
   const newRowCells: DataSetRowCell[] = [];
 
   dataset.headers.forEach((h) => {
     const cell = buildEmptyCell(h);
-    newCells.set(cell.id, cell);
+    newCells[cell.id] = cell;
     newRowCells.push(convertToRowCell(cell));
   });
 
@@ -55,9 +54,9 @@ export const addNewRowToDataSet = (dataset: DataSetProto): DataSetProto => {
 
 export const deleteRowFromDataSet = (row: DataSetRow, dataset: DataSetProto): DataSetProto => {
   const newRows = dataset.rows.filter(r => r.id !== row.id);
-  const newCells = new Map(dataset.cells);
+  const newCells: Dictionary<DataSetCell> = { ...dataset.cells };
   row.cells.forEach((c) => {
-    newCells.delete(c.cellId);
+    delete newCells[c.cellId];
   });
 
   return {

@@ -13,6 +13,7 @@ import { featureGroupsSlice } from "@/features/characterSheet/features/FeatureGr
 import { groupCollectionsSlice } from "@/features/dataSets/collections/groupCollectionsSlice";
 import { customGridsSlice } from "@/features/general/grids-old/customGridsSlice";
 import { journalEntriesSlice } from "@/features/journal/journalEntriesSlice";
+import { dataSetsSlice } from "@/features/general/datsets/dataSetSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     proficiencyBonusDataSet: proficiencyBonusDataSetSlice.reducer,
     skillScores: skillScoresSlice.reducer,
     skillsDataSet: skillsDataSetSliceSlice.reducer,
+    dataSets: dataSetsSlice.reducer,
   },
 });
 

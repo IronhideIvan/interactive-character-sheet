@@ -6,6 +6,7 @@ import { CustomGrid } from "./common/customGrid";
 import { CustomNote } from "./common/customNote";
 import { GroupCollection } from "./common/groupCollection";
 import { Ability } from "./data/ability";
+import { DataSetProto } from "./data/dataset";
 import { Feature } from "./data/feature";
 import { ProficiencyBonus } from "./data/proficiencyBonus";
 import { Skill } from "./data/skill";
@@ -25,6 +26,7 @@ export type SaveFile = {
     skills: Skill[];
     features: Feature[];
     groupCollections: GroupCollection[];
+    dataSets: DataSetProto[];
   };
   general: {
     customNotes: CustomNote[];

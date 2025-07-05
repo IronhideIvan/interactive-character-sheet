@@ -2,7 +2,7 @@ import DataGrid from "@/components/dataGrid/DataGrid";
 import { ColumnInfo, EditorType } from "@/components/dataGrid/dataGridTypes";
 import { JSX, useCallback, useMemo } from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import { DataSetHeader, DataSetProto, DataSetRow, DataSetValue } from "@/types/data/dataset";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetValue, Dictionary } from "@/types/data/dataset";
 import { upsertDataSet } from "./dataSetSlice";
 import { ID } from "@/types/common/entityBase";
 import { addNewRowToDataSet, deleteRowFromDataSet } from "./dataSetUtils";
@@ -62,7 +62,7 @@ const DataSetField = ({ dataset }: DataSetFieldProps): JSX.Element => {
         + `not contain any cells with header ID '${headerId}'`);
     }
 
-    const cell = dataset.cells.get(rowCell.cellId);
+    const cell = dataset.cells[rowCell.cellId];
     if (!cell) {
       throw new Error(`Cell '${rowCell.cellId}' does not exist on dataset '${dataset.id}'`);
     }
@@ -97,16 +97,16 @@ const DataSetField = ({ dataset }: DataSetFieldProps): JSX.Element => {
       return;
     }
 
-    const cell = dataset.cells.get(rowCell.cellId);
+    const cell = dataset.cells[rowCell.cellId];
     if (!cell) {
       return;
     }
 
-    const newCells = new Map(dataset.cells);
-    newCells.set(cell.id, {
+    const newCells: Dictionary<DataSetCell> = { ...dataset.cells };
+    newCells[cell.id] = {
       ...cell,
       value: newCellValue,
-    });
+    };
 
     upsertDataSetRows({
       ...dataset,

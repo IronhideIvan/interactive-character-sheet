@@ -14,7 +14,7 @@ const initialState: DataSetsSlice = {
   initial: [],
 };
 
-export const customGridsSlice = createSlice({
+export const dataSetsSlice = createSlice({
   name: "dataSets",
   initialState,
   reducers: {
@@ -56,4 +56,4 @@ export const {
   resetDataSet,
   resetState,
   setInitial,
-} = customGridsSlice.actions;
+} = dataSetsSlice.actions;

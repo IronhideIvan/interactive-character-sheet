@@ -16,6 +16,7 @@ import saveAs from "file-saver";
 import cloneDeep from "lodash.clonedeep";
 import { resetState as resetCustomGridsState, setInitial as setInitialGrids } from "@/features/general/grids-old/customGridsSlice";
 import { resetState as resetJournalEntriesState, setInitial as setInitialJournalEntries } from "@/features/journal/journalEntriesSlice";
+import { resetState as resetDataSetsState, setInitial as setInitialDataSets } from "@/features/general/datsets/dataSetSlice";
 
 export const useImport = () => {
   const dispatch = useAppDispatch();
@@ -41,6 +42,8 @@ export const useImport = () => {
       dispatch(resetCustomGridsState());
 
       dispatch(resetJournalEntriesState());
+
+      dispatch(resetDataSetsState());
     });
   };
 
@@ -66,6 +69,8 @@ export const useExport = () => {
 
   const journalEntries = useAppSelector(state => state.journalEntries.latest);
 
+  const dataSets = useAppSelector(state => state.dataSets.latest);
+
   const saveFile = () => {
     const fileContents: SaveFile = {
       character: {
@@ -81,6 +86,7 @@ export const useExport = () => {
         skills: skills,
         features: features,
         groupCollections: groupCollections,
+        dataSets: dataSets,
       },
       general: {
         customNotes: customNotes,
@@ -163,5 +169,9 @@ const setInitialStates = (dispatch: typeof store.dispatch, saveFile: SaveFile) =
 
   if (saveFile?.journalEntries) {
     dispatch(setInitialJournalEntries(saveFile.journalEntries));
+  }
+
+  if (saveFile?.data?.dataSets) {
+    dispatch(setInitialDataSets(saveFile.data.dataSets));
   }
 };
