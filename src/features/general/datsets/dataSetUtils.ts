@@ -1,21 +1,13 @@
-import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValue, DataSetValueType, Dictionary } from "@/types/data/dataset";
+import { Dictionary } from "@/types/common/dictionary";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell } from "@/types/data/dataset";
 import { v4 } from "uuid";
-
-const getDefaultCellValueByType = (headerType: DataSetValueType): DataSetValue => {
-  switch (headerType) {
-    case DataSetValueType.Text: return { string: "" };
-    case DataSetValueType.Boolean: return { boolean: false };
-    case DataSetValueType.Markdown: return { string: "" };
-    case DataSetValueType.Number: return { number: 0 };
-    case DataSetValueType.Icon: return { icon: null };
-  }
-};
+import { getDefaultDataObjectValueByType } from "../dataObjects/dataObjectUtil";
 
 export const buildEmptyCell = (header: DataSetHeader): DataSetCell => {
   return {
     id: v4(),
     headerId: header.id,
-    value: getDefaultCellValueByType(header.type),
+    value: getDefaultDataObjectValueByType(header.type),
     type: header.type,
   };
 };

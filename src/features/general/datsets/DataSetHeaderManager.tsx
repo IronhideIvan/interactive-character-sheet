@@ -7,8 +7,10 @@ import { v4 } from "uuid";
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { EditorType } from "@/components/dataGrid/dataGridTypes";
 import { resetDataSet, upsertDataSet } from "./dataSetSlice";
-import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell, DataSetValueType, Dictionary } from "@/types/data/dataset";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetRowCell } from "@/types/data/dataset";
 import { buildEmptyCell, convertToRowCell } from "./dataSetUtils";
+import { Dictionary } from "@/types/common/dictionary";
+import { DataObjectValueType } from "@/types/data/dataObject";
 
 type DataSetHeaderManagerProps = {
   dataset: DataSetProto;
@@ -93,7 +95,7 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
     upsertHeader({
       id: v4(),
       name: "",
-      type: DataSetValueType.Text,
+      type: DataObjectValueType.Text,
     });
   }, [upsertHeader]);
 
@@ -129,7 +131,7 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
 
     if (columnKey === "type") {
       const selectedType = value[0];
-      const newItem: DataSetHeader = { ...item, type: (selectedType as DataSetValueType) };
+      const newItem: DataSetHeader = { ...item, type: (selectedType as DataObjectValueType) };
       upsertHeader(newItem);
     }
   };
@@ -175,23 +177,23 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
 const typeReferenceOptions = createListCollection<DataDropdownItem>({
   items: [
     {
-      id: "text",
+      id: DataObjectValueType.Text,
       label: "Text",
     },
     {
-      id: "boolean",
+      id: DataObjectValueType.Boolean,
       label: "True/False",
     },
     {
-      id: "number",
+      id: DataObjectValueType.Number,
       label: "Number",
     },
     {
-      id: "markdown",
+      id: DataObjectValueType.Markdown,
       label: "Markdown",
     },
     {
-      id: "icon",
+      id: DataObjectValueType.Icon,
       label: "Icon",
     },
   ],

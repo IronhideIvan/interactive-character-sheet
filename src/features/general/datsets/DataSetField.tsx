@@ -2,11 +2,13 @@ import DataGrid from "@/components/dataGrid/DataGrid";
 import { ColumnInfo, EditorType } from "@/components/dataGrid/dataGridTypes";
 import { JSX, useCallback, useMemo } from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow, DataSetValue, Dictionary } from "@/types/data/dataset";
+import { DataSetCell, DataSetHeader, DataSetProto, DataSetRow } from "@/types/data/dataset";
 import { upsertDataSet } from "./dataSetSlice";
 import { ID } from "@/types/common/entityBase";
 import { addNewRowToDataSet, deleteRowFromDataSet } from "./dataSetUtils";
 import { Icon } from "@/types/data/icon";
+import { DataObjectValue } from "@/types/data/dataObject";
+import { Dictionary } from "@/types/common/dictionary";
 
 type DataSetFieldProps = {
   dataset: DataSetProto;
@@ -91,7 +93,7 @@ const DataSetField = ({ dataset }: DataSetFieldProps): JSX.Element => {
     upsertDataSetRows(deleteRowFromDataSet(item, dataset));
   }, [dataset, upsertDataSetRows]);
 
-  const upsertGridCell = useCallback((headerId: ID, newCellValue: DataSetValue, row: DataSetRow): void => {
+  const upsertGridCell = useCallback((headerId: ID, newCellValue: DataObjectValue, row: DataSetRow): void => {
     const rowCell = row.cells.find(c => c.headerId === headerId);
     if (!rowCell) {
       return;

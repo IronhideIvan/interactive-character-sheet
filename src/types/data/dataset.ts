@@ -1,9 +1,6 @@
-import { EntityBase, ID } from "../common/entityBase";
-import { Icon } from "./icon";
-
-export type Dictionary<T> = {
-  [id: ID]: T;
-};
+import { Dictionary } from "../common/dictionary";
+import { EntityBase } from "../common/entityBase";
+import { DataObjectValue, DataObjectValueType } from "./dataObject";
 
 export type DataSetProto = EntityBase & {
   name: string;
@@ -14,7 +11,7 @@ export type DataSetProto = EntityBase & {
 
 export type DataSetHeader = EntityBase & {
   name: string;
-  type: DataSetValueType;
+  type: DataObjectValueType;
 };
 
 export type DataSetRow = EntityBase & {
@@ -28,21 +25,6 @@ export type DataSetRowCell = {
 
 export type DataSetCell = EntityBase & {
   headerId: string;
-  type: DataSetValueType;
-  value: DataSetValue;
+  type: DataObjectValueType;
+  value: DataObjectValue;
 };
-
-export type DataSetValue = {
-  boolean?: boolean;
-  string?: string;
-  number?: number;
-  icon?: Icon | null;
-};
-
-export enum DataSetValueType {
-  Text = "text",
-  Boolean = "boolean",
-  Number = "number",
-  Markdown = "markdown",
-  Icon = "icon"
-}

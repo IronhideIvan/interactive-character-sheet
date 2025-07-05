@@ -4,8 +4,10 @@ import { CharacterFeature, CharacterFeatureGroup } from "./character/characterFe
 import { SkillScore } from "./character/skillScore";
 import { CustomGrid } from "./common/customGrid";
 import { CustomNote } from "./common/customNote";
+import { Dictionary } from "./common/dictionary";
 import { GroupCollection } from "./common/groupCollection";
 import { Ability } from "./data/ability";
+import { DataObject } from "./data/dataObject";
 import { DataSetProto } from "./data/dataset";
 import { Feature } from "./data/feature";
 import { ProficiencyBonus } from "./data/proficiencyBonus";
@@ -27,6 +29,7 @@ export type SaveFile = {
     features: Feature[];
     groupCollections: GroupCollection[];
     dataSets: DataSetProto[];
+    dataObjects: Dictionary<DataObject>;
   };
   general: {
     customNotes: CustomNote[];
