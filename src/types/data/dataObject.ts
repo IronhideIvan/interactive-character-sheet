@@ -1,3 +1,4 @@
+import { DataCalculation } from "../common/dataCalculation";
 import { EntityBase } from "../common/entityBase";
 import { Icon } from "./icon";
 
@@ -12,6 +13,7 @@ export type DataObjectValue = {
   string?: string;
   number?: number;
   icon?: Icon | null;
+  calculation?: DataCalculation;
 };
 
 export enum DataObjectValueType {
@@ -19,5 +21,6 @@ export enum DataObjectValueType {
   Boolean = "boolean",
   Number = "number",
   Markdown = "markdown",
-  Icon = "icon"
+  Icon = "icon",
+  Calculation = "calc"
 }

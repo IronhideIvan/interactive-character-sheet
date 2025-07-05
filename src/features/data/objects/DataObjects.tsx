@@ -75,9 +75,12 @@ const DataObjects = (): JSX.Element => {
     if (!values[0]) {
       return;
     }
+    const type = values[0] as DataObjectValueType;
+
     setEditObject({
       ...editObject!,
-      type: values[0] as DataObjectValueType,
+      type: type,
+      value: getDefaultDataObjectValueByType(type),
     });
   }, [editObject]);
 
@@ -167,6 +170,10 @@ const typeReferenceOptions = createListCollection<DataDropdownItem>({
     {
       id: DataObjectValueType.Number,
       label: "Number",
+    },
+    {
+      id: DataObjectValueType.Calculation,
+      label: "Calculation",
     },
   ],
   itemToValue: item => item.id,

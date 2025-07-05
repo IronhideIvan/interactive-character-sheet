@@ -1,4 +1,4 @@
-import { CalculatedField } from "./calculatedField";
+import { DataCalculation } from "./dataCalculation";
 import { EntityBase } from "./entityBase";
 
 export type CustomNoteType = "text" | "boolean" | "number";
@@ -14,5 +14,5 @@ export type CustomNoteValue = {
   boolean?: boolean;
   string?: string;
   number?: number;
-  calculation?: CalculatedField;
+  calculation?: DataCalculation;
 };
