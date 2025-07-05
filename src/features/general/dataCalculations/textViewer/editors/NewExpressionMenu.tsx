@@ -1,4 +1,4 @@
-import { CalculationExpression, CalculationExpressionType, CalculationValueType, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
+import { CalculationExpression, CalculationExpressionType, CalculationValueType, CalculationVariableAssignmentExpression, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
 import { Menu, Button, Portal } from "@chakra-ui/react";
 import { JSX } from "react";
 import { v4 } from "uuid";
@@ -27,6 +27,7 @@ const NewExpressionMenu = ({ label, onAddNewExpression }: NewExpressionMenuProps
                   id: v4(),
                   type: CalculationExpressionType.VariableDeclaration,
                   variable: {
+                    id: v4(),
                     name: "",
                     type: CalculationValueType.Number,
                   },
@@ -36,6 +37,20 @@ const NewExpressionMenu = ({ label, onAddNewExpression }: NewExpressionMenuProps
               }}
             >
               Variable Declaration
+            </Menu.Item>
+            <Menu.Item
+              value={CalculationExpressionType.VariableAssignment}
+              onClick={() => {
+                const newExpr: CalculationVariableAssignmentExpression = {
+                  id: v4(),
+                  type: CalculationExpressionType.VariableAssignment,
+                  variableId: "",
+                  value: buildDefaultCalculationValueOfType(CalculationValueType.Number),
+                };
+                onAddNewExpression(newExpr);
+              }}
+            >
+              Variable Assignment
             </Menu.Item>
           </Menu.Content>
         </Menu.Positioner>

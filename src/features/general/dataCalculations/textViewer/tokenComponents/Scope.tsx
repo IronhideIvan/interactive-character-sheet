@@ -1,4 +1,4 @@
-import { CalculationExpression, CalculationExpressionType, CalculationScopeExpression, CalculationVariableDeclarationExpression, DataCalculation } from "@/types/common/dataCalculation";
+import { CalculationExpression, CalculationExpressionType, CalculationScopeExpression, CalculationVariable, CalculationVariableAssignmentExpression, CalculationVariableDeclarationExpression, DataCalculation } from "@/types/common/dataCalculation";
 import { HStack, VStack } from "@chakra-ui/react";
 import { JSX, ReactNode } from "react";
 import { scopeIndentMargin } from "./textStyles";
@@ -8,17 +8,22 @@ import LinkingText from "./LinkingText";
 import ConfirmIconButton from "@/components/ConfirmIconButton";
 import { FaTrash } from "react-icons/fa";
 import NewExpressionMenu from "../editors/NewExpressionMenu";
+import { CalculationAggregate } from "../../dataCalculationUtil";
+import VariableAssignment from "./VariableAssignment";
 import { Dictionary } from "@/types/common/dictionary";
 
 type ScopeProps = {
   expression: CalculationScopeExpression;
   calculation: DataCalculation;
-  onExpressionsChange: (newExpressions: Dictionary<CalculationExpression>) => void;
+  variablesInScope: Dictionary<CalculationVariable>;
+  onCalculationChanged: (newCalculation: DataCalculation) => void;
 };
 
-const Scope = ({ expression, calculation, onExpressionsChange }: ScopeProps): JSX.Element => {
+const Scope = ({
+  expression, calculation, onCalculationChanged, variablesInScope,
+}: ScopeProps): JSX.Element => {
   const handleAddDirectDescendant = (newExpression: CalculationExpression) => {
-    const newExpressionDict = { ...calculation.expressions };
+    const agg = new CalculationAggregate(calculation);
     const newScope: CalculationScopeExpression = {
       ...expression,
       evaluationScope: [
@@ -26,44 +31,61 @@ const Scope = ({ expression, calculation, onExpressionsChange }: ScopeProps): JS
         newExpression.id,
       ],
     };
-    newExpressionDict[newExpression.id] = newExpression;
-    newExpressionDict[newScope.id] = newScope;
-    onExpressionsChange(newExpressionDict);
-  };
 
+    agg.upsertExpression(newExpression);
+    agg.upsertExpression(newScope);
+    onCalculationChanged(agg.getTransformation());
+  };
   const handleDeleteDirectDescendant = (id: ID) => {
-    const newExpressionDict = { ...calculation.expressions };
+    const agg = new CalculationAggregate(calculation);
     const newScope: CalculationScopeExpression = {
       ...expression,
       evaluationScope: expression.evaluationScope.filter(existingId => existingId !== id),
     };
 
-    delete newExpressionDict[id];
-    newExpressionDict[newScope.id] = newScope;
-    onExpressionsChange(newExpressionDict);
+    agg.deleteExpression(id);
+    agg.upsertExpression(newScope);
+    onCalculationChanged(agg.getTransformation());
   };
 
   const handleChildExpressionChange = (updatedExpression: CalculationExpression) => {
-    const newExpressionDict = { ...calculation.expressions };
-    newExpressionDict[updatedExpression.id] = updatedExpression;
-    onExpressionsChange(newExpressionDict);
+    const agg = new CalculationAggregate(calculation);
+    agg.upsertExpression(updatedExpression);
+    onCalculationChanged(agg.getTransformation());
   };
 
-  const scopedExpressions: {
-    id: ID; node: ReactNode;
-  }[] = [];
+  type ScopeDetails = {
+    id: ID;
+    node: ReactNode;
+    variablesInScope: Dictionary<CalculationVariable>;
+  };
+
+  const scopedExpressions: ScopeDetails[] = [];
+  let currentVariablesInScope: Dictionary<CalculationVariable> = { ...variablesInScope };
   expression.evaluationScope.forEach((id) => {
     const expr = calculation.expressions[id];
     if (expr) {
-      const scopedExp: {
-        id: ID; node: ReactNode;
-      } = { id: expr.id, node: <></> };
+      const scopedExp: ScopeDetails = { id: expr.id, node: <></>, variablesInScope: currentVariablesInScope };
 
       switch (expr.type) {
         case CalculationExpressionType.VariableDeclaration:
         {
           const castExp = expr as CalculationVariableDeclarationExpression;
           scopedExp.node = <VariableDeclaration expression={castExp} onChange={handleChildExpressionChange} />;
+          currentVariablesInScope = { ...currentVariablesInScope };
+          currentVariablesInScope[castExp.variable.id] = castExp.variable;
+          break;
+        }
+        case CalculationExpressionType.VariableAssignment:
+        {
+          const castExp = expr as CalculationVariableAssignmentExpression;
+          scopedExp.node = (
+            <VariableAssignment
+              expression={castExp}
+              onChange={handleChildExpressionChange}
+              allVariables={currentVariablesInScope}
+            />
+          );
           break;
         }
         case CalculationExpressionType.Scope: {
@@ -72,7 +94,8 @@ const Scope = ({ expression, calculation, onExpressionsChange }: ScopeProps): JS
             <Scope
               expression={castExp}
               calculation={calculation}
-              onExpressionsChange={onExpressionsChange}
+              onCalculationChanged={onCalculationChanged}
+              variablesInScope={currentVariablesInScope}
             />
           );
           break;

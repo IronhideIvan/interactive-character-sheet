@@ -1,10 +1,7 @@
 import { CalculationExpression, CalculationExpressionType, CalculationScopeExpression } from "@/types/common/dataCalculation";
 import { Dictionary } from "@/types/common/dictionary";
-import { ID } from "@/types/common/entityBase";
 import { DataObjectValueType, DataObjectValue } from "@/types/data/dataObject";
 import { v4 } from "uuid";
-
-export const testCalculationId: ID = "12345";
 
 export const getDefaultDataObjectValueByType = (type: DataObjectValueType): DataObjectValue => {
   switch (type) {
@@ -24,8 +21,9 @@ export const getDefaultDataObjectValueByType = (type: DataObjectValueType): Data
       expressions[rootId] = scope;
       return {
         calculation: {
-          id: testCalculationId,
+          id: v4(),
           rootExpressionId: rootId,
+          variables: {},
           expressions: expressions,
         },
       };

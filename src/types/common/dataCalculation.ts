@@ -3,6 +3,7 @@ import { EntityBase, ID } from "./entityBase";
 
 export type DataCalculation = EntityBase & {
   rootExpressionId: ID;
+  variables: Dictionary<CalculationVariable>;
   expressions: Dictionary<CalculationExpression>;
 };
 
@@ -18,7 +19,7 @@ export enum CalculationExpressionType {
   Scope = "scope",
   // Operation = "op",
   // Condition = "condition",
-  // Value = "value"
+  VariableAssignment = "ass",
   VariableDeclaration = "var-decl"
 }
 
@@ -27,11 +28,16 @@ export type CalculationVariableDeclarationExpression = CalculationExpression & {
   value: CalculationValue;
 };
 
+export type CalculationVariableAssignmentExpression = CalculationExpression & {
+  variableId: ID;
+  value: CalculationValue;
+};
+
 export enum CalculationValueType {
   Number = "number"
 }
 
-export type CalculationVariable = {
+export type CalculationVariable = EntityBase & {
   name: string;
   type: CalculationValueType;
 };

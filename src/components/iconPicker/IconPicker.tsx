@@ -24,7 +24,6 @@ export const IconPicker = ({ defaultIcon, onSelect, ...props }: IconPickerProps)
   const defaultColor = useMemo(() => parseColor(mostRecentColor), [mostRecentColor]);
   const [searchResults, setSearchResults] = useState<string[]>([...allGiKeys.slice(0, searchLimit)]);
   const [searchTerm, setSearchTerm] = useState("");
-  console.log("defaultIcon", defaultIcon);
   const [iconColor, setIconColor] = useState<Color>(defaultIcon
     ? parseColor(defaultIcon.color)
     : parseColor(mostRecentColor));
