@@ -69,7 +69,7 @@ const DataSetField = ({ dataset }: DataSetFieldProps): JSX.Element => {
 
     switch (type) {
       case EditorType.Icon:
-        return (cell?.value.icon ?? { id: "", color: "" }) as ValueType;
+        return (cell?.value.icon ?? null) as ValueType;
       case EditorType.Markdown:
         return (cell?.value.string ?? "") as ValueType;
       case EditorType.Text:

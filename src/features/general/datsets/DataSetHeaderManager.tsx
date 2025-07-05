@@ -32,11 +32,7 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
         if (rowCellIndex >= 0) {
           const rowCellToAdd = oldRowCells.splice(rowCellIndex, 1)[0];
           let existingCell = oldCellDict[rowCellToAdd.cellId];
-          if (!existingCell) {
-            existingCell = buildEmptyCell(header);
-          }
-
-          if (existingCell.type !== header.type) {
+          if (!existingCell || existingCell.type !== header.type) {
             existingCell = buildEmptyCell(header);
           }
 
@@ -65,13 +61,13 @@ const DataSetHeaderManager = ({ dataset }: DataSetHeaderManagerProps): JSX.Eleme
   }, []);
 
   const upsertHeader = useCallback((item: DataSetHeader): void => {
-    const previousLength = dataset.headers.length;
+    const previousHeader = dataset.headers.find(h => h.id === item.id);
     const newHeaders = upsert(item, dataset.headers, header => header.id === item.id);
     let newGrid: DataSetProto = {
       ...dataset,
       headers: newHeaders,
     };
-    if (previousLength !== newHeaders.length) {
+    if (!previousHeader || previousHeader.type !== item.type) {
       newGrid = regenerateDataSet(dataset, newHeaders);
     }
 
