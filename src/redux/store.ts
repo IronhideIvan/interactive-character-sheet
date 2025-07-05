@@ -11,7 +11,7 @@ import { characterFeaturesSlice } from "@/features/characterSheet/features/chara
 import { customNotesSlice } from "@/features/general/notes/customNotesSlice";
 import { featureGroupsSlice } from "@/features/characterSheet/features/FeatureGroup/featureGroupsSlice";
 import { groupCollectionsSlice } from "@/features/dataSets/collections/groupCollectionsSlice";
-import { customGridsSlice } from "@/features/general/grids/customGridsSlice";
+import { customGridsSlice } from "@/features/general/grids-old/customGridsSlice";
 import { journalEntriesSlice } from "@/features/journal/journalEntriesSlice";
 
 export const store = configureStore({

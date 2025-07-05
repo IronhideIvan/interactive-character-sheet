@@ -14,7 +14,7 @@ import { store } from "@/redux/store";
 import { SaveFile } from "@/types/saveFile";
 import saveAs from "file-saver";
 import cloneDeep from "lodash.clonedeep";
-import { resetState as resetCustomGridsState, setInitial as setInitialGrids } from "@/features/general/grids/customGridsSlice";
+import { resetState as resetCustomGridsState, setInitial as setInitialGrids } from "@/features/general/grids-old/customGridsSlice";
 import { resetState as resetJournalEntriesState, setInitial as setInitialJournalEntries } from "@/features/journal/journalEntriesSlice";
 
 export const useImport = () => {

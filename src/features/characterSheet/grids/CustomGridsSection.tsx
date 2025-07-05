@@ -1,8 +1,8 @@
 import CollapsibleSection from "@/components/CollapsibleSection";
 import { ActionButtonType } from "@/components/dialog/actionButtonTypes";
 import SimpleDialog from "@/components/dialog/SimpleDialog";
-import CustomGridField from "@/features/general/grids/CustomGridField";
-import CustomGridHeaderManager from "@/features/general/grids/CustomGridHeaderManager";
+import CustomGridField from "@/features/general/grids-old/CustomGridField";
+import CustomGridHeaderManager from "@/features/general/grids-old/CustomGridHeaderManager";
 import { useModal } from "@/hooks/useModal";
 import { CustomGrid } from "@/types/common/customGrid";
 import { JSX } from "react";

@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 import DataGrid from "@/components/dataGrid/DataGrid";
 import { EditorType } from "@/components/dataGrid/dataGridTypes";
 import { CustomGrid } from "@/types/common/customGrid";
-import { deleteCustomGrid, resetState, upsertCustomGrid } from "@/features/general/grids/customGridsSlice";
+import { deleteCustomGrid, resetState, upsertCustomGrid } from "@/features/general/grids-old/customGridsSlice";
 
 const GridDataSet = (): JSX.Element => {
   const collections = useAppSelector(state => state.customGrids.latest);
