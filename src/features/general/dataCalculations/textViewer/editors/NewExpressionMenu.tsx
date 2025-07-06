@@ -1,4 +1,4 @@
-import { CalculationExpression, CalculationExpressionType, CalculationValueType, CalculationVariableAssignmentExpression, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
+import { CalculationEvaluationExpression, CalculationExpression, CalculationExpressionType, CalculationValueType, CalculationVariableAssignmentExpression, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
 import { Menu, Button, Portal } from "@chakra-ui/react";
 import { JSX } from "react";
 import { v4 } from "uuid";
@@ -6,14 +6,14 @@ import { buildDefaultCalculationValueOfType } from "../../dataCalculationUtil";
 
 type NewExpressionMenuProps = {
   label: string;
-  onAddNewExpression: (newExpression: CalculationExpression) => void;
+  onAddNewExpression: (newExpression: CalculationExpression, unrelatedChildren: CalculationExpression[]) => void;
 };
 
 const NewExpressionMenu = ({ label, onAddNewExpression }: NewExpressionMenuProps): JSX.Element => {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" width={"100%"}>
           {label}
         </Button>
       </Menu.Trigger>
@@ -33,7 +33,7 @@ const NewExpressionMenu = ({ label, onAddNewExpression }: NewExpressionMenuProps
                   },
                   value: buildDefaultCalculationValueOfType(CalculationValueType.Number),
                 };
-                onAddNewExpression(newExpr);
+                onAddNewExpression(newExpr, []);
               }}
             >
               Variable Declaration
@@ -41,13 +41,21 @@ const NewExpressionMenu = ({ label, onAddNewExpression }: NewExpressionMenuProps
             <Menu.Item
               value={CalculationExpressionType.VariableAssignment}
               onClick={() => {
+                const newEval: CalculationEvaluationExpression = {
+                  id: v4(),
+                  type: CalculationExpressionType.Evaluation,
+                  baseValue: buildDefaultCalculationValueOfType(CalculationValueType.Number),
+                  operationIds: [],
+                };
+
                 const newExpr: CalculationVariableAssignmentExpression = {
                   id: v4(),
                   type: CalculationExpressionType.VariableAssignment,
                   variableId: "",
-                  value: buildDefaultCalculationValueOfType(CalculationValueType.Number),
+                  evaluationId: newEval.id,
                 };
-                onAddNewExpression(newExpr);
+
+                onAddNewExpression(newExpr, [newEval]);
               }}
             >
               Variable Assignment

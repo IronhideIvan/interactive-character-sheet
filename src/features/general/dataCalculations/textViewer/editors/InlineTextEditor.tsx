@@ -15,6 +15,8 @@ const InlineTextEditor = (props: InlineTextEditorProps): JSX.Element => {
       onValueChange={(e) => {
         props.onChange(e.value);
       }}
+      borderWidth={1}
+      borderRadius={5}
     >
       <Editable.Preview width="100%">
       </Editable.Preview>

@@ -1,17 +1,19 @@
-import { CalculationValue, CalculationValueType, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
+import { CalculationValue, CalculationValueType, CalculationVariable, CalculationVariableDeclarationExpression } from "@/types/common/dataCalculation";
 import { createListCollection, HStack } from "@chakra-ui/react";
 import { JSX } from "react";
 import InlineTextEditor from "../editors/InlineTextEditor";
 import CalculationValueEditor from "../editors/CalculationValueEditor";
 import LinkingText from "./LinkingText";
 import { DataDropdownEditor, DataDropdownItem } from "@/components/dataGrid/editors/DataDropdownEditor";
+import { Dictionary } from "@/types/common/dictionary";
 
 type VariableDeclarationProps = {
   expression: CalculationVariableDeclarationExpression;
+  variablesInScope: Dictionary<CalculationVariable>;
   onChange: (newExpression: CalculationVariableDeclarationExpression) => void;
 };
 
-const VariableDeclaration = ({ expression, onChange }: VariableDeclarationProps): JSX.Element => {
+const VariableDeclaration = ({ expression, variablesInScope, onChange }: VariableDeclarationProps): JSX.Element => {
   const handleVariableNameChange = (value: string) => {
     onChange({
       ...expression,
@@ -42,7 +44,11 @@ const VariableDeclaration = ({ expression, onChange }: VariableDeclarationProps)
   return (
     <HStack>
       <LinkingText text="declare" />
-      <InlineTextEditor placeholder="<Name>" value={expression.variable.name} onChange={handleVariableNameChange} />
+      <InlineTextEditor
+        placeholder="<Name>"
+        value={expression.variable.name}
+        onChange={handleVariableNameChange}
+      />
       <LinkingText text="as" />
       <DataDropdownEditor
         collection={typeReferenceOptions}
@@ -50,7 +56,11 @@ const VariableDeclaration = ({ expression, onChange }: VariableDeclarationProps)
         selectedItemIds={[expression.variable.type]}
       />
       <LinkingText text="with value" />
-      <CalculationValueEditor calculationValue={expression.value} onChange={handleVariableValueChange} />
+      <CalculationValueEditor
+        variablesIsScope={variablesInScope}
+        calculationValue={expression.value}
+        onChange={handleVariableValueChange}
+      />
     </HStack>
   );
 };

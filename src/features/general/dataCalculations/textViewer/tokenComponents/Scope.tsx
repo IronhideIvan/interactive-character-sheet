@@ -22,29 +22,18 @@ type ScopeProps = {
 const Scope = ({
   expression, calculation, onCalculationChanged, variablesInScope,
 }: ScopeProps): JSX.Element => {
-  const handleAddDirectDescendant = (newExpression: CalculationExpression) => {
+  const handleAddDirectDescendant = (
+    newExpression: CalculationExpression,
+    unrelatedChildren: CalculationExpression[],
+  ) => {
     const agg = new CalculationAggregate(calculation);
-    const newScope: CalculationScopeExpression = {
-      ...expression,
-      evaluationScope: [
-        ...expression.evaluationScope,
-        newExpression.id,
-      ],
-    };
-
-    agg.upsertExpression(newExpression);
-    agg.upsertExpression(newScope);
+    agg.addChildExpression(expression, newExpression);
+    agg.upsertExpressions(unrelatedChildren);
     onCalculationChanged(agg.getTransformation());
   };
   const handleDeleteDirectDescendant = (id: ID) => {
     const agg = new CalculationAggregate(calculation);
-    const newScope: CalculationScopeExpression = {
-      ...expression,
-      evaluationScope: expression.evaluationScope.filter(existingId => existingId !== id),
-    };
-
-    agg.deleteExpression(id);
-    agg.upsertExpression(newScope);
+    agg.deleteChildExpression(expression, id);
     onCalculationChanged(agg.getTransformation());
   };
 
@@ -71,7 +60,13 @@ const Scope = ({
         case CalculationExpressionType.VariableDeclaration:
         {
           const castExp = expr as CalculationVariableDeclarationExpression;
-          scopedExp.node = <VariableDeclaration expression={castExp} onChange={handleChildExpressionChange} />;
+          scopedExp.node = (
+            <VariableDeclaration
+              expression={castExp}
+              variablesInScope={currentVariablesInScope}
+              onChange={handleChildExpressionChange}
+            />
+          );
           currentVariablesInScope = { ...currentVariablesInScope };
           currentVariablesInScope[castExp.variable.id] = castExp.variable;
           break;
@@ -82,8 +77,9 @@ const Scope = ({
           scopedExp.node = (
             <VariableAssignment
               expression={castExp}
-              onChange={handleChildExpressionChange}
-              allVariables={currentVariablesInScope}
+              calculation={calculation}
+              onCalculationChanged={onCalculationChanged}
+              variablesInScope={currentVariablesInScope}
             />
           );
           break;
@@ -111,7 +107,7 @@ const Scope = ({
   });
 
   return (
-    <VStack width={"100%"} paddingLeft={scopeIndentMargin}>
+    <VStack width={"100%"} paddingLeft={scopeIndentMargin} alignItems={"start"}>
       {scopedExpressions.map((e) => {
         return (
           <HStack spaceX={2} key={e.id}>

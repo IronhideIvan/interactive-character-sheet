@@ -17,8 +17,8 @@ export type CalculationScopeExpression = CalculationExpression & {
 
 export enum CalculationExpressionType {
   Scope = "scope",
-  // Operation = "op",
-  // Condition = "condition",
+  Operator = "op",
+  Evaluation = "eval",
   VariableAssignment = "ass",
   VariableDeclaration = "var-decl"
 }
@@ -30,11 +30,26 @@ export type CalculationVariableDeclarationExpression = CalculationExpression & {
 
 export type CalculationVariableAssignmentExpression = CalculationExpression & {
   variableId: ID;
+  evaluationId: ID;
+};
+
+export type CalculationEvaluationExpression = CalculationExpression & {
+  baseValue: CalculationValue;
+  operationIds: ID[];
+};
+
+export enum CalculationOperatorType {
+  Add = "add"
+}
+
+export type CalculationOperatorExpression = CalculationExpression & {
+  operator: CalculationOperatorType;
   value: CalculationValue;
 };
 
 export enum CalculationValueType {
-  Number = "number"
+  Number = "number",
+  Variable = "variable"
 }
 
 export type CalculationVariable = EntityBase & {
@@ -45,15 +60,12 @@ export type CalculationVariable = EntityBase & {
 export type CalculationValue = {
   type: CalculationValueType;
   number?: number;
+  refId?: ID;
 };
 
 // export type CalculationExpressionScope = CalculationExpression & {
 //   expressions: CalculationExpression[];
 // };
-
-// export enum CalculationOperatorType {
-//   Add = "add"
-// }
 
 // export type CalculationExpressionOperation = CalculationExpression & {
 //   operator: CalculationOperatorType;

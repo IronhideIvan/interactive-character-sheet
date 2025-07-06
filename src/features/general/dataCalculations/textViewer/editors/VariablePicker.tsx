@@ -9,24 +9,28 @@ import { JSX, useState } from "react";
 
 type VariablePickerProps = {
   selectedVariableId?: ID;
-  allVariables: Dictionary<CalculationVariable>;
+  variablesInScope: Dictionary<CalculationVariable>;
   onSelectionChange: (newVariable: CalculationVariable) => void;
 };
 
-const VariablePicker = ({ selectedVariableId, allVariables, onSelectionChange }: VariablePickerProps): JSX.Element => {
+const VariablePicker = ({
+  selectedVariableId,
+  variablesInScope,
+  onSelectionChange,
+}: VariablePickerProps): JSX.Element => {
   const { isOpen, open, close } = useModal();
   const [variableChoices, setVariableChoices] = useState<CalculationVariable[]>([]);
-  const selectedVar = selectedVariableId ? allVariables[selectedVariableId] : undefined;
+  const selectedVar = selectedVariableId ? variablesInScope[selectedVariableId] : undefined;
 
   const handleOpenDialog = () => {
-    const allPossibleKeys = Object.keys(allVariables);
+    const allPossibleKeys = Object.keys(variablesInScope);
     const choices: CalculationVariable[] = [];
     allPossibleKeys.forEach((k) => {
       if (k === selectedVariableId) {
         return;
       }
 
-      choices.push(allVariables[k]);
+      choices.push(variablesInScope[k]);
     });
     setVariableChoices(choices);
     open();
@@ -40,7 +44,7 @@ const VariablePicker = ({ selectedVariableId, allVariables, onSelectionChange }:
 
   return (
     <Box>
-      <Button variant={"ghost"} onClick={handleOpenDialog}>{selectedVar ? selectedVar.name : "N/A"}</Button>
+      <Button variant={"outline"} onClick={handleOpenDialog}>{selectedVar ? selectedVar.name : "N/A"}</Button>
       {isOpen && variableChoices && (
         <SimpleDialog
           open={isOpen}
@@ -50,7 +54,7 @@ const VariablePicker = ({ selectedVariableId, allVariables, onSelectionChange }:
         >
           <VStack width={"100%"}>
             {variableChoices.map((c) => {
-              return <Button variant={"ghost"} key={c.id} onClick={() => handleChoiceSelected(c)}>{c.name}</Button>;
+              return <Button variant={"outline"} key={c.id} onClick={() => handleChoiceSelected(c)}>{c.name}</Button>;
             })}
           </VStack>
         </SimpleDialog>

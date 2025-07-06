@@ -1,42 +1,54 @@
-import { CalculationValue, CalculationVariable, CalculationVariableAssignmentExpression } from "@/types/common/dataCalculation";
+import { CalculationEvaluationExpression, CalculationExpressionType, CalculationVariable, CalculationVariableAssignmentExpression, DataCalculation } from "@/types/common/dataCalculation";
 import { Dictionary } from "@/types/common/dictionary";
-import { HStack } from "@chakra-ui/react";
+import { HStack, Text } from "@chakra-ui/react";
 import { JSX } from "react";
 import LinkingText from "./LinkingText";
-import CalculationValueEditor from "../editors/CalculationValueEditor";
 import VariablePicker from "../editors/VariablePicker";
+import Evaluation from "./Evaluation";
+import { CalculationAggregate } from "../../dataCalculationUtil";
 
 type VariableAssignmentProps = {
   expression: CalculationVariableAssignmentExpression;
-  allVariables: Dictionary<CalculationVariable>;
-  onChange: (newExpression: CalculationVariableAssignmentExpression) => void;
+  calculation: DataCalculation;
+  variablesInScope: Dictionary<CalculationVariable>;
+  onCalculationChanged: (newCalculation: DataCalculation) => void;
 };
 
-const VariableAssignment = ({ expression, allVariables, onChange }: VariableAssignmentProps): JSX.Element => {
-  const handleValueChange = (value: CalculationValue) => {
-    onChange({
-      ...expression,
-      value: value,
-    });
-  };
-
+const VariableAssignment = ({
+  calculation, expression, variablesInScope, onCalculationChanged,
+}: VariableAssignmentProps): JSX.Element => {
   const handleVariableChange = (value: CalculationVariable) => {
-    onChange({
+    const agg = new CalculationAggregate(calculation);
+    const newExp: CalculationVariableAssignmentExpression = {
       ...expression,
       variableId: value.id,
-    });
+    };
+    agg.upsertExpression(newExp);
   };
+
+  const evaluationExpression = calculation.expressions[expression.evaluationId];
 
   return (
     <HStack>
       <LinkingText text="Set" />
       <VariablePicker
         selectedVariableId={expression.variableId}
-        allVariables={allVariables}
+        variablesInScope={variablesInScope}
         onSelectionChange={handleVariableChange}
       />
       <LinkingText text="To" />
-      <CalculationValueEditor calculationValue={expression.value} onChange={handleValueChange} />
+      {(evaluationExpression && evaluationExpression.type === CalculationExpressionType.Evaluation)
+        ? (
+          <Evaluation
+            expression={evaluationExpression as CalculationEvaluationExpression}
+            calculation={calculation}
+            onCalculationChanged={onCalculationChanged}
+            variablesInScope={variablesInScope}
+          />
+        )
+        : (
+          <Text>UNKNOWN EVAL</Text>
+        )}
     </HStack>
   );
 };
